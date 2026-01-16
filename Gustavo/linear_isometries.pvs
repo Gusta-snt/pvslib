@@ -1,0 +1,101 @@
+linear_isometries[n: posnat]: THEORY
+%----------------------------------------------------------------------------
+% Linear Isometries Lemmas
+% Author: Gustavo
+% 
+% This theory contains lemmas and properties about linear isometries on R^n:
+% - Lemma 1.2: Relationship between isometries, origin-fixing, and length preservation
+% - Supporting lemmas for proofs
+% - Additional properties of isometries
+%
+%----------------------------------------------------------------------------
+BEGIN
+
+  IMPORTING linear_isometries_def[n]
+
+  % Variables
+  f, g: VAR Function_n
+  x, y, v, w: VAR Vector_n
+  a: VAR real
+
+  %--------------------------------------------------------------------------
+  % Lemma 1.2 (Part 1): 
+  % Suppose f: R^n -> R^n is a function that fixes the origin.
+  % If f is an isometry then f preserves lengths of all vectors in R^n.
+  %
+  % Proof sketch: For any vector x, we have:
+  %   |f(x)| = |f(x) - f(0)| = |x - 0| = |x|
+  % where the second equality uses that f is an isometry and f(0) = 0.
+  %--------------------------------------------------------------------------
+  
+  isometry_fixes_origin_preserves_length: LEMMA
+    isometry?(f) AND fixes_origin?(f) IMPLIES preserves_length?(f)
+
+  %--------------------------------------------------------------------------
+  % Lemma 1.2 (Part 2):
+  % The converse holds if f is a linear transformation.
+  % If f is linear and preserves lengths, then f is an isometry.
+  %
+  % Proof sketch: For linear f and vectors x, y:
+  %   |f(x) - f(y)| = |f(x - y)| = |x - y|
+  % where the first equality uses linearity and the second uses that
+  % f preserves lengths.
+  %--------------------------------------------------------------------------
+  
+  linear_preserves_length_is_isometry: LEMMA
+    linear?(f) AND preserves_length?(f) IMPLIES isometry?(f)
+
+  %--------------------------------------------------------------------------
+  % Supporting Lemmas for Lemma 1.2 Part 1
+  %--------------------------------------------------------------------------
+
+  % Simplification: norm(x - zero) = norm(x)
+  norm_diff_zero: LEMMA
+    norm(x - zero) = norm(x)
+
+  %--------------------------------------------------------------------------
+  % Supporting Lemmas for Lemma 1.2 Part 2
+  %--------------------------------------------------------------------------
+
+  % For linear maps: f(x - y) = f(x) - f(y)
+  linear_diff: LEMMA
+    linear?(f) IMPLIES
+    FORALL (x, y: Vector_n): f(x - y) = f(x) - f(y)
+
+  % Linear functions fix the origin
+  linear_fixes_origin: LEMMA
+    linear?(f) IMPLIES fixes_origin?(f)
+
+  % For linear f that preserves lengths: |f(x - y)| = |x - y|
+  linear_length_diff: LEMMA
+    linear?(f) AND preserves_length?(f) IMPLIES
+    FORALL (x, y: Vector_n): norm(f(x - y)) = norm(x - y)
+
+  %--------------------------------------------------------------------------
+  % Additional Properties of Isometries
+  %--------------------------------------------------------------------------
+
+  % Isometries are injective (one-to-one)
+  isometry_injective: LEMMA
+    isometry?(f) IMPLIES
+    FORALL (x, y: Vector_n): f(x) = f(y) IMPLIES x = y
+
+  % Composition of isometries is an isometry
+  isometry_composition: LEMMA
+    isometry?(f) AND isometry?(g) IMPLIES isometry?(f o g)
+
+  % If f is a linear isometry, it preserves the zero vector
+  linear_isometry_fixes_origin: LEMMA
+    linear_isometry?(f) IMPLIES fixes_origin?(f)
+
+  % Linear isometries preserve the dot product
+  linear_isometry_preserves_dot: LEMMA
+    linear_isometry?(f) IMPLIES
+    FORALL (x, y: Vector_n): f(x) * f(y) = x * y
+
+  % Isometries preserve norms (follows from fixing origin)
+  isometry_preserves_norm: LEMMA
+    isometry?(f) IMPLIES
+    FORALL (x, y: Vector_n): norm(f(x)) = norm(f(y)) IFF norm(x) = norm(y)
+
+END linear_isometries
