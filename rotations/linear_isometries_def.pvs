@@ -1,0 +1,67 @@
+linear_isometries_def[n: posnat]: THEORY
+%----------------------------------------------------------------------------
+% Linear Isometries Definitions
+% Author: Gustavo
+% 
+% This theory contains the basic definitions for isometries on R^n.
+% Vectors are represented as n x 1 matrices (Column_Matrix = MatrixMN(n, 1)).
+% Definitions are for functions f: Column_Matrix -> Column_Matrix.
+%----------------------------------------------------------------------------
+BEGIN
+
+  IMPORTING 
+    matrices@matrices,
+    matrices@norms
+  % IMPORTING matrices@mat_vec_mult
+
+  % Vectors are represented as n x 1 matrices (Column_Matrix)
+  
+  % Type aliases
+  % Column_Matrix: TYPE = MatrixMN(n, 1)
+  Function_n: TYPE = [VectorN -> VectorN]
+  
+  % Zero matrix
+  % Utilizar o zero de VectorN
+  % zero_matrix(m, n: nat): MatrixMN(m, n) =
+  %   array2list(m) (LAMBDA (i: nat): array2list(n) (LAMBDA (j: nat): 0))
+  
+  % Norm for n x 1 matrices
+  % Deve definir o que é a norma de VectorN
+  % norm(M: Column_Matrix): real = norm(col(M)(0))
+  
+  % Variables
+  f, g: VAR Function_n
+  x, y: VAR VectorN
+  a: VAR real
+
+  %--------------------------------------------------------------------------
+  % Definition 1.1: Isometry
+  % An isometry of R^n is a function f: R^n -> R^n such that for any two
+  % vectors x, y in R^n, we have |f(x) - f(y)| = |x - y|.
+  %--------------------------------------------------------------------------
+  
+  isometry?(f): bool = 
+    FORALL (x, y: VectorN): norm_2(f(x) - f(y)) = norm_2(x - y)
+
+  %--------------------------------------------------------------------------
+  % Helper predicates
+  %--------------------------------------------------------------------------
+  
+  % A function fixes the origin if f(0) = 0
+  fixes_origin?(f): bool = 
+    f(zero_matrix(n, 1)) = zero_matrix(n, 1)
+
+  % A function preserves lengths if |f(x)| = |x| for all x
+  preserves_length?(f): bool = 
+    FORALL (x: Column_Matrix): norm(f(x)) = norm(x)
+
+  % A function is linear
+  linear?(f): bool = 
+    (FORALL (x, y: Column_Matrix): f(x + y) = f(x) + f(y)) AND
+    (FORALL (a: real, x: Column_Matrix): f(a * x) = a * f(x))
+
+  % linear_isometry? is an isometry that fixes the origin.
+  linear_isometry?(f): bool = 
+    isometry?(f) AND fixes_origin?(f)
+
+END linear_isometries_def

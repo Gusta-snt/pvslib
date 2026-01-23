@@ -1,0 +1,27 @@
+orthogonal_groups_def[n: posnat]: THEORY
+%----------------------------------------------------------------------------
+% Orthogonal Groups Definitions
+% Author: Gustavo
+% 
+% This theory contains the basic definitions for the orthogonal group O(n).
+%----------------------------------------------------------------------------
+BEGIN
+
+  IMPORTING matrices@matrices
+  IMPORTING matrices@matrix_inv
+  IMPORTING matrices@mat_vec_mult
+
+  OrthoMat_n: TYPE = SquareMatrix(n)
+  
+  %--------------------------------------------------------------------------
+  % Definition of Orthogonal Group O(n)
+  % O(n) = { A in GL_n | A^-1 = A^T }
+  %--------------------------------------------------------------------------
+  
+  orthogonal_matrix?(A: OrthoMat_n): bool =
+    invertible?(A) AND inverse(A) = transpose(A)
+
+  % Defined as a subtype
+  OrthogonalMatrix: TYPE = (orthogonal_matrix?)
+
+END orthogonal_groups_def

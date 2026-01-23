@@ -1,0 +1,58 @@
+orthogonal_groups[n: posnat]: THEORY
+%----------------------------------------------------------------------------
+% Orthogonal Groups O(n)
+%
+% This theory defines the orthogonal group O(n) as the set of n x n matrices
+% where the inverse is equal to the transpose.
+%----------------------------------------------------------------------------
+BEGIN
+
+  IMPORTING 
+    orthogonal_groups_def[n],
+    linear_isometries_def[n],
+    matrices@matrix_vector_multiplication
+  
+  % Variables
+  A, B: VAR OrthoMat_n
+  u, v: VAR VectorN
+
+  %--------------------------------------------------------------------------
+  % Theorem 1.5: The set O(n) is a group under matrix multiplication.
+  %--------------------------------------------------------------------------
+
+  % 1. Closure: If A, B in O(n), then A * B in O(n)
+  ortho_closure: CONJECTURE
+    orthogonal_matrix?(A) AND orthogonal_matrix?(B) 
+    IMPLIES orthogonal_matrix?(A * B)
+
+  % 2. Identity: The identity matrix I is in O(n)
+  ortho_identity: CONJECTURE
+    orthogonal_matrix?(Id(n))
+
+  % 3. Inverse: If A in O(n), then A^-1 in O(n)
+  ortho_inverse: CONJECTURE
+    orthogonal_matrix?(A) IMPLIES orthogonal_matrix?(inverse(A))
+
+  % Additional property: A^T A = I (Equivalent definition)
+  ortho_transpose_mult: CONJECTURE
+    orthogonal_matrix?(A) IMPLIES transpose(A) * A = Id(n)
+
+  %--------------------------------------------------------------------------
+  % CONJECTURE 1.6: Elements of O(n) preserve dot products
+  % dot(Au, Av) = dot(u, v) for column matrices u, v
+  %--------------------------------------------------------------------------
+
+  ortho_preserves_dot: CONJECTURE
+    orthogonal_matrix?(A) IMPLIES
+    dot(mult(A, u), mult(A, v)) = dot(u, v)
+
+  %--------------------------------------------------------------------------
+  % CONJECTURE 1.7: Elements of O(n) induce linear isometries
+  % The linear transformation f(x) = A * x is a linear isometry.
+  %--------------------------------------------------------------------------
+
+  ortho_is_linear_isometry: CONJECTURE
+    orthogonal_matrix?(A) IMPLIES
+    linear_isometry?(LAMBDA (x: Mat_n): A * x)
+
+END orthogonal_groups
