@@ -1,0 +1,29 @@
+%----------------------------------------------------------------------------
+% Extra lemmas about matrices
+% Authors: Gustavo Ferreira dos Santos
+% 	   Universidade Federal de Goiás - Brazil
+%
+%	   Thaynara Arielly de Lima
+%	   Universidade Federal de Goiás - Brazil
+%
+% This theory contains extra lemmas for matrices theory.
+%----------------------------------------------------------------------------
+
+matrices_extra: THEORY
+
+BEGIN
+  IMPORTING 
+    matrices@matrices,
+    structures@list_lemmas
+
+
+  % c: VAR Vector
+  n: VAR nat
+  
+  crd_zero: CONJECTURE
+    FORALL (l: nat): cdr(zero(l + 1)) = zero(l)
+
+  ConsVectorN_diff: CONJECTURE
+    FORALL (c: VectorN(n)): c + zero(n) = c
+
+END matrices_extra

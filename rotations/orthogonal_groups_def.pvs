@@ -1,10 +1,16 @@
-orthogonal_groups_def[n: posnat]: THEORY
 %----------------------------------------------------------------------------
 % Orthogonal Groups Definitions
-% Author: Gustavo
+% Authors: Gustavo Ferreira dos Santos
+% 	   Universidade Federal de Goiás - Brazil
+%
+%	   Thaynara Arielly de Lima
+%	   Universidade Federal de Goiás - Brazil
 % 
 % This theory contains the basic definitions for the orthogonal group O(n).
 %----------------------------------------------------------------------------
+
+orthogonal_groups_def[n: posnat]: THEORY
+
 BEGIN
 
   IMPORTING matrices@matrices

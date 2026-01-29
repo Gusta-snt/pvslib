@@ -1,0 +1,9 @@
+(linear_isometries
+ (ConsVectorN_diff 0
+  (ConsVectorN_diff-1 nil 3978463141
+   ("" (skeep)
+    (("" (typepred c)
+      (("" (typepred "zero(n)") (("" (postpone) nil nil)) nil)) nil))
+    nil)
+   nil shostak)))
+

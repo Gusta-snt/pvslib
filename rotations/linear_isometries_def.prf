@@ -1,0 +1,170 @@
+(linear_isometries_def
+ (add_ConsVecN 0
+  (add_ConsVecN-1 nil 3978678095
+   ("" (skeep)
+    (("" (split)
+      (("1" (typepred x)
+        (("1" (typepred y)
+          (("1" (expand "+")
+            (("1" (typepred "add(x, y)")
+              (("1" (hide -1 -3 -5 -6 -8)
+                (("1" (replace -2 -1)
+                  (("1" (replace -3 -1)
+                    (("1" (expand "max") (("1" (propax) nil nil)) nil))
+                    nil))
+                  nil))
+                nil))
+              nil))
+            nil))
+          nil))
+        nil)
+       ("2" (grind) nil nil))
+      nil))
+    nil)
+   ((add def-decl "VectorN(max(length(v1), length(v2)))" matrices
+     matrices)
+    (max const-decl "{p: real | p >= m AND p >= n}" real_defs nil)
+    (Vector type-eq-decl nil matrices matrices)
+    (+ const-decl "VectorN(max(length(v1), length(v2)))" matrices
+       matrices)
+    (boolean nonempty-type-decl nil booleans nil)
+    (bool nonempty-type-eq-decl nil booleans nil)
+    (NOT const-decl "[bool -> bool]" booleans nil)
+    (number nonempty-type-decl nil numbers nil)
+    (PRED type-eq-decl nil defined_types nil)
+    (list type-decl nil list_adt nil)
+    (every adt-def-decl "boolean" list_adt nil)
+    (AND const-decl "[bool, bool -> bool]" booleans nil)
+    (number_field_pred const-decl "[number -> boolean]" number_fields
+     nil)
+    (number_field nonempty-type-from-decl nil number_fields nil)
+    (real_pred const-decl "[number_field -> boolean]" reals nil)
+    (real nonempty-type-from-decl nil reals nil)
+    (= const-decl "[T, T -> boolean]" equalities nil)
+    (rational_pred const-decl "[real -> boolean]" rationals nil)
+    (rational nonempty-type-from-decl nil rationals nil)
+    (integer_pred const-decl "[rational -> boolean]" integers nil)
+    (int nonempty-type-eq-decl nil integers nil)
+    (>= const-decl "bool" reals nil)
+    (nat nonempty-type-eq-decl nil naturalnumbers nil)
+    (length def-decl "nat" list_props nil)
+    (nonneg_int nonempty-type-eq-decl nil integers nil)
+    (> const-decl "bool" reals nil)
+    (posnat nonempty-type-eq-decl nil integers nil)
+    (n formal-const-decl "posnat" linear_isometries_def nil)
+    (VectorN type-eq-decl nil matrices matrices)
+    (cons? adt-recognizer-decl "[list -> boolean]" list_adt nil)
+    (ConsVecN type-eq-decl nil linear_isometries_def nil)
+    (real_plus_real_is_real application-judgement "real" reals nil)
+    (listn_0 name-judgement "listn[real](0)" vector_arithmetic
+     matrices))
+   nil
+   (add_ConsVecN subtype
+    "(matrices.+)(linear_isometries_def.x, linear_isometries_def.y)"
+    "ConsVecN")))
+ (isometry?_TCC1 0
+  (isometry?_TCC1-1 nil 3978678095
+   ("" (skeep) (("" (grind) nil nil)) nil)
+   ((minus_odd_is_odd application-judgement "odd_int" integers nil)
+    (- const-decl "VectorN(max(length(v1), length(v2)))" matrices
+       matrices)
+    (sub const-decl "VectorN(max(length(v1), length(v2)))" matrices
+     matrices)
+    (real_times_real_is_real application-judgement "real" reals nil)
+    (real_plus_real_is_real application-judgement "real" reals nil)
+    (add def-decl "VectorN(max(length(v1), length(v2)))" matrices
+     matrices)
+    (scal def-decl "VectorN(length(v2))" matrices matrices)
+    (listn_0 name-judgement "listn[real](0)" vector_arithmetic
+     matrices))
+   nil
+   (isometry? subtype
+    "(matrices.-)(linear_isometries_def.f(linear_isometries_def.x), linear_isometries_def.f(linear_isometries_def.y))"
+    "(list_adt[real].cons?)")))
+ (isometry?_TCC2 0
+  (isometry?_TCC2-1 nil 3978678095 ("" (grind) nil nil)
+   ((scal def-decl "VectorN(length(v2))" matrices matrices)
+    (add def-decl "VectorN(max(length(v1), length(v2)))" matrices
+     matrices)
+    (sub const-decl "VectorN(max(length(v1), length(v2)))" matrices
+     matrices)
+    (- const-decl "VectorN(max(length(v1), length(v2)))" matrices
+       matrices)
+    (minus_odd_is_odd application-judgement "odd_int" integers nil))
+   nil
+   (isometry? subtype
+    "(matrices.-)(linear_isometries_def.x, linear_isometries_def.y)"
+    "(list_adt[real].cons?)")))
+ (fixes_origin?_TCC1 0
+  (fixes_origin?_TCC1-1 nil 3978451467
+   ("" (skeep) (("" (grind) nil nil)) nil)
+   ((posint_plus_nnint_is_posint application-judgement "posint"
+     integers nil)
+    (int_minus_int_is_int application-judgement "int" integers nil) nil
+    (array2list const-decl
+     "{l: listn(n) | FORALL (i: below(n)): a(i) = nth(l, i)}"
+     array2list structures)
+    (zero const-decl "VectorN(n)" matrices matrices)
+    (array2list_it def-decl
+     "{l: listn(n - i) | FORALL (j: subrange(i, n - 1)): a(j) = nth(l, j - i)}"
+     array2list structures))
+   nil
+   (fixes_origin? subtype "matrices.zero(linear_isometries_def.n)"
+    "ConsVecN")))
+ (linear?_TCC1 0
+  (linear?_TCC2-1 nil 3978451467
+   ("" (skeep)
+    (("" (split)
+      (("1" (expand *)
+        (("1" (typepred "scal(a, x)")
+          (("1" (hide -1)
+            (("1" (hide -2)
+              (("1" (typepred x)
+                (("1" (hide -3 -1)
+                  (("1" (replace -1 -2) (("1" (propax) nil nil)) nil))
+                  nil))
+                nil))
+              nil))
+            nil))
+          nil))
+        nil)
+       ("2" (grind) nil nil))
+      nil))
+    nil)
+   ((ConsVecN type-eq-decl nil linear_isometries_def nil)
+    (cons? adt-recognizer-decl "[list -> boolean]" list_adt nil)
+    (n formal-const-decl "posnat" linear_isometries_def nil)
+    (posnat nonempty-type-eq-decl nil integers nil)
+    (> const-decl "bool" reals nil)
+    (nonneg_int nonempty-type-eq-decl nil integers nil)
+    (scal def-decl "VectorN(length(v2))" matrices matrices)
+    (VectorN type-eq-decl nil matrices matrices)
+    (length def-decl "nat" list_props nil)
+    (nat nonempty-type-eq-decl nil naturalnumbers nil)
+    (>= const-decl "bool" reals nil)
+    (int nonempty-type-eq-decl nil integers nil)
+    (integer_pred const-decl "[rational -> boolean]" integers nil)
+    (rational nonempty-type-from-decl nil rationals nil)
+    (rational_pred const-decl "[real -> boolean]" rationals nil)
+    (= const-decl "[T, T -> boolean]" equalities nil)
+    (Vector type-eq-decl nil matrices matrices)
+    (real nonempty-type-from-decl nil reals nil)
+    (real_pred const-decl "[number_field -> boolean]" reals nil)
+    (number_field nonempty-type-from-decl nil number_fields nil)
+    (number_field_pred const-decl "[number -> boolean]" number_fields
+     nil)
+    (AND const-decl "[bool, bool -> bool]" booleans nil) nil
+    (list type-decl nil list_adt nil)
+    (PRED type-eq-decl nil defined_types nil)
+    (number nonempty-type-decl nil numbers nil)
+    (NOT const-decl "[bool -> bool]" booleans nil)
+    (bool nonempty-type-eq-decl nil booleans nil)
+    (boolean nonempty-type-decl nil booleans nil)
+    (* const-decl "VectorN(length(v2))" matrices matrices)
+    (real_times_real_is_real application-judgement "real" reals nil)
+    nil)
+   nil
+   (linear? subtype
+            "matrices.*(linear_isometries_def.a, linear_isometries_def.x)"
+            "ConsVecN"))))
+

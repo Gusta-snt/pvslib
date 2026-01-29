@@ -1,10 +1,18 @@
-orthogonal_groups[n: posnat]: THEORY
 %----------------------------------------------------------------------------
 % Orthogonal Groups O(n)
+% Authors: Gustavo Ferreira dos Santos
+% 	   Universidade Federal de Goiás - Brazil
+%
+%	   Thaynara Arielly de Lima
+%	   Universidade Federal de Goiás - Brazil
 %
 % This theory defines the orthogonal group O(n) as the set of n x n matrices
 % where the inverse is equal to the transpose.
 %----------------------------------------------------------------------------
+
+orthogonal_groups[n: posnat]: THEORY
+
+
 BEGIN
 
   IMPORTING 

@@ -1,55 +1,65 @@
-linear_isometries[n: posnat]: THEORY
 %----------------------------------------------------------------------------
 % Linear Isometries Lemmas
-% Author: Gustavo
-% 
-% This theory contains lemmas and properties about linear isometries on R^n,
-% where vectors are represented as n x 1 matrices.
+% Authors: Gustavo Ferreira dos Santos
+% 	   Universidade Federal de Goiás - Brazil
+%
+%	   Thaynara Arielly de Lima
+%	   Universidade Federal de Goiás - Brazil
+%
+% This theory contains lemmas and properties about linear isometries on R^n.
 %----------------------------------------------------------------------------
+
+linear_isometries[n: posnat]: THEORY
+
 BEGIN
 
   IMPORTING linear_isometries_def[n]
 
+  Column_Matrix: TYPE = MatrixMN(n, 1)
+
   % Variables
   f, g: VAR Function_n
-  x, y: VAR Column_Matrix
+  x, y: VAR ConsVecN
+  c: VAR ConsVecN
+  norm: VAR (norm?(n))
+  
 
   %--------------------------------------------------------------------------
   % Lemma 1.2: Relates isometry, fixing origin, and preserving lengths.
   %--------------------------------------------------------------------------
   
   isometry_fixes_origin_preserves_length: CONJECTURE
-    isometry?(f) AND fixes_origin?(f) IMPLIES preserves_length?(f)
+    isometry?(f)(norm) AND fixes_origin?(f) IMPLIES preserves_length?(f)(norm)
 
   linear_preserves_length_is_isometry: CONJECTURE
-    linear?(f) AND preserves_length?(f) IMPLIES isometry?(f)
+    linear?(f) AND preserves_length?(f)(norm) IMPLIES isometry?(f)(norm)
 
   %--------------------------------------------------------------------------
   % Lemma 1.3: Composition
   %--------------------------------------------------------------------------
 
   isometry_composition: CONJECTURE
-    isometry?(f) AND isometry?(g) IMPLIES isometry?(f o g)
+    isometry?(f)(norm) AND isometry?(g)(norm) IMPLIES isometry?(f o g)(norm)
 
   linear_isometry_composition: CONJECTURE
-    linear_isometry?(f) AND linear_isometry?(g) IMPLIES linear_isometry?(f o g)
+    linear_isometry?(f)(norm) AND linear_isometry?(g)(norm) IMPLIES linear_isometry?(f o g)(norm)
 
   %--------------------------------------------------------------------------
   % Lemma 1.4: Construction of linear isometry from general isometry
   %--------------------------------------------------------------------------
 
   % If f is an isometry, then g(x) = f(x) - f(0) is a linear isometry.
-  isometry_shift_to_linear: CONJECTURE
-    isometry?(f) IMPLIES
-    LET g = (LAMBDA (x: Column_Matrix): f(x) - f(zero_matrix(n, 1))) IN
-    linear_isometry?(g)
+  % isometry_shift_to_linear: CONJECTURE
+  %   isometry?(f)(norm) IMPLIES
+  %   LET g = (LAMBDA (x: Column_Matrix): f(x) - f(zero_matrix(n, 1))) IN
+  %   linear_isometry?(g)(norm)
 
-  %--------------------------------------------------------------------------
-  % Additional Properties
-  %--------------------------------------------------------------------------
+  % %--------------------------------------------------------------------------
+  % % Additional Properties
+  % %--------------------------------------------------------------------------
 
-  isometry_injective: CONJECTURE
-    isometry?(f) IMPLIES
-    FORALL (x, y: Column_Matrix): f(x) = f(y) IMPLIES x = y
+  % isometry_injective: CONJECTURE
+  %   isometry?(f)(norm) IMPLIES
+  %   FORALL (x, y: Column_Matrix): f(x) = f(y) IMPLIES x = y
 
 END linear_isometries
