@@ -1,0 +1,9 @@
+TCCs summary for theory orthogonal_groups
+
+	ortho_closure_TCC1..............................................✅ proved              (0 s)
+	ortho_inverse_TCC1..............................................✅ proved              (0 s)
+	ortho_inverse_TCC2..............................................✅ proved              (0 s)
+	ortho_preserves_dot_TCC1........................................✨ untried             (75.664 s)
+	ortho_preserves_dot_TCC2........................................✨ untried             (12.403 s)
+
+Theory orthogonal_groups totals: 6 formulas, 5 attempted, 3 succeeded (88.067 s)

@@ -7,60 +7,64 @@
 %	   Universidade Federal de Goiás - Brazil
 %
 % This theory defines the orthogonal group O(n) as the set of n x n matrices
-% where the inverse is equal to the transpose.
 %----------------------------------------------------------------------------
 
 orthogonal_groups[n: posnat]: THEORY
-
 
 BEGIN
 
   IMPORTING 
     orthogonal_groups_def[n],
     linear_isometries_def[n],
-    matrices@matrix_vector_multiplication
+    matrices@matrix_vector_multiplication, % Verificar redundância nas importações
+    matrices_extra[n],
+    matrices@more_matrix_props
   
   % Variables
-  A, B: VAR OrthoMat_n
-  u, v: VAR VectorN
+  A, B: VAR OrthogonalMatrix
+  u, v: VAR ConsVecN
+  norm: VAR (norm?(n))
 
   %--------------------------------------------------------------------------
   % Theorem 1.5: The set O(n) is a group under matrix multiplication.
   %--------------------------------------------------------------------------
 
   % 1. Closure: If A, B in O(n), then A * B in O(n)
-  ortho_closure: CONJECTURE
-    orthogonal_matrix?(A) AND orthogonal_matrix?(B) 
-    IMPLIES orthogonal_matrix?(A * B)
+  % @QED ortho_closure proved by gusta on Fri, 06 Mar 2026 12:01:41 GMT
+  ortho_closure: LEMMA
+    FORALL (A, B: SquareMatrix(n)): 
+      orthogonal_matrix?(A) AND orthogonal_matrix?(B) IMPLIES 
+      orthogonal_matrix?(A * B)
 
   % 2. Identity: The identity matrix I is in O(n)
-  ortho_identity: CONJECTURE
+  % @QED ortho_identity proved by gusta on Fri, 06 Mar 2026 12:46:06 GMT
+  ortho_identity: LEMMA
     orthogonal_matrix?(Id(n))
 
   % 3. Inverse: If A in O(n), then A^-1 in O(n)
-  ortho_inverse: CONJECTURE
-    orthogonal_matrix?(A) IMPLIES orthogonal_matrix?(inverse(A))
+  % @QED ortho_inverse proved by gusta on Thu, 19 Mar 2026 00:40:02 GMT
+  ortho_inverse: LEMMA
+    orthogonal_matrix?(inverse(A))
 
   % Additional property: A^T A = I (Equivalent definition)
-  ortho_transpose_mult: CONJECTURE
-    orthogonal_matrix?(A) IMPLIES transpose(A) * A = Id(n)
+  % @QED ortho_transpose_mult proved by gusta on Thu, 19 Mar 2026 00:43:25 GMT
+  ortho_transpose_mult: LEMMA
+    transpose(A) * A = Id(n)
 
   %--------------------------------------------------------------------------
   % CONJECTURE 1.6: Elements of O(n) preserve dot products
   % dot(Au, Av) = dot(u, v) for column matrices u, v
   %--------------------------------------------------------------------------
-
+  % Utilizar os lemmas linhas 99 - 106 more_matrix_props.pvs
   ortho_preserves_dot: CONJECTURE
-    orthogonal_matrix?(A) IMPLIES
-    dot(mult(A, u), mult(A, v)) = dot(u, v)
+    dot(nth(vect2matrix(A * u), 0), nth(vect2matrix(A * v), 0)) = dot(u, v)
 
   %--------------------------------------------------------------------------
   % CONJECTURE 1.7: Elements of O(n) induce linear isometries
   % The linear transformation f(x) = A * x is a linear isometry.
   %--------------------------------------------------------------------------
 
-  ortho_is_linear_isometry: CONJECTURE
-    orthogonal_matrix?(A) IMPLIES
-    linear_isometry?(LAMBDA (x: Mat_n): A * x)
+  ortho_is_linear_isometry: CONJECTURE % Prova em papel e lápis
+    linear_isometry?(LAMBDA (x: ConsVecN): mult(A, x))(norm)
 
 END orthogonal_groups

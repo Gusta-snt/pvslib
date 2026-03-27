@@ -14,8 +14,7 @@ linear_isometries[n: posnat]: THEORY
 BEGIN
 
   IMPORTING linear_isometries_def[n]
-
-  Column_Matrix: TYPE = MatrixMN(n, 1)
+  IMPORTING matrices_extra[n]
 
   % Variables
   f, g: VAR Function_n
@@ -28,20 +27,24 @@ BEGIN
   % Lemma 1.2: Relates isometry, fixing origin, and preserving lengths.
   %--------------------------------------------------------------------------
   
-  isometry_fixes_origin_preserves_length: CONJECTURE
+  % @QED isometry_fixes_origin_preserves_length proved by gusta on Fri, 13 Feb 2026 02:29:41 GMT
+  isometry_fixes_origin_preserves_length: LEMMA
     isometry?(f)(norm) AND fixes_origin?(f) IMPLIES preserves_length?(f)(norm)
 
-  linear_preserves_length_is_isometry: CONJECTURE
+  % @QED linear_preserves_length_is_isometry proved by gusta on Fri, 13 Feb 2026 13:05:55 GMT
+  linear_preserves_length_is_isometry: LEMMA
     linear?(f) AND preserves_length?(f)(norm) IMPLIES isometry?(f)(norm)
 
   %--------------------------------------------------------------------------
   % Lemma 1.3: Composition
   %--------------------------------------------------------------------------
 
-  isometry_composition: CONJECTURE
+  % @QED isometry_composition proved by gusta on Fri, 13 Feb 2026 13:14:59 GMT
+  isometry_composition: LEMMA
     isometry?(f)(norm) AND isometry?(g)(norm) IMPLIES isometry?(f o g)(norm)
 
-  linear_isometry_composition: CONJECTURE
+  % @QED linear_isometry_composition proved by gusta on Fri, 13 Feb 2026 13:18:10 GMT
+  linear_isometry_composition: LEMMA
     linear_isometry?(f)(norm) AND linear_isometry?(g)(norm) IMPLIES linear_isometry?(f o g)(norm)
 
   %--------------------------------------------------------------------------
@@ -49,17 +52,17 @@ BEGIN
   %--------------------------------------------------------------------------
 
   % If f is an isometry, then g(x) = f(x) - f(0) is a linear isometry.
-  % isometry_shift_to_linear: CONJECTURE
-  %   isometry?(f)(norm) IMPLIES
-  %   LET g = (LAMBDA (x: Column_Matrix): f(x) - f(zero_matrix(n, 1))) IN
-  %   linear_isometry?(g)(norm)
+  isometry_shift_to_linear: CONJECTURE
+    isometry?(f)(norm) AND NOT fixes_origin?(f) IMPLIES
+    LET g = (LAMBDA (x: ConsVecN): f(x) - f(zero(n))) IN
+    linear_isometry?(g)(norm)
 
-  % %--------------------------------------------------------------------------
-  % % Additional Properties
-  % %--------------------------------------------------------------------------
+  %--------------------------------------------------------------------------
+  % Additional Properties
+  %--------------------------------------------------------------------------
 
-  % isometry_injective: CONJECTURE
-  %   isometry?(f)(norm) IMPLIES
-  %   FORALL (x, y: Column_Matrix): f(x) = f(y) IMPLIES x = y
+  isometry_injective: CONJECTURE
+    isometry?(f)(norm) IMPLIES
+    FORALL (x, y: ConsVecN): f(x) = f(y) IMPLIES x = y
 
 END linear_isometries

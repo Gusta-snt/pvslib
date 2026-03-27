@@ -15,16 +15,14 @@ BEGIN
 
   IMPORTING matrices@matrices
   IMPORTING matrices@matrix_inv
-  IMPORTING matrices@mat_vec_mult
-
-  OrthoMat_n: TYPE = SquareMatrix(n)
+  IMPORTING matrices@mat_vec_mult % Verificar as redundâncias de importações
   
   %--------------------------------------------------------------------------
   % Definition of Orthogonal Group O(n)
   % O(n) = { A in GL_n | A^-1 = A^T }
   %--------------------------------------------------------------------------
   
-  orthogonal_matrix?(A: OrthoMat_n): bool =
+  orthogonal_matrix?(A: SquareMatrix(n)): bool =
     invertible?(A) AND inverse(A) = transpose(A)
 
   % Defined as a subtype

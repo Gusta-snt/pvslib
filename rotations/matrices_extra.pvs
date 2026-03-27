@@ -9,21 +9,24 @@
 % This theory contains extra lemmas for matrices theory.
 %----------------------------------------------------------------------------
 
-matrices_extra: THEORY
+matrices_extra[n: posnat]: THEORY
 
 BEGIN
   IMPORTING 
     matrices@matrices,
+    matrices@mat_vec_mult,
     structures@list_lemmas
 
+  u, v: VAR VectorN(n)
+  A:    VAR SquareMatrix(n)
 
-  % c: VAR Vector
-  n: VAR nat
-  
   crd_zero: CONJECTURE
     FORALL (l: nat): cdr(zero(l + 1)) = zero(l)
 
-  ConsVectorN_diff: CONJECTURE
+  ConsVectorN_add: CONJECTURE
     FORALL (c: VectorN(n)): c + zero(n) = c
+
+  ConsVectorN_diff: CONJECTURE
+    FORALL (c: VectorN(n)): c - zero(n) = c
 
 END matrices_extra

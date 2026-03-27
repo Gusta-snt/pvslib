@@ -58,7 +58,7 @@ BEGIN
   % Should we investigate if there is another one in Linear Algebra?
   
   linear?(f): bool = 
-    (FORALL (x, y, a): (f(x + y) = f(x) + f(y)) AND f(a * x) = a * f(x))
+    (FORALL (x, y, a): (f(x + y) = f(x) + f(y)) AND f(a * x) = a * f(x)) % Remover parênteses inputeis
 
   % linear_isometry?(f) is an isometry that fixes the origin.
   % linear_isometries will be characterize as linear transformations. 
