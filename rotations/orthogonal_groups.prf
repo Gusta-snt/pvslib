@@ -539,11 +539,358 @@
   (ortho_preserves_dot-1 nil 3982869858
    ("" (skeep)
     (("" (lemma "dot_to_matrix_mult")
-      (("" (inst -1 "n" "u" "v")
-        (("" (expand "*" -1) (("" (postpone) nil nil)) nil)) nil))
+      (("" (inst - "n" "A*u" "A*v")
+        (("1" (case "A * u * (A * v) = dot(A*u, A*v)")
+          (("1" (replace -1 -2)
+            (("1" (replace -2 1)
+              (("1" (hide -1 -2)
+                (("1" (lemma "matrix_vector_to_matrix_mult")
+                  (("1" (inst - "n" "n" "A" "u")
+                    (("1" (replace -1)
+                      (("1" (hide -1)
+                        (("1" (lemma "matrix_vector_to_matrix_mult")
+                          (("1" (inst - "n" "n" "A" "v")
+                            (("1" (replace -1)
+                              (("1"
+                                (hide -1)
+                                (("1"
+                                  (rewrite "transpose_transpose")
+                                  (("1"
+                                    (rewrite "transpose_mult")
+                                    (("1"
+                                      (rewrite "transpose_transpose")
+                                      (("1"
+                                        (lemma "matrix_mult_assoc")
+                                        (("1"
+                                          (inst
+                                           -
+                                           "A * transpose(vect2matrix(v))"
+                                           "vect2matrix(u)"
+                                           "transpose(A)")
+                                          (("1"
+                                            (assert)
+                                            (("1"
+                                              (split -1)
+                                              (("1"
+                                                (replace -1)
+                                                (("1"
+                                                  (lemma
+                                                   "matrix_mult_assoc")
+                                                  (("1"
+                                                    (inst
+                                                     -
+                                                     "transpose(vect2matrix(v))"
+                                                     "transpose(A)"
+                                                     "A")
+                                                    (("1"
+                                                      (split -1)
+                                                      (("1"
+                                                        (replace
+                                                         -1
+                                                         :dir
+                                                         RL)
+                                                        (("1"
+                                                          (rewrite
+                                                           "ortho_transpose_mult")
+                                                          (("1"
+                                                            (rewrite
+                                                             "mult_Id_left")
+                                                            (("1"
+                                                              (lemma
+                                                               "dot_to_matrix_mult")
+                                                              (("1"
+                                                                (inst
+                                                                 -
+                                                                 "n"
+                                                                 "u"
+                                                                 "v")
+                                                                (("1"
+                                                                  (expand
+                                                                   *
+                                                                   -1
+                                                                   1)
+                                                                  (("1"
+                                                                    (replace
+                                                                     -1
+                                                                     :dir
+                                                                     RL)
+                                                                    (("1"
+                                                                      (propax)
+                                                                      nil
+                                                                      nil))
+                                                                    nil))
+                                                                  nil))
+                                                                nil))
+                                                              nil)
+                                                             ("2"
+                                                              (rewrite
+                                                               "rows_transpose")
+                                                              (("2"
+                                                                (typepred
+                                                                 "vect2matrix(v)")
+                                                                (("2"
+                                                                  (assert)
+                                                                  nil
+                                                                  nil))
+                                                                nil))
+                                                              nil))
+                                                            nil))
+                                                          nil))
+                                                        nil)
+                                                       ("2"
+                                                        (typepred "A")
+                                                        (("2"
+                                                          (assert)
+                                                          (("2"
+                                                            (grind)
+                                                            nil
+                                                            nil))
+                                                          nil))
+                                                        nil))
+                                                      nil))
+                                                    nil))
+                                                  nil))
+                                                nil)
+                                               ("2"
+                                                (lemma
+                                                 "rows_transpose")
+                                                (("2"
+                                                  (inst - "A")
+                                                  (("2"
+                                                    (expand "rows")
+                                                    (("2"
+                                                      (assert)
+                                                      (("2"
+                                                        (grind)
+                                                        nil
+                                                        nil))
+                                                      nil))
+                                                    nil))
+                                                  nil))
+                                                nil))
+                                              nil))
+                                            nil))
+                                          nil))
+                                        nil))
+                                      nil)
+                                     ("2"
+                                      (rewrite "rows_transpose")
+                                      (("2"
+                                        (typepred "vect2matrix(u)")
+                                        (("2"
+                                          (typepred "A")
+                                          (("2" (assert) nil nil))
+                                          nil))
+                                        nil))
+                                      nil))
+                                    nil))
+                                  nil))
+                                nil))
+                              nil)
+                             ("2" (typepred "A")
+                              (("2"
+                                (assert)
+                                (("2"
+                                  (hide 2)
+                                  (("2"
+                                    (split 1)
+                                    (("1"
+                                      (expand "rows" -6)
+                                      (("1" (propax) nil nil))
+                                      nil)
+                                     ("2"
+                                      (skosimp)
+                                      (("2"
+                                        (lemma "matrices.length_row")
+                                        (("2"
+                                          (inst - "A" "i!1")
+                                          (("2"
+                                            (expand "row" -1)
+                                            (("2"
+                                              (expand "rows" -7)
+                                              (("2" (assert) nil nil))
+                                              nil))
+                                            nil))
+                                          nil))
+                                        nil))
+                                      nil))
+                                    nil))
+                                  nil))
+                                nil))
+                              nil))
+                            nil))
+                          nil))
+                        nil))
+                      nil)
+                     ("2" (hide 2)
+                      (("2" (split 1)
+                        (("1" (typepred "A")
+                          (("1" (expand "rows" -6)
+                            (("1" (propax) nil nil)) nil))
+                          nil)
+                         ("2" (skosimp)
+                          (("2" (lemma "matrices.length_row")
+                            (("2" (inst - "A" "i!1")
+                              (("2"
+                                (expand "row" -1)
+                                (("2"
+                                  (typepred "A")
+                                  (("2"
+                                    (expand "rows" -6)
+                                    (("2" (assert) nil nil))
+                                    nil))
+                                  nil))
+                                nil))
+                              nil))
+                            nil))
+                          nil))
+                        nil))
+                      nil))
+                    nil))
+                  nil))
+                nil))
+              nil))
+            nil)
+           ("2" (hide -1 2) (("2" (grind) nil nil)) nil))
+          nil)
+         ("2" (hide 2)
+          (("2" (typepred "A * v")
+            (("2" (assert)
+              (("2" (grind)
+                (("2" (lemma "mult_length")
+                  (("2" (inst - "A" "v" "n")
+                    (("2" (typepred "A")
+                      (("2" (expand "rows")
+                        (("2" (typepred "v")
+                          (("2" (split -11)
+                            (("1" (propax) nil nil)
+                             ("2" (propax) nil nil)
+                             ("3" (assert) nil nil))
+                            nil))
+                          nil))
+                        nil))
+                      nil))
+                    nil))
+                  nil))
+                nil))
+              nil))
+            nil))
+          nil)
+         ("3" (hide 2)
+          (("3" (lemma "mult_length")
+            (("3" (inst - "A" "u" "n")
+              (("3" (split -1)
+                (("1" (assert)
+                  (("1" (expand "*" 1) (("1" (propax) nil nil)) nil))
+                  nil)
+                 ("2" (typepred "A")
+                  (("2" (assert) (("2" (grind) nil nil)) nil)) nil)
+                 ("3" (typepred "u") (("3" (assert) nil nil)) nil))
+                nil))
+              nil))
+            nil))
+          nil))
+        nil))
       nil))
     nil)
-   nil shostak))
+   ((dot_to_matrix_mult formula-decl nil more_matrix_props matrices)
+    (mult_length formula-decl nil matrix_vector_multiplication
+     matrices)
+    (* const-decl "real" matrices matrices)
+    (dot def-decl "real" matrices matrices)
+    (matrix_vector_to_matrix_mult formula-decl nil more_matrix_props
+     matrices)
+    (length_row formula-decl nil matrices matrices)
+    (vect2matrix const-decl
+     "{PFM | rows(PFM) = 1 AND columns(PFM) = length(v)}" matrices
+     matrices)
+    (transpose const-decl "PosFullMatrix" matrices matrices)
+    (* const-decl "{A: MatrixMN(rows(M), columns(N)) |
+   FORALL (i: nat, j: nat): entry(A)(i, j) = row(M)(i) * col(N)(j)}"
+       matrices matrices)
+    (col def-decl "VectorN(rows(M))" matrices matrices)
+    (row const-decl "Vector" matrices matrices)
+    (entry const-decl "real" matrices matrices)
+    (transpose_transpose formula-decl nil matrices matrices)
+    (mult_full application-judgement "FullMatrix" matrices matrices)
+    (ortho_transpose_mult formula-decl nil orthogonal_groups nil)
+    (rows_transpose formula-decl nil matrices matrices)
+    (real_gt_is_strict_total_order name-judgement
+     "(strict_total_order?[real])" real_props nil)
+    (NOT const-decl "[bool -> bool]" booleans nil)
+    (mult_Id_left formula-decl nil matrices matrices)
+    (access const-decl "real" matrices matrices)
+    (array2list const-decl
+     "{l: listn(n) | FORALL (i: below(n)): a(i) = nth(l, i)}"
+     array2list structures)
+    (array2list_it def-decl
+     "{l: listn(n - i) | FORALL (j: subrange(i, n - 1)): a(j) = nth(l, j - i)}"
+     array2list structures)
+    (form_matrix const-decl "{M: MatrixMN(m, n) |
+   FORALL (i: below(m), j: below(n)): nth(row(M)(i), j) = F(i, j)}"
+     matrices matrices)
+    (nnint_plus_posint_is_posint application-judgement "posint"
+     integers nil)
+    (form_matrix_square application-judgement "FullMatrix" matrices
+     matrices)
+    (matrix_mult_assoc formula-decl nil matrices matrices)
+    (transpose_mult formula-decl nil matrices matrices)
+    (MatrixMN type-eq-decl nil matrices matrices)
+    (v skolem-const-decl "ConsVecN[n]" orthogonal_groups nil)
+    (number nonempty-type-decl nil numbers nil)
+    (boolean nonempty-type-decl nil booleans nil)
+    (= const-decl "[T, T -> boolean]" equalities nil)
+    (list type-decl nil list_adt nil)
+    (bool nonempty-type-eq-decl nil booleans nil)
+    (PRED type-eq-decl nil defined_types nil)
+    (every adt-def-decl "boolean" list_adt nil)
+    (AND const-decl "[bool, bool -> bool]" booleans nil)
+    (number_field_pred const-decl "[number -> boolean]" number_fields
+     nil)
+    (number_field nonempty-type-from-decl nil number_fields nil)
+    (real_pred const-decl "[number_field -> boolean]" reals nil)
+    (real nonempty-type-from-decl nil reals nil)
+    (rational_pred const-decl "[real -> boolean]" rationals nil)
+    (rational nonempty-type-from-decl nil rationals nil)
+    (integer_pred const-decl "[rational -> boolean]" integers nil)
+    (int nonempty-type-eq-decl nil integers nil)
+    (>= const-decl "bool" reals nil)
+    (nat nonempty-type-eq-decl nil naturalnumbers nil)
+    (length def-decl "nat" list_props nil)
+    (Matrix type-eq-decl nil matrices matrices)
+    (Vector type-eq-decl nil matrices matrices)
+    (* const-decl "Vector" matrix_vector_multiplication matrices)
+    (OR const-decl "[bool, bool -> bool]" booleans nil)
+    (null? adt-recognizer-decl "[list -> boolean]" list_adt nil)
+    (< const-decl "bool" reals nil)
+    (below type-eq-decl nil naturalnumbers nil)
+    (below type-eq-decl nil nat_types nil)
+    (nth def-decl "T" list_props nil)
+    (FullMatrix type-eq-decl nil matrices matrices)
+    (> const-decl "bool" reals nil)
+    (rows const-decl "nat" matrices matrices)
+    (<= const-decl "bool" reals nil)
+    (columns def-decl "{c: nat |
+   (FORALL (i: below(length(M))): length(nth(M, i)) <= c) AND
+    (null?(M) AND c = 0 OR
+      EXISTS (i: below(length(M))): length(nth(M, i)) = c)}" matrices
+     matrices)
+    (PosFullMatrix type-eq-decl nil matrices matrices)
+    (Square type-eq-decl nil matrices matrices)
+    (nonneg_int nonempty-type-eq-decl nil integers nil)
+    (posnat nonempty-type-eq-decl nil integers nil)
+    (n formal-const-decl "posnat" orthogonal_groups nil)
+    (SquareMatrix type-eq-decl nil matrices matrices)
+    (orthogonal_matrix? const-decl "bool" orthogonal_groups_def nil)
+    (OrthogonalMatrix type-eq-decl nil orthogonal_groups_def nil)
+    (A skolem-const-decl "OrthogonalMatrix[n]" orthogonal_groups nil)
+    (VectorN type-eq-decl nil matrices matrices)
+    (cons? adt-recognizer-decl "[list -> boolean]" list_adt nil)
+    (ConsVecN type-eq-decl nil linear_isometries_def nil)
+    (u skolem-const-decl "ConsVecN[n]" orthogonal_groups nil)
+    (listn_0 name-judgement "listn[real](0)" vector_arithmetic
+     matrices))
+   shostak))
  (ortho_is_linear_isometry_TCC1 0
   (ortho_is_linear_isometry_TCC1-1 nil 3980996380
    ("" (subtype-tcc) nil nil) nil nil

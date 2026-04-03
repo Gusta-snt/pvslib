@@ -55,9 +55,9 @@ BEGIN
   % CONJECTURE 1.6: Elements of O(n) preserve dot products
   % dot(Au, Av) = dot(u, v) for column matrices u, v
   %--------------------------------------------------------------------------
-  % Utilizar os lemmas linhas 99 - 106 more_matrix_props.pvs
-  ortho_preserves_dot: CONJECTURE
-    dot(nth(vect2matrix(A * u), 0), nth(vect2matrix(A * v), 0)) = dot(u, v)
+  % @QED ortho_preserves_dot proved by gusta on Fri, 03 Apr 2026 10:20:50 GMT
+  ortho_preserves_dot: LEMMA
+    dot(A * u, A * v) = dot(u, v)
 
   %--------------------------------------------------------------------------
   % CONJECTURE 1.7: Elements of O(n) induce linear isometries
