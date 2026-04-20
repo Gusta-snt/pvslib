@@ -1,7 +1,9 @@
+;;-*-Lisp-*-
+
 (defattach |ln_exp.ln| (x)
-  "Natural logarithm"
-  (rational (log (rat2double x))))
+  "Natural logarithm of X (by Common Lisp double-precision floating-point)"
+   (rational (log (rat2double x))))
 
 (defattach |ln_exp.exp| (x)
-  "Exponential"
+  "Exponential of X (by Common Lisp double-precision floating-point)"
   (rational (exp (rat2double x))))

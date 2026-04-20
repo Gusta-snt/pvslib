@@ -7,11 +7,15 @@ BEGIN
     , pvsio_examples
     , stdsys_examples
     , stdstr_examples
+    , indent_examples
+    , regex_examples
+    , peg_examples
     , json_examples
     , stdio_examples
     , stdmutable_examples
     , float_examples
     , fast_examples
+    , era_examples
     , csv_utils_examples
     , csv_examples
     , kv_examples

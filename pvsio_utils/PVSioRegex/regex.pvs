@@ -1,0 +1,233 @@
+
+regex : THEORY
+BEGIN
+
+  IMPORTING regex_def
+
+  FinalState : nat = 0
+
+  connect_parent_initial(ndfa:NDFA,parent:Arrow,initial:nat)
+    : [NDFA,list[Arrow]] =
+    IF initial = FinalState THEN
+      (ndfa,(: parent :))
+    ELSE
+        LET arrow    = mk_arrow(initial) <| set_label(parent`label),
+	    new_ndfa = ndfa <| add_arrow(parent`state,arrow) IN
+  	(new_ndfa,null)
+    ENDIF
+
+  connect_parent_initials(ndfa:NDFA,parent:Arrow,initials:list[nat])
+    : RECURSIVE [NDFA,list[Arrow]] =
+    IF null?(initials) THEN
+      (ndfa,null)
+    ELSE
+      LET initial = car(initials),
+          (new_ndfa1,new_parents1) = connect_parent_initial(ndfa,parent,initial),
+  	  (new_ndfa2,new_parents2) = connect_parent_initials(new_ndfa1,parent,cdr(initials)) IN
+        (new_ndfa2,union_sl(new_parents1,new_parents2))
+    ENDIF
+    MEASURE initials BY <<
+	 
+  %% Add parents -> initials to ndfa
+  connect_parents_initials(ndfa:NDFA,parents:list[Arrow],initials:list[nat])
+    : RECURSIVE [NDFA,list[Arrow]] =
+    IF null?(parents) THEN
+      (ndfa,parents)
+    ELSE
+      LET parent = car(parents),
+          (new_ndfa1,new_parents1) = connect_parent_initials(ndfa,parent,initials),
+          (new_ndfa2,new_parents2) = connect_parents_initials(new_ndfa1,cdr(parents),initials) IN
+  	(new_ndfa2,union_sl(new_parents1,new_parents2))
+    ENDIF
+  MEASURE parents BY <<
+
+  build_initials(initials1,initials2:list[nat]) : list[nat] =
+    IF member(FinalState,initials1) THEN
+      union_sl(remove_sl(FinalState,initials1),initials2)
+    ELSE initials1
+    ENDIF
+
+  CompiledRegext_ : TYPE = [#
+    ndfa : NDFA,
+    dangling_parents  : list[Arrow], % Node index, Guard index
+    dangling_initials : list[nat]    % Node index
+  #]
+
+  % Build a CompiledRegext_ with multiple initials, one final, and no empty labels
+  compilext_(re:Regex,ndfa:NDFA) : RECURSIVE CompiledRegext_ =
+    CASES re OF
+      Empty :
+  	(#
+  	  ndfa := ndfa,
+  	  dangling_parents := null,
+  	  dangling_initials := (: FinalState :)
+        #),
+      Accept(guard) :
+        LET new_state = size(ndfa),
+  	    new_label = length(ndfa`guards),
+	    new_arrow = mk_arrow(new_state) <| set_label(new_label),
+	    new_ndfa  = ndfa <| add_new_state <| add_new_guard(guard) IN
+	  (#
+  	     ndfa := new_ndfa,
+  	     dangling_parents := (: new_arrow :),
+  	     dangling_initials := (: new_state :)
+  	  #),
+      Union(re1,re2) :
+        LET rgxt1 = compilext_(re1,ndfa),
+  	    rgxt2 = compilext_(re2,rgxt1`ndfa) IN
+  	  rgxt2 WITH [ `dangling_parents := union_sl(rgxt1`dangling_parents,
+  	                                             rgxt2`dangling_parents),
+  	  	       `dangling_initials := union_sl(rgxt1`dangling_initials,
+  			                              rgxt2`dangling_initials)
+  	             ],
+      Seq(re1,re2) :
+        LET rgxt1  = compilext_(re1,ndfa),
+            rgxt2  = compilext_(re2,rgxt1`ndfa),
+            (new_ndfa,new_parents) = connect_parents_initials(rgxt2`ndfa,
+      	                                rgxt1`dangling_parents,
+       	    				rgxt2`dangling_initials),
+  	    new_initials = build_initials(rgxt1`dangling_initials,rgxt2`dangling_initials) IN
+          rgxt1 WITH [ `ndfa := new_ndfa,
+       		       `dangling_parents := union_sl(rgxt2`dangling_parents,new_parents),
+       	  	       `dangling_initials := new_initials
+  		     ],
+      Plus(re) :
+         LET rgxt = compilext_(re,ndfa),
+            (new_ndfa,new_parents) = connect_parents_initials(rgxt`ndfa,
+      	                                rgxt`dangling_parents,
+       					add_sl(FinalState,rgxt`dangling_initials)) IN
+          rgxt WITH [ `ndfa := new_ndfa,
+       		      `dangling_parents := new_parents,
+       	  	      `dangling_initials := rgxt`dangling_initials
+  		    ]
+    ENDCASES
+  MEASURE re BY <<
+
+  init_regex_ : NDFA =
+    empty_ndfa <| add_new_state <| set_final(FinalState)
+
+  compilext(re:Regex) : CompiledRegext_ =
+    compilext_(re,init_regex_)
+
+  add_dangling_parents(ndfa:NDFA,parents:list[Arrow]) : RECURSIVE NDFA =
+    IF null?(parents) THEN ndfa
+    ELSE
+      LET parent = car(parents),
+          new_arrow = mk_arrow(FinalState) <| set_label(parent`label),
+          new_ndfa = ndfa <| add_arrow(parent`state,new_arrow) IN
+        add_dangling_parents(new_ndfa,cdr(parents))
+    ENDIF
+  MEASURE parents BY <<
+
+  add_dangling_initials(ndfa:NDFA,initials:list[nat]) : RECURSIVE NDFA =
+    IF null?(initials) THEN ndfa
+    ELSE
+      LET new_ndfa = ndfa <| set_initial(car(initials)) IN
+         add_dangling_initials(new_ndfa,cdr(initials))
+    ENDIF
+  MEASURE initials BY <<
+
+  CompiledRegex : TYPE = PVSioValue[[#
+    ndfa : NDFA,
+    greedy :bool
+  #]]
+
+  % By default, compile to greedy
+  compile(re:Regex) : CompiledRegex =
+    LET rgxt = compilext(re),
+        ndfa = add_dangling_parents(rgxt`ndfa,rgxt`dangling_parents),
+  	new_ndfa = add_dangling_initials(ndfa,rgxt`dangling_initials) IN
+      (# ndfa := new_ndfa, greedy := TRUE #)
+
+  set_greediness(greedy:bool)(rgx:CompiledRegex) : CompiledRegex =
+    rgx WITH [ `greedy := greedy ]
+
+  ;<|(rgx:CompiledRegex,f:[CompiledRegex->CompiledRegex]) : CompiledRegex =
+    f(rgx)
+
+  Position : TYPE = [#
+    npos   : nat,  % Next position
+    nlin   : nat,  % Number of lines
+    ncol   : nat   % Number of columns in this line
+  #]
+
+  init_pos: Position = (#
+    npos := 0,
+    nlin := 0,
+    ncol := 0
+  #)
+
+  valid_pos?(str:string)(p:Position) : MACRO bool =
+    p`npos <= length(str)
+
+  next_pos(p:Position,c:char) : Position =
+    LET nl = (c=char_newline) IN
+    p WITH [
+      npos := p`npos+1,
+      nlin := IF nl THEN p`nlin+1 ELSE p`nlin ENDIF,
+      ncol := IF nl THEN 0 ELSE p`ncol+1 ENDIF
+    ]
+
+  MatchResult_ : DATATYPE
+  BEGIN
+    % Matching succeded with sub-string [pos0..npos).
+    % The next non-matched character is found at (nlin+1,ncol+1)
+    Success(get_pos:Position) : success?
+    % Matching failed. Position is the maximum progress achieved
+    Fail(get_pos:Position) : fail?
+  END MatchResult_
+
+  valid_result?(str:string)(result:MatchResult_) : MACRO bool =
+    valid_pos?(str)(get_pos(result))
+
+  MatchResult(str:string) : TYPE = (valid_result?(str))
+
+  match_pos_(rgx:CompiledRegex,    % Regular expression
+             str:string,           % String to check
+             p:(valid_pos?(str)),  % Next position to check
+             states:list[nat],     % Current initial states
+	     matched_pos: Maybe[(valid_pos?(str))]) % Current successful matching position
+    : RECURSIVE MatchResult(str) =
+    IF p`npos=length(str) THEN
+      IF some?(matched_pos) THEN Success(val(matched_pos)) ELSE Fail(p) ENDIF
+    ELSE 
+      LET  next_char   = get(str,p`npos),
+           next_states = next(rgx`ndfa,states)(next_char) IN
+        IF null?(next_states) THEN
+	  IF some?(matched_pos) THEN Success(val(matched_pos)) ELSE Fail(p) ENDIF
+	ELSE
+	  LET success  = member(FinalState,next_states),
+	      next_pos = next_pos(p,next_char) IN
+	  IF NOT greedy(rgx) AND success THEN
+	    Success(next_pos)
+	  ELSE
+	    match_pos_(rgx,str,next_pos,next_states,
+	               IF success THEN Some(next_pos) ELSE matched_pos ENDIF)
+	  ENDIF
+	ENDIF
+    ENDIF
+    MEASURE length(str)-p`npos
+
+  % Return position pos such that sub-string[init_pos,pos-1] matches given regex
+  % (or None if string doesn't match regex)
+  match_pos(rgx:CompiledRegex,str:string,pos0:(valid_pos?(str))) : MatchResult(str) =
+    LET init_states  = rgx`ndfa`initials ,
+        init_matched = IF member(FinalState,init_states) THEN
+	                 Some(pos0)
+		       ELSE
+		         None
+		       ENDIF IN
+    match_pos_(rgx,str,pos0,init_states,init_matched)
+
+  % Return prefix and postfix xof string, such that prefix matches given regex (or None if
+  % string doesn't match regex)
+  match(rgx:CompiledRegex,str:string) : Maybe[[string,string]] =
+    CASES match_pos(rgx,str,init_pos) OF
+      Success(p) : (gen_strings.substr(str,0,p`npos),gen_strings.substr(str,p`npos,length(str)))
+      ELSE None
+    ENDCASES
+
+  CONVERSION compile
+
+END regex
+

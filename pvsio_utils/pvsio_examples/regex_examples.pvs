@@ -1,0 +1,40 @@
+regex_examples : THEORY
+BEGIN
+
+  IMPORTING PVSioRegex@pvsio_regex
+
+  % Matches Integer, with signed zero but no leading zeros (see PVSioParser/regex_def)
+  IntegerX : CompiledRegex = compile(Integer)
+
+  test_int0 : Maybe[[string,string]] =
+    match(IntegerX,"adasf-12354abc")
+
+  test_int1 : Maybe[[string,string]] =
+    match(IntegerX,"-12354abc")
+
+  % Non-greedy match
+  test_int2 : Maybe[[string,string]] =
+    match(IntegerX <| set_greediness(FALSE),"-12354abc")
+
+  % Matches TRUE, case insensitive (see PVSioParser/regex_def)
+  test_word : Maybe[[string,string]] =
+    % Regex is compiled on the fly
+    match(WORD("TRUE"),"tRuE 123")
+
+  % Matches Alpha-numerical identifier, including '_' and starting with Alphabetical character
+  AlphaNumX : CompiledRegex = compile(Alpha + **(Alpha OR Digit OR '_'))
+
+  test_alphanum0 : Maybe[[string,string]] =
+    match(AlphaNumX,"123AxC_")
+
+  test_alphanum1 : Maybe[[string,string]] =
+    match(AlphaNumX,"a123AxC_")
+
+  % The following regex is a corner case for backtracking matches, with exponential performance
+  % ('a'?)^n'a'^n
+  % PVSioParser implements a linear match
+
+  corner_case(n:nat) : Maybe[[string,string]] =
+    match([|'a'|]^^(n) + 'a'^^(n),"a"^n)
+
+END regex_examples

@@ -1,6 +1,8 @@
+% JSON reader and writer
 top : THEORY
 BEGIN
 
-  IMPORTING pvsio_json
+  IMPORTING JSONPeg,
+            pvsio_json
 
 END top
