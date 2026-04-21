@@ -57,7 +57,7 @@
     (number_field nonempty-type-from-decl nil number_fields nil)
     (number_field_pred const-decl "[number -> boolean]" number_fields
      nil)
-    (AND const-decl "[bool, bool -> bool]" booleans nil)
+    (AND const-decl "[bool, bool -> bool]" booleans nil) nil
     (PRED type-eq-decl nil defined_types nil)
     (list type-decl nil list_adt nil)
     (number nonempty-type-decl nil numbers nil)
@@ -836,14 +836,12 @@
     (matrix_mult_assoc formula-decl nil matrices matrices)
     (transpose_mult formula-decl nil matrices matrices)
     (MatrixMN type-eq-decl nil matrices matrices)
-    (v skolem-const-decl "ConsVecN[n]" orthogonal_groups nil)
     (number nonempty-type-decl nil numbers nil)
     (boolean nonempty-type-decl nil booleans nil)
     (= const-decl "[T, T -> boolean]" equalities nil)
     (list type-decl nil list_adt nil)
     (bool nonempty-type-eq-decl nil booleans nil)
     (PRED type-eq-decl nil defined_types nil)
-    (every adt-def-decl "boolean" list_adt nil)
     (AND const-decl "[bool, bool -> bool]" booleans nil)
     (number_field_pred const-decl "[number -> boolean]" number_fields
      nil)
@@ -883,18 +881,219 @@
     (SquareMatrix type-eq-decl nil matrices matrices)
     (orthogonal_matrix? const-decl "bool" orthogonal_groups_def nil)
     (OrthogonalMatrix type-eq-decl nil orthogonal_groups_def nil)
-    (A skolem-const-decl "OrthogonalMatrix[n]" orthogonal_groups nil)
     (VectorN type-eq-decl nil matrices matrices)
     (cons? adt-recognizer-decl "[list -> boolean]" list_adt nil)
-    (ConsVecN type-eq-decl nil linear_isometries_def nil)
-    (u skolem-const-decl "ConsVecN[n]" orthogonal_groups nil)
-    (listn_0 name-judgement "listn[real](0)" vector_arithmetic
-     matrices))
+    (ConsVecN type-eq-decl nil linear_isometries_def nil))
    shostak))
  (ortho_is_linear_isometry_TCC1 0
   (ortho_is_linear_isometry_TCC1-1 nil 3980996380
-   ("" (subtype-tcc) nil nil) nil nil
+   ("" (skeep)
+    (("" (typepred "A")
+      (("" (typepred "x")
+        (("" (lemma "mult_length")
+          (("" (inst -1 "A" "x" "n")
+            (("" (assert)
+              (("" (expand "rows" -10)
+                (("" (assert)
+                  (("" (expand "*" 1) (("" (propax) nil nil)) nil))
+                  nil))
+                nil))
+              nil))
+            nil))
+          nil))
+        nil))
+      nil))
+    nil)
+   ((OrthogonalMatrix type-eq-decl nil orthogonal_groups_def nil)
+    (orthogonal_matrix? const-decl "bool" orthogonal_groups_def nil)
+    (SquareMatrix type-eq-decl nil matrices matrices)
+    (n formal-const-decl "posnat" orthogonal_groups nil)
+    (posnat nonempty-type-eq-decl nil integers nil)
+    (nonneg_int nonempty-type-eq-decl nil integers nil)
+    (Square type-eq-decl nil matrices matrices)
+    (PosFullMatrix type-eq-decl nil matrices matrices)
+    (columns def-decl "{c: nat |
+   (FORALL (i: below(length(M))): length(nth(M, i)) <= c) AND
+    (null?(M) AND c = 0 OR
+      EXISTS (i: below(length(M))): length(nth(M, i)) = c)}" matrices
+     matrices)
+    (<= const-decl "bool" reals nil)
+    (rows const-decl "nat" matrices matrices)
+    (> const-decl "bool" reals nil)
+    (FullMatrix type-eq-decl nil matrices matrices)
+    (nth def-decl "T" list_props nil)
+    (below type-eq-decl nil nat_types nil)
+    (= const-decl "[T, T -> boolean]" equalities nil)
+    (below type-eq-decl nil naturalnumbers nil)
+    (length def-decl "nat" list_props nil)
+    (< const-decl "bool" reals nil)
+    (nat nonempty-type-eq-decl nil naturalnumbers nil)
+    (>= const-decl "bool" reals nil)
+    (int nonempty-type-eq-decl nil integers nil)
+    (integer_pred const-decl "[rational -> boolean]" integers nil)
+    (rational nonempty-type-from-decl nil rationals nil)
+    (rational_pred const-decl "[real -> boolean]" rationals nil)
+    (null? adt-recognizer-decl "[list -> boolean]" list_adt nil)
+    (real nonempty-type-from-decl nil reals nil)
+    (OR const-decl "[bool, bool -> bool]" booleans nil)
+    (Matrix type-eq-decl nil matrices matrices)
+    (real_pred const-decl "[number_field -> boolean]" reals nil)
+    (number_field nonempty-type-from-decl nil number_fields nil)
+    (number_field_pred const-decl "[number -> boolean]" number_fields
+     nil)
+    (AND const-decl "[bool, bool -> bool]" booleans nil) nil
+    (PRED type-eq-decl nil defined_types nil)
+    (list type-decl nil list_adt nil)
+    (number nonempty-type-decl nil numbers nil)
+    (NOT const-decl "[bool -> bool]" booleans nil)
+    (bool nonempty-type-eq-decl nil booleans nil)
+    (boolean nonempty-type-decl nil booleans nil)
+    (mult_length formula-decl nil matrix_vector_multiplication
+     matrices)
+    (real_gt_is_strict_total_order name-judgement
+     "(strict_total_order?[real])" real_props nil)
+    (* const-decl "Vector" matrix_vector_multiplication matrices)
+    (Vector type-eq-decl nil matrices matrices)
+    (ConsVecN type-eq-decl nil linear_isometries_def nil)
+    (cons? adt-recognizer-decl "[list -> boolean]" list_adt nil)
+    (VectorN type-eq-decl nil matrices matrices) nil)
+   nil
    (ortho_is_linear_isometry subtype
-    "matrix_vector_multiplication.mult(orthogonal_groups.A, orthogonal_groups.x)"
-    "ConsVecN[n]"))))
+    "matrix_vector_multiplication.*(orthogonal_groups.A, orthogonal_groups.x)"
+    "ConsVecN[n]")))
+ (ortho_is_linear_isometry 0
+  (ortho_is_linear_isometry-1 nil 3984200515
+   ("" (skeep)
+    (("" (expand "linear_isometry?")
+      (("" (split)
+        (("1" (expand "isometry?")
+          (("1" (skosimp)
+            (("1" (lemma "matv_dist_sub")
+              (("1" (inst - "A" "x!1" "y!1")
+                (("1"
+                  (case "mult(A, x!1 - y!1) = mult(A, x!1) - mult(A, y!1)")
+                  (("1" (hide -2)
+                    (("1" (expand "norm_2" 1)
+                      (("1" (expand "norm_2sq" 1)
+                        (("1" (lemma "ortho_preserves_dot")
+                          (("1" (inst - "A" "x!1 - y!1" "x!1 - y!1")
+                            (("1" (expand "*" 1)
+                              (("1"
+                                (replace -2 :dir RL)
+                                (("1"
+                                  (expand "*" -1)
+                                  (("1"
+                                    (replace -1 1)
+                                    (("1" (propax) nil nil))
+                                    nil))
+                                  nil))
+                                nil))
+                              nil)
+                             ("2" (hide -1 2)
+                              (("2"
+                                (typepred "x!1")
+                                (("2"
+                                  (typepred "y!1")
+                                  (("2"
+                                    (lemma "length_add_vect_same")
+                                    (("2"
+                                      (expand "-" 1)
+                                      (("2"
+                                        (expand "sub" 1)
+                                        (("2"
+                                          (inst
+                                           -1
+                                           "x!1"
+                                           "scal(-1, y!1)")
+                                          (("2"
+                                            (expand "+" -1)
+                                            (("2"
+                                              (hide -2 -5)
+                                              (("2"
+                                                (lemma
+                                                 "length_scal_vect")
+                                                (("2"
+                                                  (inst -1 "-1" "y!1")
+                                                  (("2"
+                                                    (expand "*" -1)
+                                                    (("2"
+                                                      (assert)
+                                                      nil
+                                                      nil))
+                                                    nil))
+                                                  nil))
+                                                nil))
+                                              nil))
+                                            nil))
+                                          nil))
+                                        nil))
+                                      nil))
+                                    nil))
+                                  nil))
+                                nil))
+                              nil))
+                            nil))
+                          nil))
+                        nil))
+                      nil))
+                    nil)
+                   ("2"
+                    (lemma "mmult_sub_dist"
+                     ("m" "n" "n" "n" "A" "A" "v1" "x!1" "v2" "y!1"))
+                    (("1" (expand "mult" -1) (("1" (propax) nil nil))
+                      nil)
+                     ("2" (typepred "A")
+                      (("2" (assert)
+                        (("2" (expand "rows" -6)
+                          (("2" (assert)
+                            (("2" (skolem!)
+                              (("2"
+                                (lemma "matrices.length_row")
+                                (("2"
+                                  (inst? -1)
+                                  (("2"
+                                    (inst -1 "i!1")
+                                    (("2"
+                                      (expand "row" -1)
+                                      (("2" (assert) nil nil))
+                                      nil))
+                                    nil))
+                                  nil))
+                                nil))
+                              nil))
+                            nil))
+                          nil))
+                        nil))
+                      nil))
+                    nil))
+                  nil))
+                nil))
+              nil))
+            nil))
+          nil)
+         ("2" (expand "fixes_origin?")
+          (("2" (lemma "matv_zerovec")
+            (("2" (inst -1 "A")
+              (("2" (typepred "A")
+                (("2" (replace -6 -8)
+                  (("2" (replace -6 -5)
+                    (("2" (replace -5 -8 :dir RL)
+                      (("2" (hide -1 -2 -3 -4 -5 -6 -7)
+                        (("2" (case "zero(n) = zero_vec(n)")
+                          (("1" (replace -1 -2 :dir RL)
+                            (("1" (postpone) nil nil)) nil)
+                           ("2" (postpone) nil nil))
+                          nil))
+                        nil))
+                      nil))
+                    nil))
+                  nil))
+                nil))
+              nil))
+            nil))
+          nil))
+        nil))
+      nil))
+    nil)
+   nil shostak)))
 

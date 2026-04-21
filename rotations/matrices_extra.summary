@@ -1,6 +1,7 @@
 TCCs summary for theory matrices_extra
 
-	crd_zero_TCC1...................................................✅ proved              (1.296 s)
-	dot_mult_transpose_TCC1.........................................✅ proved              (0.69 s)
+	crd_zero_TCC1...................................................✅ proved              (0.52 s)
+	mat_vect_mult_zero_TCC1.........................................❗ unfinished          (0.497 s)
+	mat_vect_mult_zero_TCC2.........................................❗ unfinished          (0.571 s)
 
-Theory matrices_extra totals: 2 formulas, 2 attempted, 2 succeeded (1.986 s)
+Theory matrices_extra totals: 3 formulas, 3 attempted, 1 succeeded (1.588 s)

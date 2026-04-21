@@ -18,7 +18,6 @@ BEGIN
     structures@list_lemmas
 
   u, v: VAR VectorN(n)
-  A:    VAR SquareMatrix(n)
 
   crd_zero: CONJECTURE
     FORALL (l: nat): cdr(zero(l + 1)) = zero(l)
@@ -28,5 +27,8 @@ BEGIN
 
   ConsVectorN_diff: CONJECTURE
     FORALL (c: VectorN(n)): c - zero(n) = c
+
+  mat_vect_mult_zero: CONJECTURE
+    FORALL (m,n: nat, A: MatrixMN(m, n)): A * zero(n) = zero(n)
 
 END matrices_extra

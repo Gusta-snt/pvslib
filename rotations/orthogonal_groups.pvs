@@ -64,7 +64,7 @@ BEGIN
   % The linear transformation f(x) = A * x is a linear isometry.
   %--------------------------------------------------------------------------
 
-  ortho_is_linear_isometry: CONJECTURE % Prova em papel e lápis
-    linear_isometry?(LAMBDA (x: ConsVecN): mult(A, x))(norm)
+  ortho_is_linear_isometry: CONJECTURE
+    linear_isometry?(LAMBDA (x: ConsVecN): A * x)(norm_2(n))
 
 END orthogonal_groups
