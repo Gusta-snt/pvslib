@@ -15,20 +15,31 @@ BEGIN
   IMPORTING 
     matrices@matrices,
     matrices@mat_vec_mult,
+    matrices@vector_arithmetic,
+    matrices@matrix_vector_multiplication,
     structures@list_lemmas
 
   u, v: VAR VectorN(n)
 
   crd_zero: CONJECTURE
-    FORALL (l: nat): cdr(zero(l + 1)) = zero(l)
+    FORALL (l: nat): cdr(zero_vec(l + 1)) = zero_vec(l)
 
   ConsVectorN_add: CONJECTURE
-    FORALL (c: VectorN(n)): c + zero(n) = c
+    FORALL (c: VectorN(n)): c + zero_vec(n) = c
 
   ConsVectorN_diff: CONJECTURE
-    FORALL (c: VectorN(n)): c - zero(n) = c
+    FORALL (c: VectorN(n)): c - zero_vec(n) = c
 
   mat_vect_mult_zero: CONJECTURE
-    FORALL (m,n: nat, A: MatrixMN(m, n)): A * zero(n) = zero(n)
+    FORALL (m,n: nat, A: MatrixMN(m, n)): A * zero_vec(n) = zero_vec(m)
+
+  % @QED mat_vec_mult_aux proved by gusta on Fri, 24 Apr 2026 12:41:33 GMT
+  mat_vec_mult_aux: LEMMA
+    FORALL (m: posnat, A: MatrixMN(m, 1), x: VectorN(1)):
+      matvec(m, 1, A, x) = mult(A, x)
+
+  matvec_is_mult: CONJECTURE
+    FORALL (m,n: posnat, A: MatrixMN(m, n), x: VectorN(n)):
+      matvec(m, n, A, x) = mult(A, x)
 
 END matrices_extra

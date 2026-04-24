@@ -1,9 +1,15 @@
-TCCs summary for theory orthogonal_groups
+Proof summary for theory orthogonal_groups
 
-	ortho_closure_TCC1..............................................✅ proved              (0 s)
-	ortho_inverse_TCC1..............................................✅ proved              (0 s)
-	ortho_inverse_TCC2..............................................✅ proved              (0 s)
-	ortho_preserves_dot_TCC1........................................✨ untried             (75.664 s)
-	ortho_preserves_dot_TCC2........................................✨ untried             (12.403 s)
+	ortho_closure...................................................✅ proved              (2.122 s)
+	ortho_identity..................................................✅ proved              (5.17 s)
+	ortho_inverse...................................................✅ proved              (2.154 s)
+	ortho_transpose_mult............................................✅ proved              (1.097 s)
+	ortho_preserves_dot.............................................❗ unfinished          (1.264 s)
+	ortho_is_linear_isometry........................................❗ unfinished          (1.409 s)
+	ortho_is_linear_isometry_mult...................................❗ unfinished          (0.442 s)
+	ortho_closure_TCC1..............................................✅ proved              (1.329 s)
+	ortho_inverse_TCC1..............................................✅ proved              (0.517 s)
+	ortho_inverse_TCC2..............................................✅ proved              (0.948 s)
+	ortho_preserves_dot_TCC1........................................✨ untried             (60.41 s)
 
-Theory orthogonal_groups totals: 6 formulas, 5 attempted, 3 succeeded (88.067 s)
+Theory orthogonal_groups totals: 13 formulas, 11 attempted, 7 succeeded (76.862 s)

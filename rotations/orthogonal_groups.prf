@@ -57,7 +57,7 @@
     (number_field nonempty-type-from-decl nil number_fields nil)
     (number_field_pred const-decl "[number -> boolean]" number_fields
      nil)
-    (AND const-decl "[bool, bool -> bool]" booleans nil) nil
+    (AND const-decl "[bool, bool -> bool]" booleans nil)
     (PRED type-eq-decl nil defined_types nil)
     (list type-decl nil list_adt nil)
     (number nonempty-type-decl nil numbers nil)
@@ -535,6 +535,11 @@
     (boolean nonempty-type-decl nil booleans nil)
     (mult_inverse_left formula-decl nil matrix_inv matrices))
    shostak))
+ (ortho_preserves_dot_TCC1 0
+  (ortho_preserves_dot_TCC1-1 nil 3986018090 ("" (subtype-tcc) nil nil)
+   nil nil
+   (ortho_preserves_dot subtype "orthogonal_groups.A"
+    "matrices.MatrixMN(orthogonal_groups.n, orthogonal_groups.n)")))
  (ortho_preserves_dot 0
   (ortho_preserves_dot-1 nil 3982869858
    ("" (skeep)
@@ -941,7 +946,7 @@
     (number_field nonempty-type-from-decl nil number_fields nil)
     (number_field_pred const-decl "[number -> boolean]" number_fields
      nil)
-    (AND const-decl "[bool, bool -> bool]" booleans nil) nil
+    (AND const-decl "[bool, bool -> bool]" booleans nil)
     (PRED type-eq-decl nil defined_types nil)
     (list type-decl nil list_adt nil)
     (number nonempty-type-decl nil numbers nil)
@@ -956,10 +961,10 @@
     (Vector type-eq-decl nil matrices matrices)
     (ConsVecN type-eq-decl nil linear_isometries_def nil)
     (cons? adt-recognizer-decl "[list -> boolean]" list_adt nil)
-    (VectorN type-eq-decl nil matrices matrices) nil)
+    (VectorN type-eq-decl nil matrices matrices))
    nil
    (ortho_is_linear_isometry subtype
-    "matrix_vector_multiplication.*(orthogonal_groups.A, orthogonal_groups.x)"
+    "mat_vec_mult.matvec(orthogonal_groups.n, orthogonal_groups.n, orthogonal_groups.A, orthogonal_groups.x)"
     "ConsVecN[n]")))
  (ortho_is_linear_isometry 0
   (ortho_is_linear_isometry-1 nil 3984200515
@@ -1088,6 +1093,31 @@
                       nil))
                     nil))
                   nil))
+                nil))
+              nil))
+            nil))
+          nil))
+        nil))
+      nil))
+    nil)
+   nil shostak))
+ (ortho_is_linear_isometry_mult_TCC1 0
+  (ortho_is_linear_isometry_mult_TCC1-1 nil 3986018090
+   ("" (subtype-tcc) nil nil) nil nil
+   (ortho_is_linear_isometry_mult subtype
+    "matrix_vector_multiplication.*(orthogonal_groups.A, orthogonal_groups.x)"
+    "ConsVecN[n]")))
+ (ortho_is_linear_isometry_mult 0
+  (ortho_is_linear_isometry_mult-1 nil 3986018159
+   ("" (skeep)
+    (("" (expand "linear_isometry?")
+      (("" (split)
+        (("1" (postpone) nil nil)
+         ("2" (expand "fixes_origin?")
+          (("2" (expand "*")
+            (("2" (lemma "matv_zerovec")
+              (("2" (inst -1 "A")
+                (("2" (expand "*") (("2" (postpone) nil nil)) nil))
                 nil))
               nil))
             nil))

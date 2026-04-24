@@ -16,6 +16,7 @@ BEGIN
   IMPORTING 
     matrices@matrices,
     matrices@norms,
+    matrices@vector_arithmetic,
     structures@list_lemmas
 
   % Vectors are represented as n x 1 matrices (Column_Matrix)
@@ -47,7 +48,7 @@ BEGIN
   
   % A function fixes the origin if f(0) = 0
    fixes_origin?(f): bool = 
-     f(zero(n)) = zero(n)
+     f(zero_vec(n)) = zero_vec(n)
 
   %A function preserves lengths if |f(x)| = |x| for all x
   preserves_length?(f)(norm): bool = 
