@@ -1,0 +1,10 @@
+top : THEORY
+BEGIN
+
+  IMPORTING  peg_def,
+	     peg,
+	     peg_ast,
+	     % I/O theories
+	     pvsio_peg
+	      
+END top
