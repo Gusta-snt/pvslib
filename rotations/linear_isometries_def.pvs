@@ -65,6 +65,6 @@ BEGIN
   % linear_isometries will be characterize as linear transformations. 
   
   linear_isometry?(f)(norm): bool = 
-    isometry?(f)(norm) AND fixes_origin?(f)
+    isometry?(f)(norm) AND fixes_origin?(f) AND linear?(f)
 
 END linear_isometries_def

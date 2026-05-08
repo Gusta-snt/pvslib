@@ -27,7 +27,7 @@ BEGIN
   % Lemma 1.2: Relates isometry, fixing origin, and preserving lengths.
   %--------------------------------------------------------------------------
   
-  isometry_fixes_origin_preserves_length: CONJECTURE
+  isometry_fixes_origin_preserves_length: LEMMA
     isometry?(f)(norm) AND fixes_origin?(f) IMPLIES preserves_length?(f)(norm)
 
   % @QED linear_preserves_length_is_isometry proved by gusta on Fri, 13 Feb 2026 13:05:55 GMT
@@ -50,15 +50,15 @@ BEGIN
   % Lemma 1.4: Construction of linear isometry from general isometry
   %--------------------------------------------------------------------------
 
+  %--------------------------------------------------------------------------
+  % Additional Properties
+  %--------------------------------------------------------------------------
+
   % If f is an isometry, then g(x) = f(x) - f(0) is a linear isometry.
   isometry_shift_to_linear: CONJECTURE
     isometry?(f)(norm) AND NOT fixes_origin?(f) IMPLIES
     LET g = (LAMBDA (x: ConsVecN): f(x) - f(zero_vec(n))) IN
     linear_isometry?(g)(norm)
-
-  %--------------------------------------------------------------------------
-  % Additional Properties
-  %--------------------------------------------------------------------------
 
   isometry_injective: CONJECTURE
     isometry?(f)(norm) IMPLIES

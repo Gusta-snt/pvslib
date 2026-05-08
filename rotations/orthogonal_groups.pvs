@@ -18,7 +18,8 @@ BEGIN
     linear_isometries_def[n],
     matrices@matrix_vector_multiplication, % Verificar redundância nas importações
     matrices_extra[n],
-    matrices@more_matrix_props
+    matrices@more_matrix_props,
+    matrices@matrix_diag
   
   % Variables
   A, B: VAR OrthogonalMatrix
@@ -55,8 +56,8 @@ BEGIN
   % CONJECTURE 1.6: Elements of O(n) preserve dot products
   % dot(Au, Av) = dot(u, v) for column matrices u, v
   %--------------------------------------------------------------------------
-  ortho_preserves_dot: CONJECTURE
-    dot(matvec(n, n, A, u), matvec(n, n, A, v)) = dot(u, v)
+  ortho_preserves_dot: LEMMA
+    dot(matvec(n, n, A, u), matvec(n, n, A, v)) = dot(u, v) % Voltar a versão para mult
 
   %--------------------------------------------------------------------------
   % CONJECTURE 1.7: Elements of O(n) induce linear isometries
@@ -68,5 +69,68 @@ BEGIN
 
   ortho_is_linear_isometry_mult: CONJECTURE
     linear_isometry?(LAMBDA (x: ConsVecN): A * x)(norm_2(n))
+
+  %--------------------------------------------------------------------------
+  % Proposition 1.8: Every linear isometry is a linear transformation
+  % whose matrix is in O(n).
+  %
+  % i.e., for every linear isometry f there exists an orthogonal matrix A
+  % such that f(x) = A * x for all x in R^n.
+  %--------------------------------------------------------------------------
+
+  f: VAR Function_n
+
+  linear_isometry_is_orthogonal_matrix: CONJECTURE
+    linear_isometry?(f)(norm_2(n)) IMPLIES
+    EXISTS (A: SquareMatrix(n)):
+      orthogonal_matrix?(A) AND
+      FORALL (x: ConsVecN): f(x) = matvec(n, n, A, x)
+
+  %--------------------------------------------------------------------------
+  % Theorem 1.9: SO(n) = { A in O(n) | det(A) = 1 } is a subgroup of O(n).
+  %
+  % The special orthogonal group SO(n) is defined as the kernel of the
+  % determinant map det : O(n) -> {-1, 1}.  We verify the three subgroup
+  % axioms: identity, closure, and existence of inverses.
+  %--------------------------------------------------------------------------
+
+  % 1. Closure: If A, B in SO(n) then det(A*B) = det(A)*det(B) = 1*1 = 1
+  SO_closure: CONJECTURE
+    FORALL (A, B: SquareMatrix(n)):
+      orthogonal_matrix?(A) AND det(A) = 1 AND
+      orthogonal_matrix?(B) AND det(B) = 1 IMPLIES
+      orthogonal_matrix?(A * B) AND det(A * B) = 1
+
+  % 2. Inverse: If A in SO(n) then det(A^-1) = 1/det(A) = 1
+  SO_inverse: CONJECTURE
+    FORALL (A: SquareMatrix(n)):
+      orthogonal_matrix?(A) AND det(A) = 1 IMPLIES
+      orthogonal_matrix?(inverse(A)) AND det(inverse(A)) = 1
+
+  %--------------------------------------------------------------------------
+  % Theorem 1.10: SO(n) is a normal subgroup of O(n) and O(n)/SO(n) ≅ Z₂.
+  %
+  % The map det : O(n) -> {-1, 1} is a surjective group homomorphism whose
+  % kernel is exactly SO(n).  By the First Isomorphism Theorem,
+  % O(n)/SO(n) ≅ {-1, 1} ≅ Z₂.
+  %--------------------------------------------------------------------------
+
+  % Normality: conjugation preserves SO(n), i.e. A*B*A^-1 in SO(n) for B in SO(n)
+  SO_normal: CONJECTURE
+    FORALL (A, B: SquareMatrix(n)):
+      orthogonal_matrix?(A) AND
+      orthogonal_matrix?(B) AND det(B) = 1 IMPLIES
+      det(A * B * inverse(A)) = 1
+
+  % The determinant of any orthogonal matrix is ±1
+  ortho_det_pm1: CONJECTURE
+    FORALL (A: SquareMatrix(n)):
+      orthogonal_matrix?(A) IMPLIES det(A) = 1 OR det(A) = -1
+
+  % Surjectivity: both values ±1 are achieved by elements of O(n)
+  % (the identity has det 1; any reflection has det -1)
+  ortho_det_surjective: CONJECTURE
+    (EXISTS (A: SquareMatrix(n)): orthogonal_matrix?(A) AND det(A) =  1) AND
+    (EXISTS (A: SquareMatrix(n)): orthogonal_matrix?(A) AND det(A) = -1)
 
 END orthogonal_groups

@@ -1,0 +1,4 @@
+Provamos que Id(n) é inversível
+Provamos que inverse(Id(n)) = Id(n)
+Seria útil incluir em matrix_inv.pvs?
+Provamos em rotations.orthogonal_groups.ortho_identity
