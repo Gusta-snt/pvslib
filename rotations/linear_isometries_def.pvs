@@ -46,8 +46,8 @@ BEGIN
   %--------------------------------------------------------------------------
   
   % A function fixes the origin if f(0) = 0
-   fixes_origin?(f): bool = 
-     f(zero(n)) = zero(n)
+  fixes_origin?(f): bool = 
+    f(zero_vec(n)) = zero_vec(n)
 
   %A function preserves lengths if |f(x)| = |x| for all x
   preserves_length?(f)(norm): bool = 
@@ -58,7 +58,7 @@ BEGIN
   % Should we investigate if there is another one in Linear Algebra?
   
   linear?(f): bool = 
-    (FORALL (x, y, a): (f(x + y) = f(x) + f(y)) AND f(a * x) = a * f(x)) % Remover parênteses inputeis
+    FORALL (x, y, a): (f(x + y) = f(x) + f(y)) AND f(a * x) = a * f(x)
 
   % linear_isometry?(f) is an isometry that fixes the origin.
   % linear_isometries will be characterize as linear transformations. 

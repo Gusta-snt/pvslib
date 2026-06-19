@@ -9,26 +9,24 @@
 % This theory contains extra lemmas for matrices theory.
 %----------------------------------------------------------------------------
 
-matrices_extra[n: posnat]: THEORY
+matrices_extra: THEORY
 
 BEGIN
   IMPORTING 
-    matrices@matrices,
-    matrices@mat_vec_mult,
-    structures@list_lemmas
+    matrices@more_matrix_props
 
-  u, v: VAR VectorN(n)
 
-  crd_zero: CONJECTURE
-    FORALL (l: nat): cdr(zero(l + 1)) = zero(l)
+  % These theories, belonging to matrices@props_mat_vec_multiplication, 
+  % must be modified according to the following specification.
 
-  ConsVectorN_add: CONJECTURE
-    FORALL (c: VectorN(n)): c + zero(n) = c
+  % @QED mult_scal_alt proved by gusta on Fri, 15 May 2026 12:21:20 GMT
+  mult_scal_alt: LEMMA 
+    FORALL(m, n: posnat, A: MatrixMN(m,n), v: VectorN(n), c: real):
+      A * (c * v) = (c * A) * v
 
-  ConsVectorN_diff: CONJECTURE
-    FORALL (c: VectorN(n)): c - zero(n) = c
-
-  mat_vect_mult_zero: CONJECTURE
-    FORALL (m,n: nat, A: MatrixMN(m, n)): A * zero(n) = zero(n)
+  % @QED mult_mat_zero_vec_alt proved by gusta on Fri, 15 May 2026 12:22:18 GMT
+  mult_mat_zero_vec_alt: LEMMA 
+    FORALL(m, n: posnat, A: MatrixMN(m,n)):
+      A * zero_vec(n) = zero_vec(m)
 
 END matrices_extra

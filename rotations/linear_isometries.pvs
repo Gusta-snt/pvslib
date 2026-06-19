@@ -14,7 +14,6 @@ linear_isometries[n: posnat]: THEORY
 BEGIN
 
   IMPORTING linear_isometries_def[n]
-  IMPORTING matrices_extra[n]
 
   % Variables
   f, g: VAR Function_n
@@ -52,17 +51,10 @@ BEGIN
   %--------------------------------------------------------------------------
 
   % If f is an isometry, then g(x) = f(x) - f(0) is a linear isometry.
-  isometry_shift_to_linear: CONJECTURE
+  % @QED isometry_shift_to_linear proved by gusta on Fri, 15 May 2026 11:16:50 GMT
+  isometry_shift_to_linear: LEMMA
     isometry?(f)(norm) AND NOT fixes_origin?(f) IMPLIES
-    LET g = (LAMBDA (x: ConsVecN): f(x) - f(zero(n))) IN
+    LET g = (LAMBDA (x: ConsVecN): f(x) - f(zero_vec(n))) IN
     linear_isometry?(g)(norm)
-
-  %--------------------------------------------------------------------------
-  % Additional Properties
-  %--------------------------------------------------------------------------
-
-  isometry_injective: CONJECTURE
-    isometry?(f)(norm) IMPLIES
-    FORALL (x, y: ConsVecN): f(x) = f(y) IMPLIES x = y
 
 END linear_isometries

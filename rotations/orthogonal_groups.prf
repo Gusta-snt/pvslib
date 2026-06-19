@@ -57,7 +57,8 @@
     (number_field nonempty-type-from-decl nil number_fields nil)
     (number_field_pred const-decl "[number -> boolean]" number_fields
      nil)
-    (AND const-decl "[bool, bool -> bool]" booleans nil) nil
+    (AND const-decl "[bool, bool -> bool]" booleans nil)
+    (every adt-def-decl "boolean" list_adt nil)
     (PRED type-eq-decl nil defined_types nil)
     (list type-decl nil list_adt nil)
     (number nonempty-type-decl nil numbers nil)
@@ -108,9 +109,6 @@
     (transpose_mult formula-decl nil matrices matrices)
     (inverse_mult formula-decl nil matrix_inv matrices)
     (SquareMatrix type-eq-decl nil matrices matrices)
-    (n formal-const-decl "posnat" orthogonal_groups nil)
-    (posnat nonempty-type-eq-decl nil integers nil)
-    (nonneg_int nonempty-type-eq-decl nil integers nil)
     (Square type-eq-decl nil matrices matrices)
     (PosFullMatrix type-eq-decl nil matrices matrices)
     (columns def-decl "{c: nat |
@@ -118,36 +116,11 @@
     (null?(M) AND c = 0 OR
       EXISTS (i: below(length(M))): length(nth(M, i)) = c)}" matrices
      matrices)
-    (<= const-decl "bool" reals nil)
     (rows const-decl "nat" matrices matrices)
-    (> const-decl "bool" reals nil)
     (FullMatrix type-eq-decl nil matrices matrices)
-    (nth def-decl "T" list_props nil)
-    (below type-eq-decl nil nat_types nil)
-    (= const-decl "[T, T -> boolean]" equalities nil)
-    (below type-eq-decl nil naturalnumbers nil)
-    (length def-decl "nat" list_props nil)
-    (< const-decl "bool" reals nil)
-    (nat nonempty-type-eq-decl nil naturalnumbers nil)
-    (>= const-decl "bool" reals nil)
-    (int nonempty-type-eq-decl nil integers nil)
-    (integer_pred const-decl "[rational -> boolean]" integers nil)
-    (rational nonempty-type-from-decl nil rationals nil)
-    (rational_pred const-decl "[real -> boolean]" rationals nil)
     (null? adt-recognizer-decl "[list -> boolean]" list_adt nil)
-    (real nonempty-type-from-decl nil reals nil)
-    (OR const-decl "[bool, bool -> bool]" booleans nil)
     (Matrix type-eq-decl nil matrices matrices)
-    (real_pred const-decl "[number_field -> boolean]" reals nil)
-    (number_field nonempty-type-from-decl nil number_fields nil)
-    (number_field_pred const-decl "[number -> boolean]" number_fields
-     nil)
-    (AND const-decl "[bool, bool -> bool]" booleans nil)
-    (PRED type-eq-decl nil defined_types nil)
-    (bool nonempty-type-eq-decl nil booleans nil)
-    (boolean nonempty-type-decl nil booleans nil)
-    (list type-decl nil list_adt nil)
-    (number nonempty-type-decl nil numbers nil))
+    (list type-decl nil list_adt nil))
    shostak))
  (ortho_identity 0
   (ortho_identity-1 nil 3980997009
@@ -195,22 +168,18 @@
     nil)
    ((transpose_Id formula-decl nil matrices matrices)
     (Id const-decl "{M: SquareMatrix(pm) |
-   (FORALL (i: nat, j: nat):
+   (FORALL (i, j):
       entry(M)(i, j) = IF i < pm AND i = j THEN 1 ELSE 0 ENDIF)
     AND
     (FORALL (pn: posnat, N: MatrixMN(pm, pn)): M * N = N) AND
      (FORALL (pn: posnat, N: MatrixMN(pn, pm)): N * M = N)}" matrices
      matrices)
-    (* const-decl "{A: MatrixMN(rows(M), columns(N)) |
-   FORALL (i: nat, j: nat): entry(A)(i, j) = row(M)(i) * col(N)(j)}"
-       matrices matrices)
     (col def-decl "VectorN(rows(M))" matrices matrices)
     (VectorN type-eq-decl nil matrices matrices)
     (row const-decl "Vector" matrices matrices)
     (* const-decl "real" matrices matrices)
     (Vector type-eq-decl nil matrices matrices)
     (MatrixMN type-eq-decl nil matrices matrices)
-    (IF const-decl "[boolean, T, T -> T]" if_def nil)
     (entry const-decl "real" matrices matrices)
     (SquareMatrix type-eq-decl nil matrices matrices)
     (invertible? const-decl "bool" matrix_inv matrices)
@@ -221,53 +190,21 @@
     (null?(M) AND c = 0 OR
       EXISTS (i: below(length(M))): length(nth(M, i)) = c)}" matrices
      matrices)
-    (<= const-decl "bool" reals nil)
     (rows const-decl "nat" matrices matrices)
     (FullMatrix type-eq-decl nil matrices matrices)
-    (nth def-decl "T" list_props nil)
-    (below type-eq-decl nil nat_types nil)
-    (= const-decl "[T, T -> boolean]" equalities nil)
-    (below type-eq-decl nil naturalnumbers nil)
-    (length def-decl "nat" list_props nil)
-    (< const-decl "bool" reals nil)
-    (nat nonempty-type-eq-decl nil naturalnumbers nil)
     (null? adt-recognizer-decl "[list -> boolean]" list_adt nil)
-    (OR const-decl "[bool, bool -> bool]" booleans nil)
     (Matrix type-eq-decl nil matrices matrices)
-    (AND const-decl "[bool, bool -> bool]" booleans nil)
-    (PRED type-eq-decl nil defined_types nil)
     (list type-decl nil list_adt nil)
     (inverse const-decl "{IQ |
    rows(IQ) = rows(SQ) AND
     IQ * SQ = Id(rows(SQ)) AND SQ * IQ = Id(rows(SQ))}" matrix_inv
      matrices)
     (det def-decl "real" matrix_props matrices)
-    (/= const-decl "boolean" notequal nil)
     (mult_inverse_left formula-decl nil matrix_inv matrices)
     (mult_Id_right formula-decl nil matrices matrices)
     (rows_Id formula-decl nil matrices matrices)
-    (NOT const-decl "[bool -> bool]" booleans nil)
     (mult_Id_left formula-decl nil matrices matrices)
-    (real_gt_is_strict_total_order name-judgement
-     "(strict_total_order?[real])" real_props nil)
     (mult_full application-judgement "FullMatrix" matrices matrices)
-    (n formal-const-decl "posnat" orthogonal_groups nil)
-    (posnat nonempty-type-eq-decl nil integers nil)
-    (> const-decl "bool" reals nil)
-    (nonneg_int nonempty-type-eq-decl nil integers nil)
-    (>= const-decl "bool" reals nil)
-    (bool nonempty-type-eq-decl nil booleans nil)
-    (int nonempty-type-eq-decl nil integers nil)
-    (integer_pred const-decl "[rational -> boolean]" integers nil)
-    (rational nonempty-type-from-decl nil rationals nil)
-    (rational_pred const-decl "[real -> boolean]" rationals nil)
-    (real nonempty-type-from-decl nil reals nil)
-    (real_pred const-decl "[number_field -> boolean]" reals nil)
-    (number_field nonempty-type-from-decl nil number_fields nil)
-    (number_field_pred const-decl "[number -> boolean]" number_fields
-     nil)
-    (boolean nonempty-type-decl nil booleans nil)
-    (number nonempty-type-decl nil numbers nil)
     (orthogonal_matrix? const-decl "bool" orthogonal_groups_def nil))
    shostak))
  (ortho_inverse_TCC1 0
@@ -315,6 +252,7 @@
     (number_field_pred const-decl "[number -> boolean]" number_fields
      nil)
     (AND const-decl "[bool, bool -> bool]" booleans nil)
+    (every adt-def-decl "boolean" list_adt nil)
     (PRED type-eq-decl nil defined_types nil)
     (list type-decl nil list_adt nil)
     (number nonempty-type-decl nil numbers nil)
@@ -370,6 +308,7 @@
     (number_field_pred const-decl "[number -> boolean]" number_fields
      nil)
     (AND const-decl "[bool, bool -> bool]" booleans nil)
+    (every adt-def-decl "boolean" list_adt nil)
     (PRED type-eq-decl nil defined_types nil)
     (list type-decl nil list_adt nil)
     (number nonempty-type-decl nil numbers nil)
@@ -386,9 +325,12 @@
     (row const-decl "Vector" matrices matrices)
     (VectorN type-eq-decl nil matrices matrices)
     (col def-decl "VectorN(rows(M))" matrices matrices)
+    (* const-decl "{A: MatrixMN(rows(M), columns(N)) |
+   FORALL (i, j): entry(A)(i, j) = row(M)(i) * col(N)(j)}" matrices
+       matrices)
     (IF const-decl "[boolean, T, T -> T]" if_def nil)
     (Id const-decl "{M: SquareMatrix(pm) |
-   (FORALL (i: nat, j: nat):
+   (FORALL (i, j):
       entry(M)(i, j) = IF i < pm AND i = j THEN 1 ELSE 0 ENDIF)
     AND
     (FORALL (pn: posnat, N: MatrixMN(pm, pn)): M * N = N) AND
@@ -430,9 +372,6 @@
     (inverse_inverse formula-decl nil matrix_inv matrices)
     (OrthogonalMatrix type-eq-decl nil orthogonal_groups_def nil)
     (SquareMatrix type-eq-decl nil matrices matrices)
-    (n formal-const-decl "posnat" orthogonal_groups nil)
-    (posnat nonempty-type-eq-decl nil integers nil)
-    (nonneg_int nonempty-type-eq-decl nil integers nil)
     (Square type-eq-decl nil matrices matrices)
     (PosFullMatrix type-eq-decl nil matrices matrices)
     (columns def-decl "{c: nat |
@@ -440,39 +379,11 @@
     (null?(M) AND c = 0 OR
       EXISTS (i: below(length(M))): length(nth(M, i)) = c)}" matrices
      matrices)
-    (<= const-decl "bool" reals nil)
     (rows const-decl "nat" matrices matrices)
-    (> const-decl "bool" reals nil)
     (FullMatrix type-eq-decl nil matrices matrices)
-    (nth def-decl "T" list_props nil)
-    (below type-eq-decl nil nat_types nil)
-    (= const-decl "[T, T -> boolean]" equalities nil)
-    (below type-eq-decl nil naturalnumbers nil)
-    (length def-decl "nat" list_props nil)
-    (< const-decl "bool" reals nil)
-    (nat nonempty-type-eq-decl nil naturalnumbers nil)
-    (>= const-decl "bool" reals nil)
-    (int nonempty-type-eq-decl nil integers nil)
-    (integer_pred const-decl "[rational -> boolean]" integers nil)
-    (rational nonempty-type-from-decl nil rationals nil)
-    (rational_pred const-decl "[real -> boolean]" rationals nil)
     (null? adt-recognizer-decl "[list -> boolean]" list_adt nil)
-    (real nonempty-type-from-decl nil reals nil)
-    (OR const-decl "[bool, bool -> bool]" booleans nil)
     (Matrix type-eq-decl nil matrices matrices)
-    (real_pred const-decl "[number_field -> boolean]" reals nil)
-    (number_field nonempty-type-from-decl nil number_fields nil)
-    (number_field_pred const-decl "[number -> boolean]" number_fields
-     nil)
-    (AND const-decl "[bool, bool -> bool]" booleans nil)
-    (PRED type-eq-decl nil defined_types nil)
     (list type-decl nil list_adt nil)
-    (number nonempty-type-decl nil numbers nil)
-    (NOT const-decl "[bool -> bool]" booleans nil)
-    (bool nonempty-type-eq-decl nil booleans nil)
-    (boolean nonempty-type-decl nil booleans nil)
-    (real_gt_is_strict_total_order name-judgement
-     "(strict_total_order?[real])" real_props nil)
     (inverse_invertible formula-decl nil matrix_inv matrices))
    shostak))
  (ortho_transpose_mult 0
@@ -492,9 +403,6 @@
    ((OrthogonalMatrix type-eq-decl nil orthogonal_groups_def nil)
     (orthogonal_matrix? const-decl "bool" orthogonal_groups_def nil)
     (SquareMatrix type-eq-decl nil matrices matrices)
-    (n formal-const-decl "posnat" orthogonal_groups nil)
-    (posnat nonempty-type-eq-decl nil integers nil)
-    (nonneg_int nonempty-type-eq-decl nil integers nil)
     (Square type-eq-decl nil matrices matrices)
     (PosFullMatrix type-eq-decl nil matrices matrices)
     (columns def-decl "{c: nat |
@@ -502,37 +410,11 @@
     (null?(M) AND c = 0 OR
       EXISTS (i: below(length(M))): length(nth(M, i)) = c)}" matrices
      matrices)
-    (<= const-decl "bool" reals nil)
     (rows const-decl "nat" matrices matrices)
-    (> const-decl "bool" reals nil)
     (FullMatrix type-eq-decl nil matrices matrices)
-    (nth def-decl "T" list_props nil)
-    (below type-eq-decl nil nat_types nil)
-    (= const-decl "[T, T -> boolean]" equalities nil)
-    (below type-eq-decl nil naturalnumbers nil)
-    (length def-decl "nat" list_props nil)
-    (< const-decl "bool" reals nil)
-    (nat nonempty-type-eq-decl nil naturalnumbers nil)
-    (>= const-decl "bool" reals nil)
-    (int nonempty-type-eq-decl nil integers nil)
-    (integer_pred const-decl "[rational -> boolean]" integers nil)
-    (rational nonempty-type-from-decl nil rationals nil)
-    (rational_pred const-decl "[real -> boolean]" rationals nil)
     (null? adt-recognizer-decl "[list -> boolean]" list_adt nil)
-    (real nonempty-type-from-decl nil reals nil)
-    (OR const-decl "[bool, bool -> bool]" booleans nil)
     (Matrix type-eq-decl nil matrices matrices)
-    (real_pred const-decl "[number_field -> boolean]" reals nil)
-    (number_field nonempty-type-from-decl nil number_fields nil)
-    (number_field_pred const-decl "[number -> boolean]" number_fields
-     nil)
-    (AND const-decl "[bool, bool -> bool]" booleans nil)
-    (PRED type-eq-decl nil defined_types nil)
     (list type-decl nil list_adt nil)
-    (number nonempty-type-decl nil numbers nil)
-    (NOT const-decl "[bool -> bool]" booleans nil)
-    (bool nonempty-type-eq-decl nil booleans nil)
-    (boolean nonempty-type-decl nil booleans nil)
     (mult_inverse_left formula-decl nil matrix_inv matrices))
    shostak))
  (ortho_preserves_dot 0
@@ -805,69 +687,35 @@
      "{PFM | rows(PFM) = 1 AND columns(PFM) = length(v)}" matrices
      matrices)
     (transpose const-decl "PosFullMatrix" matrices matrices)
-    (* const-decl "{A: MatrixMN(rows(M), columns(N)) |
-   FORALL (i: nat, j: nat): entry(A)(i, j) = row(M)(i) * col(N)(j)}"
-       matrices matrices)
     (col def-decl "VectorN(rows(M))" matrices matrices)
     (row const-decl "Vector" matrices matrices)
     (entry const-decl "real" matrices matrices)
     (transpose_transpose formula-decl nil matrices matrices)
     (mult_full application-judgement "FullMatrix" matrices matrices)
-    (ortho_transpose_mult formula-decl nil orthogonal_groups nil)
     (rows_transpose formula-decl nil matrices matrices)
-    (real_gt_is_strict_total_order name-judgement
-     "(strict_total_order?[real])" real_props nil)
-    (NOT const-decl "[bool -> bool]" booleans nil)
     (mult_Id_left formula-decl nil matrices matrices)
-    (access const-decl "real" matrices matrices)
-    (array2list const-decl
-     "{l: listn(n) | FORALL (i: below(n)): a(i) = nth(l, i)}"
-     array2list structures)
-    (array2list_it def-decl
-     "{l: listn(n - i) | FORALL (j: subrange(i, n - 1)): a(j) = nth(l, j - i)}"
-     array2list structures)
+    (form_matrix_square application-judgement "FullMatrix" matrices
+     matrices)
     (form_matrix const-decl "{M: MatrixMN(m, n) |
    FORALL (i: below(m), j: below(n)): nth(row(M)(i), j) = F(i, j)}"
      matrices matrices)
-    (nnint_plus_posint_is_posint application-judgement "posint"
-     integers nil)
-    (form_matrix_square application-judgement "FullMatrix" matrices
-     matrices)
+    (array2list_it def-decl
+     "{l: listn(n - i) | FORALL (j: subrange(i, n - 1)): a(j) = nth(l, j - i)}"
+     array2list structures)
+    (array2list const-decl
+     "{l: listn(n) | FORALL (i: below(n)): a(i) = nth(l, i)}"
+     array2list structures)
+    (access const-decl "real" matrices matrices)
     (matrix_mult_assoc formula-decl nil matrices matrices)
     (transpose_mult formula-decl nil matrices matrices)
     (MatrixMN type-eq-decl nil matrices matrices)
-    (number nonempty-type-decl nil numbers nil)
-    (boolean nonempty-type-decl nil booleans nil)
-    (= const-decl "[T, T -> boolean]" equalities nil)
     (list type-decl nil list_adt nil)
-    (bool nonempty-type-eq-decl nil booleans nil)
-    (PRED type-eq-decl nil defined_types nil)
-    (AND const-decl "[bool, bool -> bool]" booleans nil)
-    (number_field_pred const-decl "[number -> boolean]" number_fields
-     nil)
-    (number_field nonempty-type-from-decl nil number_fields nil)
-    (real_pred const-decl "[number_field -> boolean]" reals nil)
-    (real nonempty-type-from-decl nil reals nil)
-    (rational_pred const-decl "[real -> boolean]" rationals nil)
-    (rational nonempty-type-from-decl nil rationals nil)
-    (integer_pred const-decl "[rational -> boolean]" integers nil)
-    (int nonempty-type-eq-decl nil integers nil)
-    (>= const-decl "bool" reals nil)
-    (nat nonempty-type-eq-decl nil naturalnumbers nil)
-    (length def-decl "nat" list_props nil)
     (Matrix type-eq-decl nil matrices matrices)
     (Vector type-eq-decl nil matrices matrices)
     (* const-decl "Vector" matrix_vector_multiplication matrices)
-    (OR const-decl "[bool, bool -> bool]" booleans nil)
     (null? adt-recognizer-decl "[list -> boolean]" list_adt nil)
-    (< const-decl "bool" reals nil)
-    (below type-eq-decl nil naturalnumbers nil)
-    (below type-eq-decl nil nat_types nil)
-    (nth def-decl "T" list_props nil)
     (FullMatrix type-eq-decl nil matrices matrices)
-    (> const-decl "bool" reals nil)
     (rows const-decl "nat" matrices matrices)
-    (<= const-decl "bool" reals nil)
     (columns def-decl "{c: nat |
    (FORALL (i: below(length(M))): length(nth(M, i)) <= c) AND
     (null?(M) AND c = 0 OR
@@ -875,9 +723,6 @@
      matrices)
     (PosFullMatrix type-eq-decl nil matrices matrices)
     (Square type-eq-decl nil matrices matrices)
-    (nonneg_int nonempty-type-eq-decl nil integers nil)
-    (posnat nonempty-type-eq-decl nil integers nil)
-    (n formal-const-decl "posnat" orthogonal_groups nil)
     (SquareMatrix type-eq-decl nil matrices matrices)
     (orthogonal_matrix? const-decl "bool" orthogonal_groups_def nil)
     (OrthogonalMatrix type-eq-decl nil orthogonal_groups_def nil)
@@ -941,7 +786,8 @@
     (number_field nonempty-type-from-decl nil number_fields nil)
     (number_field_pred const-decl "[number -> boolean]" number_fields
      nil)
-    (AND const-decl "[bool, bool -> bool]" booleans nil) nil
+    (AND const-decl "[bool, bool -> bool]" booleans nil)
+    (every adt-def-decl "boolean" list_adt nil)
     (PRED type-eq-decl nil defined_types nil)
     (list type-decl nil list_adt nil)
     (number nonempty-type-decl nil numbers nil)
@@ -956,7 +802,9 @@
     (Vector type-eq-decl nil matrices matrices)
     (ConsVecN type-eq-decl nil linear_isometries_def nil)
     (cons? adt-recognizer-decl "[list -> boolean]" list_adt nil)
-    (VectorN type-eq-decl nil matrices matrices) nil)
+    (VectorN type-eq-decl nil matrices matrices)
+    (listn_0 name-judgement "listn[real](0)" vector_arithmetic
+     matrices))
    nil
    (ortho_is_linear_isometry subtype
     "matrix_vector_multiplication.*(orthogonal_groups.A, orthogonal_groups.x)"
@@ -968,61 +816,41 @@
       (("" (split)
         (("1" (expand "isometry?")
           (("1" (skosimp)
-            (("1" (lemma "matv_dist_sub")
-              (("1" (inst - "A" "x!1" "y!1")
-                (("1"
-                  (case "mult(A, x!1 - y!1) = mult(A, x!1) - mult(A, y!1)")
-                  (("1" (hide -2)
-                    (("1" (expand "norm_2" 1)
-                      (("1" (expand "norm_2sq" 1)
-                        (("1" (lemma "ortho_preserves_dot")
-                          (("1" (inst - "A" "x!1 - y!1" "x!1 - y!1")
-                            (("1" (expand "*" 1)
-                              (("1"
-                                (replace -2 :dir RL)
-                                (("1"
-                                  (expand "*" -1)
-                                  (("1"
-                                    (replace -1 1)
-                                    (("1" (propax) nil nil))
-                                    nil))
-                                  nil))
-                                nil))
-                              nil)
-                             ("2" (hide -1 2)
+            (("1"
+              (case "mult(A, x!1 - y!1) = mult(A, x!1) - mult(A, y!1)")
+              (("1" (expand "norm_2" 1)
+                (("1" (expand "norm_2sq" 1)
+                  (("1" (lemma "ortho_preserves_dot")
+                    (("1" (inst - "A" "x!1 - y!1" "x!1 - y!1")
+                      (("1" (expand "*" 1)
+                        (("1" (replace -2 :dir RL)
+                          (("1" (expand "*" -1)
+                            (("1" (replace -1 1)
+                              (("1" (propax) nil nil)) nil))
+                            nil))
+                          nil))
+                        nil)
+                       ("2" (hide -1 2)
+                        (("2" (typepred "x!1")
+                          (("2" (typepred "y!1")
+                            (("2" (lemma "length_add_vect_same")
                               (("2"
-                                (typepred "x!1")
+                                (expand "-" 1)
                                 (("2"
-                                  (typepred "y!1")
+                                  (expand "sub" 1)
                                   (("2"
-                                    (lemma "length_add_vect_same")
+                                    (inst -1 "x!1" "scal(-1, y!1)")
                                     (("2"
-                                      (expand "-" 1)
+                                      (expand "+" -1)
                                       (("2"
-                                        (expand "sub" 1)
+                                        (hide -2 -5)
                                         (("2"
-                                          (inst
-                                           -1
-                                           "x!1"
-                                           "scal(-1, y!1)")
+                                          (lemma "length_scal_vect")
                                           (("2"
-                                            (expand "+" -1)
+                                            (inst -1 "-1" "y!1")
                                             (("2"
-                                              (hide -2 -5)
-                                              (("2"
-                                                (lemma
-                                                 "length_scal_vect")
-                                                (("2"
-                                                  (inst -1 "-1" "y!1")
-                                                  (("2"
-                                                    (expand "*" -1)
-                                                    (("2"
-                                                      (assert)
-                                                      nil
-                                                      nil))
-                                                    nil))
-                                                  nil))
-                                                nil))
+                                              (expand "*" -1)
+                                              (("2" (assert) nil nil))
                                               nil))
                                             nil))
                                           nil))
@@ -1036,28 +864,25 @@
                           nil))
                         nil))
                       nil))
-                    nil)
-                   ("2"
-                    (lemma "mmult_sub_dist"
-                     ("m" "n" "n" "n" "A" "A" "v1" "x!1" "v2" "y!1"))
-                    (("1" (expand "mult" -1) (("1" (propax) nil nil))
-                      nil)
-                     ("2" (typepred "A")
+                    nil))
+                  nil))
+                nil)
+               ("2"
+                (lemma "mmult_sub_dist"
+                 ("m" "n" "n" "n" "A" "A" "v1" "x!1" "v2" "y!1"))
+                (("1" (expand "mult" -1) (("1" (propax) nil nil)) nil)
+                 ("2" (typepred "A")
+                  (("2" (assert)
+                    (("2" (expand "rows" -6)
                       (("2" (assert)
-                        (("2" (expand "rows" -6)
-                          (("2" (assert)
-                            (("2" (skolem!)
+                        (("2" (skolem!)
+                          (("2" (lemma "matrices.length_row")
+                            (("2" (inst? -1)
                               (("2"
-                                (lemma "matrices.length_row")
+                                (inst -1 "i!1")
                                 (("2"
-                                  (inst? -1)
-                                  (("2"
-                                    (inst -1 "i!1")
-                                    (("2"
-                                      (expand "row" -1)
-                                      (("2" (assert) nil nil))
-                                      nil))
-                                    nil))
+                                  (expand "row" -1)
+                                  (("2" (assert) nil nil))
                                   nil))
                                 nil))
                               nil))
@@ -1072,17 +897,127 @@
             nil))
           nil)
          ("2" (expand "fixes_origin?")
-          (("2" (lemma "matv_zerovec")
-            (("2" (inst -1 "A")
-              (("2" (typepred "A")
-                (("2" (replace -6 -8)
-                  (("2" (replace -6 -5)
-                    (("2" (replace -5 -8 :dir RL)
-                      (("2" (hide -1 -2 -3 -4 -5 -6 -7)
-                        (("2" (case "zero(n) = zero_vec(n)")
-                          (("1" (replace -1 -2 :dir RL)
-                            (("1" (postpone) nil nil)) nil)
-                           ("2" (postpone) nil nil))
+          (("2" (lemma "mult_mat_zero_vec")
+            (("2" (inst -1 "n" "1" "n" "A")
+              (("2" (split 1)
+                (("1" (typepred "A")
+                  (("1" (assert)
+                    (("1" (expand "rows") (("1" (propax) nil nil))
+                      nil))
+                    nil))
+                  nil)
+                 ("2" (hide 2)
+                  (("2" (skeep)
+                    (("2" (typepred "A")
+                      (("2" (lemma "length_nth_row")
+                        (("2" (inst -1 "A" "i")
+                          (("2" (assert) nil nil)) nil))
+                        nil))
+                      nil))
+                    nil))
+                  nil))
+                nil))
+              nil))
+            nil))
+          nil))
+        nil))
+      nil))
+    nil)
+   ((linear_isometry? const-decl "bool" linear_isometries_def nil)
+    (fixes_origin? const-decl "bool" linear_isometries_def nil)
+    (length_nth_row formula-decl nil matrix_props matrices)
+    (mult_mat_zero_vec formula-decl nil props_mat_vec_multiplication
+     matrices)
+    (isometry? const-decl "bool" linear_isometries_def nil)
+    (ConsVecN type-eq-decl nil linear_isometries_def nil)
+    (cons? adt-recognizer-decl "[list -> boolean]" list_adt nil)
+    (- const-decl "VectorN(max(length(v1), length(v2)))" matrices
+       matrices)
+    (VectorN type-eq-decl nil matrices matrices)
+    (OrthogonalMatrix type-eq-decl nil orthogonal_groups_def nil)
+    (orthogonal_matrix? const-decl "bool" orthogonal_groups_def nil)
+    (SquareMatrix type-eq-decl nil matrices matrices)
+    (Square type-eq-decl nil matrices matrices)
+    (PosFullMatrix type-eq-decl nil matrices matrices)
+    (columns def-decl "{c: nat |
+   (FORALL (i: below(length(M))): length(nth(M, i)) <= c) AND
+    (null?(M) AND c = 0 OR
+      EXISTS (i: below(length(M))): length(nth(M, i)) = c)}" matrices
+     matrices)
+    (rows const-decl "nat" matrices matrices)
+    (FullMatrix type-eq-decl nil matrices matrices)
+    (null? adt-recognizer-decl "[list -> boolean]" list_adt nil)
+    (mult def-decl "Vector" matrix_vector_multiplication matrices)
+    (Vector type-eq-decl nil matrices matrices)
+    (Matrix type-eq-decl nil matrices matrices)
+    (list type-decl nil list_adt nil)
+    (norm_2sq const-decl "nonneg_real" norms matrices)
+    (* const-decl "real" matrices matrices)
+    (* const-decl "Vector" matrix_vector_multiplication matrices)
+    (length_add_vect_same formula-decl nil matrices matrices)
+    (sub const-decl "VectorN(max(length(v1), length(v2)))" matrices
+     matrices)
+    (+ const-decl "VectorN(max(length(v1), length(v2)))" matrices
+       matrices)
+    (length_scal_vect formula-decl nil matrices matrices)
+    (* const-decl "VectorN(length(v2))" matrices matrices)
+    (scal def-decl "VectorN(length(v2))" matrices matrices)
+    (norm_2 const-decl "(norm?(m))" norms matrices)
+    (row const-decl "Vector" matrices matrices)
+    (length_row formula-decl nil matrices matrices)
+    (mult const-decl "VectorN(m)" matrix_vector_multiplication
+     matrices)
+    (MatrixMN type-eq-decl nil matrices matrices)
+    (mmult_sub_dist formula-decl nil matrix_vector_multiplication
+     matrices))
+   shostak))
+ (ortho_det_sq 0
+  (ortho_det_sq-1 nil 3988435624
+   ("" (skeep)
+    (("" (lemma "det_transpose")
+      (("" (inst -1 "A")
+        (("" (name-replace "det" "det(A)")
+          (("" (expand "det" 1 2)
+            (("" (replace -1 1 :dir RL)
+              (("" (hide -1)
+                (("" (typepred "A")
+                  (("" (expand "orthogonal_matrix?")
+                    (("" (flatten)
+                      (("" (lemma "det_mult")
+                        (("" (hide-all-but (-1 -9 1 -7 -8))
+                          (("" (inst -1 "A" "inverse(A)")
+                            (("" (prop)
+                              (("1"
+                                (replace -4 1 :dir RL)
+                                (("1"
+                                  (replace -1 1 :dir RL)
+                                  (("1"
+                                    (lemma "mult_inverse_left")
+                                    (("1"
+                                      (inst -1 "A")
+                                      (("1"
+                                        (prop)
+                                        (("1"
+                                          (replace -3 -1)
+                                          (("1"
+                                            (replace -1 1)
+                                            (("1"
+                                              (rewrite "det_Id")
+                                              nil
+                                              nil))
+                                            nil))
+                                          nil))
+                                        nil))
+                                      nil))
+                                    nil))
+                                  nil))
+                                nil)
+                               ("2"
+                                (typepred "inverse(A)")
+                                (("2" (propax) nil nil))
+                                nil))
+                              nil))
+                            nil))
                           nil))
                         nil))
                       nil))
@@ -1095,5 +1030,657 @@
         nil))
       nil))
     nil)
-   nil shostak)))
+   ((det_transpose formula-decl nil matrix_inv matrices)
+    (det def-decl "real" matrix_props matrices)
+    (det_Id formula-decl nil matrix_props matrices)
+    (mult_inverse_left formula-decl nil matrix_inv matrices)
+    (inverse const-decl "{IQ |
+   rows(IQ) = rows(SQ) AND
+    IQ * SQ = Id(rows(SQ)) AND SQ * IQ = Id(rows(SQ))}" matrix_inv
+     matrices)
+    (Id const-decl "{M: SquareMatrix(pm) |
+   (FORALL (i, j):
+      entry(M)(i, j) = IF i < pm AND i = j THEN 1 ELSE 0 ENDIF)
+    AND
+    (FORALL (pn: posnat, N: MatrixMN(pm, pn)): M * N = N) AND
+     (FORALL (pn: posnat, N: MatrixMN(pn, pm)): N * M = N)}" matrices
+     matrices)
+    (col def-decl "VectorN(rows(M))" matrices matrices)
+    (VectorN type-eq-decl nil matrices matrices)
+    (row const-decl "Vector" matrices matrices)
+    (* const-decl "real" matrices matrices)
+    (Vector type-eq-decl nil matrices matrices)
+    (entry const-decl "real" matrices matrices)
+    (MatrixMN type-eq-decl nil matrices matrices)
+    (invertible? const-decl "bool" matrix_inv matrices)
+    (det_mult formula-decl nil matrix_diag matrices)
+    (OrthogonalMatrix type-eq-decl nil orthogonal_groups_def nil)
+    (orthogonal_matrix? const-decl "bool" orthogonal_groups_def nil)
+    (SquareMatrix type-eq-decl nil matrices matrices)
+    (Square type-eq-decl nil matrices matrices)
+    (PosFullMatrix type-eq-decl nil matrices matrices)
+    (columns def-decl "{c: nat |
+   (FORALL (i: below(length(M))): length(nth(M, i)) <= c) AND
+    (null?(M) AND c = 0 OR
+      EXISTS (i: below(length(M))): length(nth(M, i)) = c)}" matrices
+     matrices)
+    (rows const-decl "nat" matrices matrices)
+    (FullMatrix type-eq-decl nil matrices matrices)
+    (null? adt-recognizer-decl "[list -> boolean]" list_adt nil)
+    (Matrix type-eq-decl nil matrices matrices)
+    (list type-decl nil list_adt nil))
+   shostak))
+ (ortho_det 0
+  (ortho_det-1 nil 3988437113
+   ("" (skeep)
+    (("" (lemma "ortho_det_sq")
+      (("" (inst -1 "A")
+        (("" (lemma "real_props.sqrt_1")
+          (("" (inst -1 "det(A)") (("" (assert) nil nil)) nil)) nil))
+        nil))
+      nil))
+    nil)
+   ((det def-decl "real" matrix_props matrices)
+    (OrthogonalMatrix type-eq-decl nil orthogonal_groups_def nil)
+    (orthogonal_matrix? const-decl "bool" orthogonal_groups_def nil)
+    (SquareMatrix type-eq-decl nil matrices matrices)
+    (Square type-eq-decl nil matrices matrices)
+    (PosFullMatrix type-eq-decl nil matrices matrices)
+    (columns def-decl "{c: nat |
+   (FORALL (i: below(length(M))): length(nth(M, i)) <= c) AND
+    (null?(M) AND c = 0 OR
+      EXISTS (i: below(length(M))): length(nth(M, i)) = c)}" matrices
+     matrices)
+    (rows const-decl "nat" matrices matrices)
+    (FullMatrix type-eq-decl nil matrices matrices)
+    (null? adt-recognizer-decl "[list -> boolean]" list_adt nil)
+    (Matrix type-eq-decl nil matrices matrices)
+    (list type-decl nil list_adt nil))
+   shostak))
+ (so_closure_TCC1 0
+  (so_closure_TCC1-1 nil 3988435624
+   ("" (skeep)
+    (("" (typepred "C" "D")
+      (("" (lemma "rows_mult")
+        (("" (inst -1 "C" "D")
+          (("" (lemma "columns_mult")
+            (("" (inst -1 "C" "D")
+              (("" (expand "special_orthogonal_matrix?")
+                (("" (expand "orthogonal_matrix?")
+                  (("" (flatten)
+                    (("" (case "NOT null?(C)")
+                      (("1" (assert) nil nil) ("2" (grind) nil nil))
+                      nil))
+                    nil))
+                  nil))
+                nil))
+              nil))
+            nil))
+          nil))
+        nil))
+      nil))
+    nil)
+   ((SquareMatrix type-eq-decl nil matrices matrices)
+    (n formal-const-decl "posnat" orthogonal_groups nil)
+    (posnat nonempty-type-eq-decl nil integers nil)
+    (nonneg_int nonempty-type-eq-decl nil integers nil)
+    (Square type-eq-decl nil matrices matrices)
+    (PosFullMatrix type-eq-decl nil matrices matrices)
+    (columns def-decl "{c: nat |
+   (FORALL (i: below(length(M))): length(nth(M, i)) <= c) AND
+    (null?(M) AND c = 0 OR
+      EXISTS (i: below(length(M))): length(nth(M, i)) = c)}" matrices
+     matrices)
+    (<= const-decl "bool" reals nil)
+    (rows const-decl "nat" matrices matrices)
+    (> const-decl "bool" reals nil)
+    (FullMatrix type-eq-decl nil matrices matrices)
+    (nth def-decl "T" list_props nil)
+    (below type-eq-decl nil nat_types nil)
+    (= const-decl "[T, T -> boolean]" equalities nil)
+    (below type-eq-decl nil naturalnumbers nil)
+    (length def-decl "nat" list_props nil)
+    (< const-decl "bool" reals nil)
+    (nat nonempty-type-eq-decl nil naturalnumbers nil)
+    (>= const-decl "bool" reals nil)
+    (int nonempty-type-eq-decl nil integers nil)
+    (integer_pred const-decl "[rational -> boolean]" integers nil)
+    (rational nonempty-type-from-decl nil rationals nil)
+    (rational_pred const-decl "[real -> boolean]" rationals nil)
+    (null? adt-recognizer-decl "[list -> boolean]" list_adt nil)
+    (real nonempty-type-from-decl nil reals nil)
+    (OR const-decl "[bool, bool -> bool]" booleans nil)
+    (Matrix type-eq-decl nil matrices matrices)
+    (real_pred const-decl "[number_field -> boolean]" reals nil)
+    (number_field nonempty-type-from-decl nil number_fields nil)
+    (number_field_pred const-decl "[number -> boolean]" number_fields
+     nil)
+    (AND const-decl "[bool, bool -> bool]" booleans nil)
+    (every adt-def-decl "boolean" list_adt nil)
+    (PRED type-eq-decl nil defined_types nil)
+    (list type-decl nil list_adt nil)
+    (number nonempty-type-decl nil numbers nil)
+    (NOT const-decl "[bool -> bool]" booleans nil)
+    (bool nonempty-type-eq-decl nil booleans nil)
+    (boolean nonempty-type-decl nil booleans nil)
+    (orthogonal_matrix? const-decl "bool" orthogonal_groups_def nil)
+    (mult_full application-judgement "FullMatrix" matrices matrices)
+    (real_gt_is_strict_total_order name-judgement
+     "(strict_total_order?[real])" real_props nil)
+    (row const-decl "Vector" matrices matrices)
+    (dot def-decl "real" matrices matrices)
+    (array2list_it def-decl
+     "{l: listn(n - i) | FORALL (j: subrange(i, n - 1)): a(j) = nth(l, j - i)}"
+     array2list structures)
+    (array2list const-decl
+     "{l: listn(n) | FORALL (i: below(n)): a(i) = nth(l, i)}"
+     array2list structures)
+    (form_matrix const-decl "{M: MatrixMN(m, n) |
+   FORALL (i: below(m), j: below(n)): nth(row(M)(i), j) = F(i, j)}"
+     matrices matrices)
+    (mult const-decl "{A: MatrixMN(rows(M), columns(N)) |
+   FORALL (i, j): entry(A)(i, j) = row(M)(i) * col(N)(j)}" matrices
+     matrices)
+    (* const-decl "{A: MatrixMN(rows(M), columns(N)) |
+   FORALL (i, j): entry(A)(i, j) = row(M)(i) * col(N)(j)}" matrices
+       matrices)
+    (posint_plus_nnint_is_posint application-judgement "posint"
+     integers nil)
+    (int_minus_int_is_int application-judgement "int" integers nil)
+    (form_matrix_square application-judgement "FullMatrix" matrices
+     matrices)
+    (special_orthogonal_matrix? const-decl "bool" orthogonal_groups_def
+     nil)
+    (columns_mult formula-decl nil matrices matrices)
+    (rows_mult formula-decl nil matrices matrices))
+   nil
+   (so_closure subtype
+    "matrices.*(orthogonal_groups.C, orthogonal_groups.D)"
+    "matrices.SquareMatrix(orthogonal_groups.n)")))
+ (so_closure 0
+  (so_closure-1 nil 3989039827
+   ("" (skeep)
+    (("" (expand "special_orthogonal_matrix?")
+      (("" (flatten)
+        (("" (split)
+          (("1" (lemma "ortho_closure")
+            (("1" (inst -1 "C" "D") (("1" (assert) nil nil)) nil)) nil)
+           ("2" (lemma "det_mult")
+            (("2" (inst -1 "D" "C") (("2" (assert) nil nil)) nil))
+            nil))
+          nil))
+        nil))
+      nil))
+    nil)
+   ((mult_full application-judgement "FullMatrix" matrices matrices)
+    (special_orthogonal_matrix? const-decl "bool" orthogonal_groups_def
+     nil)
+    (number nonempty-type-decl nil numbers nil)
+    (list type-decl nil list_adt nil)
+    (boolean nonempty-type-decl nil booleans nil)
+    (bool nonempty-type-eq-decl nil booleans nil)
+    (PRED type-eq-decl nil defined_types nil)
+    (AND const-decl "[bool, bool -> bool]" booleans nil)
+    (number_field_pred const-decl "[number -> boolean]" number_fields
+     nil)
+    (number_field nonempty-type-from-decl nil number_fields nil)
+    (real_pred const-decl "[number_field -> boolean]" reals nil)
+    (Matrix type-eq-decl nil matrices matrices)
+    (OR const-decl "[bool, bool -> bool]" booleans nil)
+    (real nonempty-type-from-decl nil reals nil)
+    (null? adt-recognizer-decl "[list -> boolean]" list_adt nil)
+    (rational_pred const-decl "[real -> boolean]" rationals nil)
+    (rational nonempty-type-from-decl nil rationals nil)
+    (integer_pred const-decl "[rational -> boolean]" integers nil)
+    (int nonempty-type-eq-decl nil integers nil)
+    (>= const-decl "bool" reals nil)
+    (nat nonempty-type-eq-decl nil naturalnumbers nil)
+    (< const-decl "bool" reals nil)
+    (length def-decl "nat" list_props nil)
+    (below type-eq-decl nil naturalnumbers nil)
+    (= const-decl "[T, T -> boolean]" equalities nil)
+    (below type-eq-decl nil nat_types nil)
+    (nth def-decl "T" list_props nil)
+    (FullMatrix type-eq-decl nil matrices matrices)
+    (> const-decl "bool" reals nil)
+    (rows const-decl "nat" matrices matrices)
+    (<= const-decl "bool" reals nil)
+    (columns def-decl "{c: nat |
+   (FORALL (i: below(length(M))): length(nth(M, i)) <= c) AND
+    (null?(M) AND c = 0 OR
+      EXISTS (i: below(length(M))): length(nth(M, i)) = c)}" matrices
+     matrices)
+    (PosFullMatrix type-eq-decl nil matrices matrices)
+    (Square type-eq-decl nil matrices matrices)
+    (nonneg_int nonempty-type-eq-decl nil integers nil)
+    (posnat nonempty-type-eq-decl nil integers nil)
+    (n formal-const-decl "posnat" orthogonal_groups nil)
+    (SquareMatrix type-eq-decl nil matrices matrices)
+    (ortho_closure formula-decl nil orthogonal_groups nil)
+    (det_mult formula-decl nil matrix_diag matrices))
+   shostak))
+ (so_identity 0
+  (so_identity-1 nil 3989040036
+   ("" (expand "special_orthogonal_matrix?")
+    (("" (split)
+      (("1" (lemma "ortho_identity") (("1" (propax) nil nil)) nil)
+       ("2" (lemma "det_Id") (("2" (inst -1 "n") nil nil)) nil))
+      nil))
+    nil)
+   ((ortho_identity formula-decl nil orthogonal_groups nil)
+    (number nonempty-type-decl nil numbers nil)
+    (boolean nonempty-type-decl nil booleans nil)
+    (number_field_pred const-decl "[number -> boolean]" number_fields
+     nil)
+    (number_field nonempty-type-from-decl nil number_fields nil)
+    (real_pred const-decl "[number_field -> boolean]" reals nil)
+    (real nonempty-type-from-decl nil reals nil)
+    (rational_pred const-decl "[real -> boolean]" rationals nil)
+    (rational nonempty-type-from-decl nil rationals nil)
+    (integer_pred const-decl "[rational -> boolean]" integers nil)
+    (int nonempty-type-eq-decl nil integers nil)
+    (bool nonempty-type-eq-decl nil booleans nil)
+    (>= const-decl "bool" reals nil)
+    (nonneg_int nonempty-type-eq-decl nil integers nil)
+    (> const-decl "bool" reals nil)
+    (posnat nonempty-type-eq-decl nil integers nil)
+    (n formal-const-decl "posnat" orthogonal_groups nil)
+    (det_Id formula-decl nil matrix_props matrices)
+    (special_orthogonal_matrix? const-decl "bool" orthogonal_groups_def
+     nil))
+   shostak))
+ (so_inverse_TCC1 0
+  (so_inverse_TCC1-1 nil 3988435624
+   ("" (skeep)
+    (("" (typepred "C")
+      (("" (expand "special_orthogonal_matrix?")
+        (("" (expand "orthogonal_matrix?" -7) (("" (flatten) nil nil))
+          nil))
+        nil))
+      nil))
+    nil)
+   ((SpecialOrthogonalMatrix type-eq-decl nil orthogonal_groups_def
+     nil)
+    (special_orthogonal_matrix? const-decl "bool" orthogonal_groups_def
+     nil)
+    (SquareMatrix type-eq-decl nil matrices matrices)
+    (n formal-const-decl "posnat" orthogonal_groups nil)
+    (posnat nonempty-type-eq-decl nil integers nil)
+    (nonneg_int nonempty-type-eq-decl nil integers nil)
+    (Square type-eq-decl nil matrices matrices)
+    (PosFullMatrix type-eq-decl nil matrices matrices)
+    (columns def-decl "{c: nat |
+   (FORALL (i: below(length(M))): length(nth(M, i)) <= c) AND
+    (null?(M) AND c = 0 OR
+      EXISTS (i: below(length(M))): length(nth(M, i)) = c)}" matrices
+     matrices)
+    (<= const-decl "bool" reals nil)
+    (rows const-decl "nat" matrices matrices)
+    (> const-decl "bool" reals nil)
+    (FullMatrix type-eq-decl nil matrices matrices)
+    (nth def-decl "T" list_props nil)
+    (below type-eq-decl nil nat_types nil)
+    (= const-decl "[T, T -> boolean]" equalities nil)
+    (below type-eq-decl nil naturalnumbers nil)
+    (length def-decl "nat" list_props nil)
+    (< const-decl "bool" reals nil)
+    (nat nonempty-type-eq-decl nil naturalnumbers nil)
+    (>= const-decl "bool" reals nil)
+    (int nonempty-type-eq-decl nil integers nil)
+    (integer_pred const-decl "[rational -> boolean]" integers nil)
+    (rational nonempty-type-from-decl nil rationals nil)
+    (rational_pred const-decl "[real -> boolean]" rationals nil)
+    (null? adt-recognizer-decl "[list -> boolean]" list_adt nil)
+    (real nonempty-type-from-decl nil reals nil)
+    (OR const-decl "[bool, bool -> bool]" booleans nil)
+    (Matrix type-eq-decl nil matrices matrices)
+    (real_pred const-decl "[number_field -> boolean]" reals nil)
+    (number_field nonempty-type-from-decl nil number_fields nil)
+    (number_field_pred const-decl "[number -> boolean]" number_fields
+     nil)
+    (AND const-decl "[bool, bool -> bool]" booleans nil)
+    (every adt-def-decl "boolean" list_adt nil)
+    (PRED type-eq-decl nil defined_types nil)
+    (list type-decl nil list_adt nil)
+    (number nonempty-type-decl nil numbers nil)
+    (NOT const-decl "[bool -> bool]" booleans nil)
+    (bool nonempty-type-eq-decl nil booleans nil)
+    (boolean nonempty-type-decl nil booleans nil)
+    (orthogonal_matrix? const-decl "bool" orthogonal_groups_def nil))
+   nil
+   (so_inverse subtype "orthogonal_groups.C"
+    "{SQ | booleans.OR(matrix_props.det(matrix_inv.SQ) /= 0, matrix_inv.invertible?(matrix_inv.SQ))}")))
+ (so_inverse_TCC2 0
+  (so_inverse_TCC2-1 nil 3988435624
+   ("" (skeep)
+    (("" (typepred "C")
+      (("" (typepred "inverse(C)") (("" (assert) nil nil)) nil)) nil))
+    nil)
+   ((SpecialOrthogonalMatrix type-eq-decl nil orthogonal_groups_def
+     nil)
+    (special_orthogonal_matrix? const-decl "bool" orthogonal_groups_def
+     nil)
+    (SquareMatrix type-eq-decl nil matrices matrices)
+    (n formal-const-decl "posnat" orthogonal_groups nil)
+    (posnat nonempty-type-eq-decl nil integers nil)
+    (nonneg_int nonempty-type-eq-decl nil integers nil)
+    (Square type-eq-decl nil matrices matrices)
+    (PosFullMatrix type-eq-decl nil matrices matrices)
+    (columns def-decl "{c: nat |
+   (FORALL (i: below(length(M))): length(nth(M, i)) <= c) AND
+    (null?(M) AND c = 0 OR
+      EXISTS (i: below(length(M))): length(nth(M, i)) = c)}" matrices
+     matrices)
+    (<= const-decl "bool" reals nil)
+    (rows const-decl "nat" matrices matrices)
+    (> const-decl "bool" reals nil)
+    (FullMatrix type-eq-decl nil matrices matrices)
+    (nth def-decl "T" list_props nil)
+    (below type-eq-decl nil nat_types nil)
+    (= const-decl "[T, T -> boolean]" equalities nil)
+    (below type-eq-decl nil naturalnumbers nil)
+    (length def-decl "nat" list_props nil)
+    (< const-decl "bool" reals nil)
+    (nat nonempty-type-eq-decl nil naturalnumbers nil)
+    (>= const-decl "bool" reals nil)
+    (int nonempty-type-eq-decl nil integers nil)
+    (integer_pred const-decl "[rational -> boolean]" integers nil)
+    (rational nonempty-type-from-decl nil rationals nil)
+    (rational_pred const-decl "[real -> boolean]" rationals nil)
+    (null? adt-recognizer-decl "[list -> boolean]" list_adt nil)
+    (real nonempty-type-from-decl nil reals nil)
+    (OR const-decl "[bool, bool -> bool]" booleans nil)
+    (Matrix type-eq-decl nil matrices matrices)
+    (real_pred const-decl "[number_field -> boolean]" reals nil)
+    (number_field nonempty-type-from-decl nil number_fields nil)
+    (number_field_pred const-decl "[number -> boolean]" number_fields
+     nil)
+    (AND const-decl "[bool, bool -> bool]" booleans nil)
+    (every adt-def-decl "boolean" list_adt nil)
+    (PRED type-eq-decl nil defined_types nil)
+    (list type-decl nil list_adt nil)
+    (number nonempty-type-decl nil numbers nil)
+    (NOT const-decl "[bool -> bool]" booleans nil)
+    (bool nonempty-type-eq-decl nil booleans nil)
+    (boolean nonempty-type-decl nil booleans nil)
+    (mult_full application-judgement "FullMatrix" matrices matrices)
+    (real_gt_is_strict_total_order name-judgement
+     "(strict_total_order?[real])" real_props nil)
+    (/= const-decl "boolean" notequal nil)
+    (det def-decl "real" matrix_props matrices)
+    (invertible? const-decl "bool" matrix_inv matrices)
+    (MatrixMN type-eq-decl nil matrices matrices)
+    (entry const-decl "real" matrices matrices)
+    (Vector type-eq-decl nil matrices matrices)
+    (* const-decl "real" matrices matrices)
+    (row const-decl "Vector" matrices matrices)
+    (VectorN type-eq-decl nil matrices matrices)
+    (col def-decl "VectorN(rows(M))" matrices matrices)
+    (* const-decl "{A: MatrixMN(rows(M), columns(N)) |
+   FORALL (i, j): entry(A)(i, j) = row(M)(i) * col(N)(j)}" matrices
+       matrices)
+    (IF const-decl "[boolean, T, T -> T]" if_def nil)
+    (Id const-decl "{M: SquareMatrix(pm) |
+   (FORALL (i, j):
+      entry(M)(i, j) = IF i < pm AND i = j THEN 1 ELSE 0 ENDIF)
+    AND
+    (FORALL (pn: posnat, N: MatrixMN(pm, pn)): M * N = N) AND
+     (FORALL (pn: posnat, N: MatrixMN(pn, pm)): N * M = N)}" matrices
+     matrices)
+    (inverse const-decl "{IQ |
+   rows(IQ) = rows(SQ) AND
+    IQ * SQ = Id(rows(SQ)) AND SQ * IQ = Id(rows(SQ))}" matrix_inv
+     matrices))
+   nil
+   (so_inverse subtype "matrix_inv.inverse(orthogonal_groups.C)"
+    "matrices.SquareMatrix(orthogonal_groups.n)")))
+ (so_inverse 0
+  (so_inverse-1 nil 3989040101
+   ("" (skeep)
+    (("" (expand "special_orthogonal_matrix?")
+      (("" (split)
+        (("1" (lemma "ortho_inverse") (("1" (inst -1 "C") nil nil))
+          nil)
+         ("2" (lemma "det_inverse")
+          (("2" (inst -1 "C")
+            (("2" (assert)
+              (("2" (typepred "C")
+                (("2" (expand "special_orthogonal_matrix?" -7)
+                  (("2" (flatten) (("2" (assert) nil nil)) nil)) nil))
+                nil))
+              nil))
+            nil))
+          nil))
+        nil))
+      nil))
+    nil)
+   ((special_orthogonal_matrix? const-decl "bool" orthogonal_groups_def
+     nil)
+    (det_inverse formula-decl nil matrix_inv matrices)
+    (real_gt_is_strict_total_order name-judgement
+     "(strict_total_order?[real])" real_props nil)
+    (NOT const-decl "[bool -> bool]" booleans nil)
+    (ortho_inverse formula-decl nil orthogonal_groups nil)
+    (SpecialOrthogonalMatrix type-eq-decl nil orthogonal_groups_def
+     nil)
+    (OrthogonalMatrix type-eq-decl nil orthogonal_groups_def nil)
+    (orthogonal_matrix? const-decl "bool" orthogonal_groups_def nil)
+    (SquareMatrix type-eq-decl nil matrices matrices)
+    (n formal-const-decl "posnat" orthogonal_groups nil)
+    (posnat nonempty-type-eq-decl nil integers nil)
+    (nonneg_int nonempty-type-eq-decl nil integers nil)
+    (Square type-eq-decl nil matrices matrices)
+    (PosFullMatrix type-eq-decl nil matrices matrices)
+    (columns def-decl "{c: nat |
+   (FORALL (i: below(length(M))): length(nth(M, i)) <= c) AND
+    (null?(M) AND c = 0 OR
+      EXISTS (i: below(length(M))): length(nth(M, i)) = c)}" matrices
+     matrices)
+    (<= const-decl "bool" reals nil)
+    (rows const-decl "nat" matrices matrices)
+    (> const-decl "bool" reals nil)
+    (FullMatrix type-eq-decl nil matrices matrices)
+    (nth def-decl "T" list_props nil)
+    (below type-eq-decl nil nat_types nil)
+    (= const-decl "[T, T -> boolean]" equalities nil)
+    (below type-eq-decl nil naturalnumbers nil)
+    (length def-decl "nat" list_props nil)
+    (< const-decl "bool" reals nil)
+    (nat nonempty-type-eq-decl nil naturalnumbers nil)
+    (>= const-decl "bool" reals nil)
+    (int nonempty-type-eq-decl nil integers nil)
+    (integer_pred const-decl "[rational -> boolean]" integers nil)
+    (rational nonempty-type-from-decl nil rationals nil)
+    (rational_pred const-decl "[real -> boolean]" rationals nil)
+    (null? adt-recognizer-decl "[list -> boolean]" list_adt nil)
+    (real nonempty-type-from-decl nil reals nil)
+    (OR const-decl "[bool, bool -> bool]" booleans nil)
+    (Matrix type-eq-decl nil matrices matrices)
+    (real_pred const-decl "[number_field -> boolean]" reals nil)
+    (number_field nonempty-type-from-decl nil number_fields nil)
+    (number_field_pred const-decl "[number -> boolean]" number_fields
+     nil)
+    (AND const-decl "[bool, bool -> bool]" booleans nil)
+    (PRED type-eq-decl nil defined_types nil)
+    (bool nonempty-type-eq-decl nil booleans nil)
+    (boolean nonempty-type-decl nil booleans nil)
+    (list type-decl nil list_adt nil)
+    (number nonempty-type-decl nil numbers nil))
+   shostak))
+ (ortho_det_homomorphism 0
+  (ortho_det_homomorphism-1 nil 3989042585
+   ("" (skeep) (("" (postpone) nil nil)) nil) nil shostak))
+ (so_normal_TCC1 0
+  (so_normal_TCC1-1 nil 3988435624
+   ("" (skeep)
+    (("" (typepred "A" "C")
+      (("" (lemma "rows_mult")
+        (("" (inst -1 "A*C" "inverse(A)")
+          (("1" (lemma "rows_mult")
+            (("1" (inst -1 "A" "C")
+              (("1" (lemma "columns_mult")
+                (("1" (inst -1 "A*C" "inverse(A)")
+                  (("1" (expand "orthogonal_matrix?")
+                    (("1" (case "NOT null?(A)")
+                      (("1" (assert)
+                        (("1" (hide -4 -11)
+                          (("1" (prop)
+                            (("1" (expand "invertible?" -10)
+                              (("1" (assert) nil nil)) nil)
+                             ("2" (expand "rows")
+                              (("2" (assert) nil nil)) nil)
+                             ("3" (assert) nil nil)
+                             ("4" (replace -11 -2)
+                              (("4"
+                                (rewrite "columns_transpose")
+                                (("4" (assert) nil nil))
+                                nil))
+                              nil)
+                             ("5" (expand "rows")
+                              (("5"
+                                (assert)
+                                (("5"
+                                  (typepred "n")
+                                  (("5"
+                                    (lemma "columns_mult")
+                                    (("5"
+                                      (inst -1 "A * C" "inverse(A)")
+                                      (("5"
+                                        (assert)
+                                        (("5"
+                                          (lemma "columns_mult")
+                                          (("5"
+                                            (inst -1 "A" "C")
+                                            (("5"
+                                              (assert)
+                                              (("5"
+                                                (lemma "columns_mult")
+                                                (("5"
+                                                  (inst
+                                                   -1
+                                                   "A * C"
+                                                   "inverse(A)")
+                                                  (("5"
+                                                    (lemma
+                                                     "columns_transpose")
+                                                    (("5"
+                                                      (inst -1 "A")
+                                                      (("5"
+                                                        (replace
+                                                         -16
+                                                         -2)
+                                                        (("5"
+                                                          (lemma
+                                                           "rows_mult")
+                                                          (("5"
+                                                            (inst
+                                                             -1
+                                                             "A"
+                                                             "C")
+                                                            (("5"
+                                                              (assert)
+                                                              (("5"
+                                                                (lemma
+                                                                 "columns_mult")
+                                                                (("5"
+                                                                  (inst
+                                                                   -1
+                                                                   "A * C"
+                                                                   "inverse(A)")
+                                                                  (("5"
+                                                                    (lemma
+                                                                     "columns_transpose")
+                                                                    (("5"
+                                                                      (postpone)
+                                                                      nil
+                                                                      nil))
+                                                                    nil))
+                                                                  nil))
+                                                                nil))
+                                                              nil))
+                                                            nil))
+                                                          nil))
+                                                        nil))
+                                                      nil))
+                                                    nil))
+                                                  nil))
+                                                nil))
+                                              nil))
+                                            nil))
+                                          nil))
+                                        nil))
+                                      nil))
+                                    nil))
+                                  nil))
+                                nil))
+                              nil)
+                             ("6" (postpone) nil nil)
+                             ("7" (postpone) nil nil)
+                             ("8" (postpone) nil nil))
+                            nil))
+                          nil))
+                        nil)
+                       ("2" (postpone) nil nil))
+                      nil))
+                    nil))
+                  nil))
+                nil))
+              nil))
+            nil)
+           ("2" (postpone) nil nil))
+          nil))
+        nil))
+      nil))
+    nil)
+   nil nil
+   (so_normal subtype
+    "matrices.*(matrices.*(orthogonal_groups.A, orthogonal_groups.C), matrix_inv.inverse(orthogonal_groups.A))"
+    "matrices.SquareMatrix(orthogonal_groups.n)")))
+ (so_normal 0
+  (so_normal-1 nil 3989040320
+   ("" (skeep)
+    (("" (typepred "A")
+      (("" (typepred "C")
+        (("" (expand "special_orthogonal_matrix?")
+          (("" (expand "orthogonal_matrix?" -)
+            (("" (lemma "invertible_det")
+              (("" (inst -1 "A")
+                (("" (flatten)
+                  (("" (split)
+                    (("1" (lemma "ortho_closure")
+                      (("1" (inst -1 "A * C" "inverse(A)")
+                        (("1" (lemma "ortho_closure")
+                          (("1" (inst -1 "A" "C")
+                            (("1" (lemma "ortho_inverse")
+                              (("1"
+                                (inst -1 "A")
+                                (("1"
+                                  (assert)
+                                  (("1" (postpone) nil nil))
+                                  nil))
+                                nil))
+                              nil))
+                            nil))
+                          nil)
+                         ("2" (postpone) nil nil)
+                         ("3" (postpone) nil nil))
+                        nil))
+                      nil)
+                     ("2" (postpone) nil nil))
+                    nil))
+                  nil))
+                nil))
+              nil))
+            nil))
+          nil))
+        nil))
+      nil))
+    nil)
+   nil shostak))
+ (ortho_det_sign_homomorphism_TCC1 0
+  (ortho_det_sign_homomorphism_TCC1-1 nil 3990478183
+   ("" (subtype-tcc) nil nil) nil nil
+   (ortho_det_sign_homomorphism subtype
+    "matrices.*(orthogonal_groups.A, orthogonal_groups.B)"
+    "OrthogonalMatrix[n]"))))
 

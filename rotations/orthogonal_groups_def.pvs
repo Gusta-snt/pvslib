@@ -15,8 +15,7 @@ BEGIN
 
   IMPORTING matrices@matrices
   IMPORTING matrices@matrix_inv
-  IMPORTING matrices@mat_vec_mult % Verificar as redundâncias de importações
-  
+
   %--------------------------------------------------------------------------
   % Definition of Orthogonal Group O(n)
   % O(n) = { A in GL_n | A^-1 = A^T }
@@ -27,5 +26,41 @@ BEGIN
 
   % Defined as a subtype
   OrthogonalMatrix: TYPE = (orthogonal_matrix?)
+
+  %--------------------------------------------------------------------------
+  % Definition of Special Orthogonal Group SO(n)
+  % SO(n) = { A in O(n) | det(A) = 1 }
+  %--------------------------------------------------------------------------
+
+  special_orthogonal_matrix?(A: SquareMatrix(n)): bool =
+    orthogonal_matrix?(A) AND det(A) = 1
+
+  % Defined as a subtype
+  SpecialOrthogonalMatrix: TYPE = (special_orthogonal_matrix?)
+
+  %--------------------------------------------------------------------------
+  % Sign group {±1} under multiplication
+  % Target group for the determinant homomorphism O(n) -> {±1}
+  %--------------------------------------------------------------------------
+
+  Sign: TYPE = {x: real | x = 1 OR x = -1}
+
+  sign_mult(x, y: Sign): Sign =
+    IF x = 1 THEN y ELSE IF y = 1 THEN -1 ELSE 1 ENDIF ENDIF
+
+  %--------------------------------------------------------------------------
+  % Reflection matrix in O(n) with determinant -1
+  % Diagonal matrix with -1 at (0,0) and 1 elsewhere
+  %--------------------------------------------------------------------------
+
+  reflection_matrix: SquareMatrix(n) =
+    form_matrix(LAMBDA (i, j: nat):
+      IF i < n AND j < n AND i = j THEN
+        IF i = 0 THEN -1 ELSE 1 ENDIF
+      ELSE 0 ENDIF, n, n)
+
+  % Determinant map O(n) -> Sign, via det
+  ortho_det_sign(A: OrthogonalMatrix): Sign =
+    IF det(A) = 1 THEN 1 ELSE -1 ENDIF
 
 END orthogonal_groups_def

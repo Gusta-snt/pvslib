@@ -1,0 +1,107 @@
+%----------------------------------------------------------------------------
+% Special Orthogonal Groups Properties
+% Authors: Gustavo Ferreira dos Santos
+% 	   Universidade Federal de Goiás - Brazil
+%
+%	   Thaynara Arielly de Lima
+%	   Universidade Federal de Goiás - Brazil
+%
+% This theory formalizes SO(n) as a subgroup of O(n) and the quotient
+% O(n)/SO(n) ≅ Z_2 via the determinant homomorphism (Theorem 1.9 and 1.10).
+%----------------------------------------------------------------------------
+
+special_orthogonal_groups[n: posnat]: THEORY
+BEGIN
+
+  IMPORTING orthogonal_groups_def[n],
+            orthogonal_groups[n],
+            matrices_extra
+
+  % Properly define the restricted operations so we can use the algebra library
+  ortho_mult(A, B: OrthogonalMatrix): OrthogonalMatrix = A * B
+  ortho_id: OrthogonalMatrix = Id(n)
+
+  %--------------------------------------------------------------------------
+  % Theorem 1.5 / prerequisite: O(n) is a group under matrix multiplication
+  %--------------------------------------------------------------------------
+  IMPORTING algebra@group_def[OrthogonalMatrix, ortho_mult, ortho_id]
+
+  % @QED orthogonal_matrices_is_group proved by gusta on Fri, 18 Jun 2026 10:57:53 GMT
+  orthogonal_matrices_is_group: LEMMA
+    group?(fullset[OrthogonalMatrix])
+
+  %--------------------------------------------------------------------------
+  % Theorem 1.9: SO(n) is a subgroup of O(n)
+  % SO(n) = { A in O(n) | det(A) = 1 }
+  %--------------------------------------------------------------------------
+
+  special_orthogonal_matrices_is_subgroup: CONJECTURE
+    subgroup?(fullset[SpecialOrthogonalMatrix], fullset[OrthogonalMatrix])
+
+  %--------------------------------------------------------------------------
+  % Sign group {±1} is a group under multiplication
+  %--------------------------------------------------------------------------
+  IMPORTING algebra@group_def[Sign, sign_mult, 1]
+
+  sign_group_is_group: CONJECTURE
+    group?(fullset[Sign])
+
+  %--------------------------------------------------------------------------
+  % Theorem 1.10: SO(n) ◁ O(n) and O(n)/SO(n) ≅ Z_2
+  % Proof strategy: det: O(n) -> {±1} is a surjective homomorphism with
+  % kernel SO(n); apply the First Isomorphism Theorem.
+  %--------------------------------------------------------------------------
+
+  % We import the algebra library theories with the proper group types.
+  % The assumptions for these theories will be generated as TCCs which are
+  % provable by the conjectures above, removing the need for an ASSUMING block.
+  IMPORTING algebra@group[OrthogonalMatrix, ortho_mult, ortho_id],
+            algebra@group[Sign, sign_mult, 1]
+
+  On: group[OrthogonalMatrix, ortho_mult, ortho_id].group = fullset[OrthogonalMatrix]
+  SOn: set[OrthogonalMatrix] = fullset[SpecialOrthogonalMatrix]
+  SignGp: group[Sign, sign_mult, 1].group = fullset[Sign]
+
+  IMPORTING algebra@normal_subgroups[OrthogonalMatrix, ortho_mult, ortho_id],
+            algebra@homomorphisms[OrthogonalMatrix, ortho_mult, ortho_id, Sign, sign_mult, 1],
+            algebra@homomorphism_lemmas[OrthogonalMatrix, ortho_mult, ortho_id, Sign, sign_mult, 1],
+            algebra@factor_groups[OrthogonalMatrix, ortho_mult, ortho_id],
+            algebra@zp_group[2]
+
+  Z2: group[below(2), ++, 0].group = fullset[below(2)]
+
+  ortho_det_phi(A: OrthogonalMatrix): Sign = ortho_det_sign(A)
+
+  % SO(n) is a normal subgroup of O(n)
+  so_is_normal_subgroup: CONJECTURE
+    normal_subgroup?(SOn, On)
+
+  % det: O(n) -> {±1} is a group homomorphism
+  ortho_det_is_homomorphism: CONJECTURE
+    homomorphism?(On, SignGp, ortho_det_phi)
+
+  % ker(det) = SO(n)
+  ortho_det_kernel_is_SO: CONJECTURE
+    kernel(On, SignGp)(ortho_det_phi) = SOn
+
+  % det: O(n) -> {±1} is surjective
+  ortho_det_is_surjective: CONJECTURE
+    surjective?(ortho_det_phi)
+
+  % {±1} ≅ Z_2 via 1 ↦ 0, -1 ↦ 1
+  sign_iso_Z2: CONJECTURE
+    isomorphism?(SignGp, Z2, LAMBDA (s: Sign): IF s = 1 THEN 0 ELSE 1 ENDIF)
+
+  % O(n)/SO(n) ≅ {±1}  (First Isomorphism Theorem)
+  ortho_quotient_iso_sign: CONJECTURE
+    EXISTS (N: normal_subgroup(On)):
+      isomorphic?[left_cosets(On, N), mult(On, N), N, Sign, sign_mult, 1]
+        (over(On, N), SignGp)
+
+  % O(n)/SO(n) ≅ Z_2
+  ortho_quotient_iso_Z2: CONJECTURE
+    EXISTS (N: normal_subgroup(On)):
+      isomorphic?[left_cosets(On, N), mult(On, N), N, below(2), ++, 0]
+        (over(On, N), Z2)
+
+END special_orthogonal_groups

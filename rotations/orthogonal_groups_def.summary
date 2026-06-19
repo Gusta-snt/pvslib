@@ -1,5 +1,6 @@
 TCCs summary for theory orthogonal_groups_def
 
-	orthogonal_matrix?_TCC1.........................................✅ proved              (1.391 s)
+	orthogonal_matrix?_TCC1.........................................✅ proved              (0.981 s)
+	reflection_matrix_TCC1..........................................✅ proved              (0.617 s)
 
-Theory orthogonal_groups_def totals: 1 formulas, 1 attempted, 1 succeeded (1.391 s)
+Theory orthogonal_groups_def totals: 2 formulas, 2 attempted, 2 succeeded (1.598 s)

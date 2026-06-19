@@ -1,0 +1,6 @@
+TCCs summary for theory linear_isometries
+
+	isometry_shift_to_linear_TCC1...................................✅ proved              (0.416 s)
+	isometry_shift_to_linear_TCC2...................................✅ proved              (0.567 s)
+
+Theory linear_isometries totals: 2 formulas, 2 attempted, 2 succeeded (0.983 s)

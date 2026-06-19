@@ -16,9 +16,7 @@ BEGIN
   IMPORTING 
     orthogonal_groups_def[n],
     linear_isometries_def[n],
-    matrices@matrix_vector_multiplication, % Verificar redundância nas importações
-    matrices_extra[n],
-    matrices@more_matrix_props
+    matrices@props_mat_vec_multiplication
   
   % Variables
   A, B: VAR OrthogonalMatrix
@@ -64,7 +62,100 @@ BEGIN
   % The linear transformation f(x) = A * x is a linear isometry.
   %--------------------------------------------------------------------------
 
-  ortho_is_linear_isometry: CONJECTURE
+  % @QED ortho_is_linear_isometry proved by gusta on Fri, 08 May 2026 11:40:25 GMT
+  ortho_is_linear_isometry: LEMMA
     linear_isometry?(LAMBDA (x: ConsVecN): A * x)(norm_2(n))
+
+  %--------------------------------------------------------------------------
+  % Corollary: Orthogonal matrices have determinant ±1.
+  % det(A)^2 = det(A) * det(A^T) = det(A * A^T) = det(I) = 1
+  %--------------------------------------------------------------------------
+
+  % @QED ortho_det_sq proved by gusta on Fri, 22 May 2026 11:36:04 GMT
+  ortho_det_sq: LEMMA
+    det(A) * det(A) = 1
+
+  % @QED ortho_det proved by gusta on Fri, 22 May 2026 11:19:32 GMT
+  ortho_det: COROLLARY
+    det(A) = 1 OR det(A) = -1
+
+  %--------------------------------------------------------------------------
+  % fechar 1.9 antes do 1.8
+  % CONJECTURE 1.8: Every linear isometry is a linear transformation
+  % whose matrix is in O(n).
+  % If f is a linear isometry, then there exists an orthogonal matrix A
+  % such that f(x) = A * x for all x in R^n.
+  % (Converse of ortho_is_linear_isometry)
+  %--------------------------------------------------------------------------
+
+  f: VAR Function_n
+
+  linear_isometry_is_ortho: CONJECTURE
+    linear_isometry?(f)(norm_2(n)) IMPLIES
+    EXISTS (A: OrthogonalMatrix):
+      FORALL (x: ConsVecN): f(x) = A * x
+
+  %--------------------------------------------------------------------------
+  % Theorem 1.9: SO(n) is a subgroup of O(n).
+  % SO(n) = { A in O(n) | det(A) = 1 }
+  %--------------------------------------------------------------------------
+
+  C, D: VAR SpecialOrthogonalMatrix
+
+  % 1. Closure: If A, B in SO(n), then A * B in SO(n)
+  % @QED so_closure proved by gusta on Fri, 29 May 2026 10:40:27 GMT
+  so_closure: LEMMA
+    FORALL (C, D: SquareMatrix(n)):
+      special_orthogonal_matrix?(C) AND special_orthogonal_matrix?(D) IMPLIES
+      special_orthogonal_matrix?(C * D)
+
+  % 2. Identity: The identity matrix I is in SO(n)
+  % @QED so_identity proved by gusta on Fri, 29 May 2026 10:41:34 GMT
+  so_identity: LEMMA
+    special_orthogonal_matrix?(Id(n))
+
+  % 3. Inverse: If A in SO(n), then A^-1 in SO(n)
+  % @QED so_inverse proved by gusta on Fri, 29 May 2026 10:45:06 GMT
+  so_inverse: LEMMA
+    special_orthogonal_matrix?(inverse(C))
+
+  %--------------------------------------------------------------------------
+  % Theorem 1.10: SO(n) is a normal subgroup of O(n).
+  % Furthermore, O(n)/SO(n) ≅ Z_2.
+  %--------------------------------------------------------------------------
+
+  % Reflection matrix lies in O(n) and has determinant -1
+  ortho_reflection: CONJECTURE
+    orthogonal_matrix?(reflection_matrix) AND det(reflection_matrix) = -1
+
+  % There exists an orthogonal matrix with determinant -1
+  ortho_det_neg_exists: CONJECTURE
+    EXISTS (M: SquareMatrix(n)):
+      orthogonal_matrix?(M) AND det(M) = -1
+
+  % Determinant is multiplicative on O(n)
+  ortho_det_homomorphism: LEMMA
+    det(A * B) = det(A) * det(B)
+
+  % Conjugation preserves determinant: det(A*C*A^-1) = det(C)
+  ortho_det_conjugate: CONJECTURE
+    special_orthogonal_matrix?(C) IMPLIES
+    det(A * C * inverse(A)) = det(C)
+
+  % Kernel characterization on O(n): det(A) = 1 iff A in SO(n)
+  ortho_det_kernel_char: LEMMA
+    special_orthogonal_matrix?(A) IFF det(A) = 1
+
+  % SO(n) is normal: for all A in O(n), C in SO(n), A * C * A^-1 in SO(n)
+  so_normal: CONJECTURE
+    special_orthogonal_matrix?(A * C * inverse(A))
+
+  % det: O(n) -> Sign is multiplicative at the level of Sign
+  ortho_det_sign_homomorphism: CONJECTURE
+    ortho_det_sign(A * B) = sign_mult(ortho_det_sign(A), ortho_det_sign(B))
+
+  % det: O(n) -> Sign is surjective
+  ortho_det_sign_surjective: CONJECTURE
+    EXISTS (R: OrthogonalMatrix): ortho_det_sign(R) = -1
 
 END orthogonal_groups
