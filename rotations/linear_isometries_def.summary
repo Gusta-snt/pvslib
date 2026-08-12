@@ -1,9 +1,0 @@
-TCCs summary for theory linear_isometries_def
-
-	add_ConsVecN....................................................✅ proved              (1.1 s)
-	isometry?_TCC1..................................................✅ proved              (0.407 s)
-	isometry?_TCC2..................................................✅ proved              (0.35 s)
-	fixes_origin?_TCC1..............................................✅ proved              (0.356 s)
-	linear?_TCC1....................................................✅ proved              (0.466 s)
-
-Theory linear_isometries_def totals: 5 formulas, 5 attempted, 5 succeeded (2.679 s)

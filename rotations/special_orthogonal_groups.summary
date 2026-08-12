@@ -1,7 +1,0 @@
-TCCs summary for theory special_orthogonal_groups
-
-	orthogonal_matrices_is_group_TCC1...............................✅ proved              (0.609 s)
-	orthogonal_matrices_is_group_TCC2...............................✨ untried             (1.269 s)
-	special_orthogonal_matrices_is_subgroup_TCC1....................✨ untried             (44.463 s)
-
-Theory special_orthogonal_groups totals: 3 formulas, 3 attempted, 1 succeeded (46.341 s)

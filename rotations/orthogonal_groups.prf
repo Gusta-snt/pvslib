@@ -23,9 +23,6 @@
       nil))
     nil)
    ((SquareMatrix type-eq-decl nil matrices matrices)
-    (n formal-const-decl "posnat" orthogonal_groups nil)
-    (posnat nonempty-type-eq-decl nil integers nil)
-    (nonneg_int nonempty-type-eq-decl nil integers nil)
     (Square type-eq-decl nil matrices matrices)
     (PosFullMatrix type-eq-decl nil matrices matrices)
     (columns def-decl "{c: nat |
@@ -33,42 +30,13 @@
     (null?(M) AND c = 0 OR
       EXISTS (i: below(length(M))): length(nth(M, i)) = c)}" matrices
      matrices)
-    (<= const-decl "bool" reals nil)
     (rows const-decl "nat" matrices matrices)
-    (> const-decl "bool" reals nil)
     (FullMatrix type-eq-decl nil matrices matrices)
-    (nth def-decl "T" list_props nil)
-    (below type-eq-decl nil nat_types nil)
-    (= const-decl "[T, T -> boolean]" equalities nil)
-    (below type-eq-decl nil naturalnumbers nil)
-    (length def-decl "nat" list_props nil)
-    (< const-decl "bool" reals nil)
-    (nat nonempty-type-eq-decl nil naturalnumbers nil)
-    (>= const-decl "bool" reals nil)
-    (int nonempty-type-eq-decl nil integers nil)
-    (integer_pred const-decl "[rational -> boolean]" integers nil)
-    (rational nonempty-type-from-decl nil rationals nil)
-    (rational_pred const-decl "[real -> boolean]" rationals nil)
     (null? adt-recognizer-decl "[list -> boolean]" list_adt nil)
-    (real nonempty-type-from-decl nil reals nil)
-    (OR const-decl "[bool, bool -> bool]" booleans nil)
     (Matrix type-eq-decl nil matrices matrices)
-    (real_pred const-decl "[number_field -> boolean]" reals nil)
-    (number_field nonempty-type-from-decl nil number_fields nil)
-    (number_field_pred const-decl "[number -> boolean]" number_fields
-     nil)
-    (AND const-decl "[bool, bool -> bool]" booleans nil)
-    (every adt-def-decl "boolean" list_adt nil)
-    (PRED type-eq-decl nil defined_types nil)
     (list type-decl nil list_adt nil)
-    (number nonempty-type-decl nil numbers nil)
-    (NOT const-decl "[bool -> bool]" booleans nil)
-    (bool nonempty-type-eq-decl nil booleans nil)
-    (boolean nonempty-type-decl nil booleans nil)
     (columns_mult formula-decl nil matrices matrices)
     (orthogonal_matrix? const-decl "bool" orthogonal_groups_def nil)
-    (real_gt_is_strict_total_order name-judgement
-     "(strict_total_order?[real])" real_props nil)
     (mult_full application-judgement "FullMatrix" matrices matrices)
     (rows_mult formula-decl nil matrices matrices))
    nil
@@ -1097,6 +1065,988 @@
     (Matrix type-eq-decl nil matrices matrices)
     (list type-decl nil list_adt nil))
    shostak))
+ (dot_product_norm_eq 0
+  (dot_product_norm_eq-1 nil 3995084864
+   ("" (skeep)
+    (("" (typepred "P")
+      (("" (typepred "Q")
+        (("" (typepred "P - Q")
+          (("" (expand "max")
+            (("" (assert)
+              ((""
+                (lemma "dot_dist_sub" ("l1" "P - Q" "l2" "P" "l3" "Q"))
+                (("" (lemma "dot_commutes" ("v1" "P - Q" "v2" "P"))
+                  (("" (lemma "dot_commutes" ("v1" "P - Q" "v2" "Q"))
+                    ((""
+                      (lemma "dot_dist_sub"
+                       ("l1" "P" "l2" "P" "l3" "Q"))
+                      ((""
+                        (lemma "dot_dist_sub"
+                         ("l1" "Q" "l2" "P" "l3" "Q"))
+                        (("" (lemma "dot_commutes" ("v1" "Q" "v2" "P"))
+                          (("" (assert) nil nil)) nil))
+                        nil))
+                      nil))
+                    nil))
+                  nil))
+                nil))
+              nil))
+            nil))
+          nil))
+        nil))
+      nil))
+    nil)
+   ((ConsVecN type-eq-decl nil linear_isometries_def nil)
+    (cons? adt-recognizer-decl "[list -> boolean]" list_adt nil)
+    (VectorN type-eq-decl nil matrices matrices)
+    (n formal-const-decl "posnat" orthogonal_groups nil)
+    (posnat nonempty-type-eq-decl nil integers nil)
+    (> const-decl "bool" reals nil)
+    (nonneg_int nonempty-type-eq-decl nil integers nil)
+    (length def-decl "nat" list_props nil)
+    (nat nonempty-type-eq-decl nil naturalnumbers nil)
+    (>= const-decl "bool" reals nil)
+    (int nonempty-type-eq-decl nil integers nil)
+    (integer_pred const-decl "[rational -> boolean]" integers nil)
+    (rational nonempty-type-from-decl nil rationals nil)
+    (rational_pred const-decl "[real -> boolean]" rationals nil)
+    (= const-decl "[T, T -> boolean]" equalities nil)
+    (real nonempty-type-from-decl nil reals nil)
+    (real_pred const-decl "[number_field -> boolean]" reals nil)
+    (number_field nonempty-type-from-decl nil number_fields nil)
+    (number_field_pred const-decl "[number -> boolean]" number_fields
+     nil)
+    (AND const-decl "[bool, bool -> bool]" booleans nil)
+    (every adt-def-decl "boolean" list_adt nil)
+    (list type-decl nil list_adt nil)
+    (PRED type-eq-decl nil defined_types nil)
+    (number nonempty-type-decl nil numbers nil)
+    (NOT const-decl "[bool -> bool]" booleans nil)
+    (bool nonempty-type-eq-decl nil booleans nil)
+    (boolean nonempty-type-decl nil booleans nil)
+    (- const-decl "VectorN(max(length(v1), length(v2)))" matrices
+       matrices)
+    (max const-decl "{p: real | p >= m AND p >= n}" real_defs nil)
+    (Vector type-eq-decl nil matrices matrices)
+    (real_plus_real_is_real application-judgement "real" reals nil)
+    (real_minus_real_is_real application-judgement "real" reals nil)
+    (real_times_real_is_real application-judgement "real" reals nil)
+    (dot_commutes formula-decl nil matrices matrices)
+    (dot_dist_sub formula-decl nil vector_arithmetic matrices)
+    (listn_0 name-judgement "listn[real](0)" vector_arithmetic
+     matrices))
+   shostak))
+ (isometry_preserves_dot_product 0
+  (isometry_preserves_dot_product-1 nil 3995085919
+   ("" (skeep)
+    (("" (expand "linear_isometry?")
+      (("" (flatten)
+        (("" (skeep)
+          (("" (expand "isometry?")
+            (("" (expand "fixes_origin?")
+              (("" (inst-cp -1 "x" "y")
+                (("" (inst-cp -1 "x" "zero_vec(n)")
+                  (("" (inst -1 "y" "zero_vec(n)")
+                    (("" (typepred "x")
+                      (("" (typepred "y")
+                        (("" (typepred "f(x)")
+                          (("" (typepred "f(y)")
+                            ((""
+                              (lemma "vector_arithmetic.sub_zero"
+                               ("l" "f(x)"))
+                              ((""
+                                (lemma
+                                 "vector_arithmetic.sub_zero"
+                                 ("l" "x"))
+                                ((""
+                                  (lemma
+                                   "vector_arithmetic.sub_zero"
+                                   ("l" "f(y)"))
+                                  ((""
+                                    (lemma
+                                     "vector_arithmetic.sub_zero"
+                                     ("l" "y"))
+                                    ((""
+                                      (lemma
+                                       "vector_arithmetic.sub_zero"
+                                       ("l" "f(y)"))
+                                      ((""
+                                        (lemma
+                                         "vector_arithmetic.sub_zero"
+                                         ("l" "y"))
+                                        ((""
+                                          (assert)
+                                          ((""
+                                            (expand "norm_2")
+                                            ((""
+                                              (rewrite
+                                               "reals@sqrt.sqrt_eq")
+                                              ((""
+                                                (rewrite
+                                                 "reals@sqrt.sqrt_eq")
+                                                ((""
+                                                  (rewrite
+                                                   "reals@sqrt.sqrt_eq")
+                                                  ((""
+                                                    (expand "norm_2sq")
+                                                    ((""
+                                                      (lemma
+                                                       "dot_product_norm_eq"
+                                                       ("P"
+                                                        "f(x)"
+                                                        "Q"
+                                                        "f(y)"))
+                                                      ((""
+                                                        (lemma
+                                                         "dot_product_norm_eq"
+                                                         ("P"
+                                                          "x"
+                                                          "Q"
+                                                          "y"))
+                                                        ((""
+                                                          (assert)
+                                                          nil
+                                                          nil))
+                                                        nil))
+                                                      nil))
+                                                    nil))
+                                                  nil))
+                                                nil))
+                                              nil))
+                                            nil))
+                                          nil))
+                                        nil))
+                                      nil))
+                                    nil))
+                                  nil))
+                                nil))
+                              nil))
+                            nil))
+                          nil))
+                        nil))
+                      nil))
+                    nil))
+                  nil))
+                nil))
+              nil))
+            nil))
+          nil))
+        nil))
+      nil))
+    nil)
+   ((linear_isometry? const-decl "bool" linear_isometries_def nil)
+    (listn_0 name-judgement "listn[real](0)" vector_arithmetic
+     matrices)
+    (fixes_origin? const-decl "bool" linear_isometries_def nil)
+    (zero_vec def-decl "VectorN(m)" vector_arithmetic matrices)
+    (NOT const-decl "[bool -> bool]" booleans nil)
+    (Function_n type-eq-decl nil linear_isometries_def nil)
+    (sub_zero formula-decl nil vector_arithmetic matrices)
+    (- const-decl "VectorN(max(length(v1), length(v2)))" matrices
+       matrices)
+    (max const-decl "{p: real | p >= m AND p >= n}" real_defs nil)
+    (Vector type-eq-decl nil matrices matrices)
+    (norm_2sq const-decl "nonneg_real" norms matrices)
+    (nonneg_real nonempty-type-eq-decl nil real_types nil)
+    (sqrt_eq formula-decl nil sqrt reals)
+    (dot_product_norm_eq formula-decl nil orthogonal_groups nil)
+    (real_plus_real_is_real application-judgement "real" reals nil)
+    (real_minus_real_is_real application-judgement "real" reals nil)
+    (real_times_real_is_real application-judgement "real" reals nil)
+    (norm_2 const-decl "(norm?(m))" norms matrices)
+    (ConsVecN type-eq-decl nil linear_isometries_def nil)
+    (cons? adt-recognizer-decl "[list -> boolean]" list_adt nil)
+    (VectorN type-eq-decl nil matrices matrices)
+    (n formal-const-decl "posnat" orthogonal_groups nil)
+    (posnat nonempty-type-eq-decl nil integers nil)
+    (> const-decl "bool" reals nil)
+    (nonneg_int nonempty-type-eq-decl nil integers nil)
+    (length def-decl "nat" list_props nil)
+    (nat nonempty-type-eq-decl nil naturalnumbers nil)
+    (>= const-decl "bool" reals nil)
+    (int nonempty-type-eq-decl nil integers nil)
+    (integer_pred const-decl "[rational -> boolean]" integers nil)
+    (rational nonempty-type-from-decl nil rationals nil)
+    (rational_pred const-decl "[real -> boolean]" rationals nil)
+    (= const-decl "[T, T -> boolean]" equalities nil)
+    (real nonempty-type-from-decl nil reals nil)
+    (real_pred const-decl "[number_field -> boolean]" reals nil)
+    (number_field nonempty-type-from-decl nil number_fields nil)
+    (number_field_pred const-decl "[number -> boolean]" number_fields
+     nil)
+    (AND const-decl "[bool, bool -> bool]" booleans nil)
+    (every adt-def-decl "boolean" list_adt nil)
+    (PRED type-eq-decl nil defined_types nil)
+    (bool nonempty-type-eq-decl nil booleans nil)
+    (boolean nonempty-type-decl nil booleans nil)
+    (list type-decl nil list_adt nil)
+    (number nonempty-type-decl nil numbers nil)
+    (isometry? const-decl "bool" linear_isometries_def nil))
+   shostak))
+ (isometry_matrix_TCC1 0
+  (isometry_matrix_TCC1-1 nil 3995084756 ("" (subtype-tcc) nil nil)
+   ((boolean nonempty-type-decl nil booleans nil)
+    (bool nonempty-type-eq-decl nil booleans nil)
+    (NOT const-decl "[bool -> bool]" booleans nil)
+    (number nonempty-type-decl nil numbers nil)
+    (number_field_pred const-decl "[number -> boolean]" number_fields
+     nil)
+    (number_field nonempty-type-from-decl nil number_fields nil)
+    (real_pred const-decl "[number_field -> boolean]" reals nil)
+    (real nonempty-type-from-decl nil reals nil)
+    (>= const-decl "bool" reals nil)
+    (rational_pred const-decl "[real -> boolean]" rationals nil)
+    (rational nonempty-type-from-decl nil rationals nil)
+    (integer_pred const-decl "[rational -> boolean]" integers nil)
+    (int nonempty-type-eq-decl nil integers nil)
+    (nat nonempty-type-eq-decl nil naturalnumbers nil)
+    (listn_0 name-judgement "listn[real](0)" vector_arithmetic
+     matrices)
+    (real_lt_is_strict_total_order name-judgement
+     "(strict_total_order?[real])" real_props nil)
+    (real_ge_is_total_order name-judgement "(total_order?[real])"
+     real_props nil))
+   nil
+   (isometry_matrix subtype
+    "vector_arithmetic.e(orthogonal_groups.n, orthogonal_groups.j)"
+    "ConsVecN[n]")))
+ (isometry_matrix_TCC2 0
+  (isometry_matrix_TCC2-1 nil 3995084756 ("" (subtype-tcc) nil nil)
+   ((boolean nonempty-type-decl nil booleans nil)
+    (bool nonempty-type-eq-decl nil booleans nil)
+    (NOT const-decl "[bool -> bool]" booleans nil)
+    (number nonempty-type-decl nil numbers nil)
+    (number_field_pred const-decl "[number -> boolean]" number_fields
+     nil)
+    (number_field nonempty-type-from-decl nil number_fields nil)
+    (real_pred const-decl "[number_field -> boolean]" reals nil)
+    (real nonempty-type-from-decl nil reals nil)
+    (>= const-decl "bool" reals nil)
+    (rational_pred const-decl "[real -> boolean]" rationals nil)
+    (rational nonempty-type-from-decl nil rationals nil)
+    (integer_pred const-decl "[rational -> boolean]" integers nil)
+    (int nonempty-type-eq-decl nil integers nil)
+    (nat nonempty-type-eq-decl nil naturalnumbers nil)
+    (listn_0 name-judgement "listn[real](0)" vector_arithmetic
+     matrices)
+    (real_lt_is_strict_total_order name-judgement
+     "(strict_total_order?[real])" real_props nil)
+    (real_ge_is_total_order name-judgement "(total_order?[real])"
+     real_props nil))
+   nil
+   (isometry_matrix subtype "orthogonal_groups.i"
+    "below[length[real](f(e(n, j)))]")))
+ (isometry_matrix_TCC3 0
+  (isometry_matrix_TCC3-1 nil 3995084756 ("" (subtype-tcc) nil nil) nil
+   nil
+   (isometry_matrix subtype
+    "matrices.form_matrix(LAMBDA (i, j: naturalnumbers.nat): IF booleans.AND(reals.<(i, orthogonal_groups.n), reals.<(j, orthogonal_groups.n)) THEN list_props[real].nth(orthogonal_groups.f(vector_arithmetic.e(orthogonal_groups.n, j)), i) ELSE 0 ENDIF, orthogonal_groups.n, orthogonal_groups.n)"
+    "matrices.SquareMatrix(orthogonal_groups.n)")))
+ (isometry_matrix_is_orthogonal 0
+  (isometry_matrix_is_orthogonal-1 nil 3995086421
+   ("" (skeep)
+    (("" (lemma "isometry_preserves_dot_product" ("f" "f"))
+      (("" (assert)
+        (("" (expand "orthogonal_matrix?")
+          ((""
+            (lemma "matrix_inv.inverse_unique"
+             ("SQ" "isometry_matrix(f)" "IQ"
+              "transpose(isometry_matrix(f))"))
+            (("1" (split -1)
+              (("1" (flatten) (("1" (assert) nil nil)) nil)
+               ("2" (expand "isometry_matrix")
+                (("2" (expand "transpose")
+                  (("2" (auto-rewrite "matrices.rows_form_matrix")
+                    (("2" (auto-rewrite "matrices.columns_form_matrix")
+                      (("2" (assert)
+                        (("2"
+                          (lemma "matrices.full_matrix_eq"
+                           ("SM1"
+                            "transpose(isometry_matrix(f)) * isometry_matrix(f)"
+                            "SM2" "Id(rows(isometry_matrix(f))
+)"))
+                          (("2" (use "matrices.columns_form_matrix")
+                            (("1" (assert) nil nil)
+                             ("2"
+                              (lemma "matrices.full_matrix_eq"
+                               ("SM1"
+                                "transpose(isometry_matrix(f)) * isometry_matrix(f)"
+                                "SM2"
+                                "Id(rows(isometry_matrix(f))
+)"))
+                              (("2"
+                                (skeep)
+                                (("2"
+                                  (typepred "f(e(n, j))")
+                                  (("2" (assert) nil nil))
+                                  nil))
+                                nil))
+                              nil)
+                             ("3"
+                              (lemma "matrices.full_matrix_eq"
+                               ("SM1"
+                                "transpose(isometry_matrix(f)) * isometry_matrix(f)"
+                                "SM2"
+                                "Id(rows(isometry_matrix(f))
+)"))
+                              (("3"
+                                (skeep)
+                                (("3"
+                                  (typepred "e(n, j)")
+                                  (("3" (assert) nil nil))
+                                  nil))
+                                nil))
+                              nil))
+                            nil))
+                          nil))
+                        nil))
+                      nil))
+                    nil))
+                  nil))
+                nil)
+               ("3"
+                (lemma "matrices.full_matrix_eq"
+                 ("SM1"
+                  "transpose(isometry_matrix(f)) * isometry_matrix(f)"
+                  "SM2" "Id(rows(isometry_matrix(f))
+)"))
+                (("3" (replace -1 1)
+                  (("3" (hide -1)
+                    (("3" (flatten)
+                      (("3" (split 1)
+                        (("1" (auto-rewrite "matrices.rows_mult")
+                          (("1"
+                            (auto-rewrite "matrices.rows_transpose")
+                            (("1"
+                              (auto-rewrite "matrices.rows_form_matrix")
+                              (("1" (assert) nil nil)) nil))
+                            nil))
+                          nil)
+                         ("2" (assert)
+                          (("2" (use "matrices.columns_form_matrix")
+                            (("2"
+                              (auto-rewrite "matrices.columns_mult")
+                              (("2"
+                                (auto-rewrite
+                                 "matrices.columns_form_matrix")
+                                (("2"
+                                  (assert)
+                                  (("2"
+                                    (typepred "isometry_matrix(f)")
+                                    (("2"
+                                      (typepred
+                                       "transpose(isometry_matrix(f))")
+                                      (("2"
+                                        (typepred
+                                         "transpose(isometry_matrix(f)) * isometry_matrix(f)")
+                                        (("2"
+                                          (assert)
+                                          (("2"
+                                            (lemma
+                                             "matrices.columns_mult"
+                                             ("M"
+                                              "transpose(isometry_matrix(f))"
+                                              "N"
+                                              "isometry_matrix(f)"))
+                                            (("2"
+                                              (expand "rows")
+                                              (("2"
+                                                (assert)
+                                                (("2"
+                                                  (grind
+                                                   :exclude
+                                                   ("isometry_matrix"
+                                                    "transpose"
+                                                    "f"))
+                                                  nil
+                                                  nil))
+                                                nil))
+                                              nil))
+                                            nil))
+                                          nil))
+                                        nil))
+                                      nil))
+                                    nil))
+                                  nil))
+                                nil))
+                              nil))
+                            nil))
+                          nil)
+                         ("3" (skeep)
+                          (("3" (hide 2 3)
+                            (("3"
+                              (lemma "matrices.entry_mult"
+                               ("M"
+                                "transpose(isometry_matrix(f))"
+                                "N"
+                                "isometry_matrix(f)"))
+                              (("3"
+                                (inst -1 "i" "j")
+                                (("3"
+                                  (lemma
+                                   "matrices.rows_mult"
+                                   ("M"
+                                    "transpose(isometry_matrix(f))"
+                                    "N"
+                                    "isometry_matrix(f)"))
+                                  (("3"
+                                    (lemma
+                                     "matrices.rows_transpose"
+                                     ("PFM" "isometry_matrix(f)"))
+                                    (("3"
+                                      (lemma
+                                       "matrices.columns_transpose"
+                                       ("PFM" "isometry_matrix(f)"))
+                                      (("3"
+                                        (replace -4 1 :hide? t)
+                                        (("3"
+                                          (case
+                                           "i < rows(transpose(isometry_matrix(f))) AND j < columns(isometry_matrix(f))")
+                                          (("1"
+                                            (assert)
+                                            (("1"
+                                              (expand "Id" 1)
+                                              (("1"
+                                                (auto-rewrite
+                                                 "matrices.entry_form_matrix")
+                                                (("1"
+                                                  (auto-rewrite
+                                                   "matrices.access_row")
+                                                  (("1"
+                                                    (auto-rewrite
+                                                     "matrices.access_col")
+                                                    (("1"
+                                                      (auto-rewrite
+                                                       "matrices.entry_transpose")
+                                                      (("1"
+                                                        (use
+                                                         "matrices.rows_form_matrix")
+                                                        (("1"
+                                                          (expand
+                                                           "*"
+                                                           1)
+                                                          (("1"
+                                                            (assert)
+                                                            (("1"
+                                                              (lemma
+                                                               "matrices.dot_eq_sigma"
+                                                               ("v1"
+                                                                "row(transpose(isometry_matrix(f)))(i)"
+                                                                "v2"
+                                                                "col(isometry_matrix(f))(j)"))
+                                                              (("1"
+                                                                (replace
+                                                                 -1
+                                                                 1
+                                                                 :hide?
+                                                                 t)
+                                                                (("1"
+                                                                  (assert)
+                                                                  (("1"
+                                                                    (rewrite
+                                                                     "matrices.length_row"
+                                                                     1)
+                                                                    (("1"
+                                                                      (rewrite
+                                                                       "matrices.length_col"
+                                                                       1)
+                                                                      (("1"
+                                                                        (rewrite
+                                                                         "matrices.columns_transpose"
+                                                                         1)
+                                                                        (("1"
+                                                                          (typepred
+                                                                           "isometry_matrix(f)")
+                                                                          (("1"
+                                                                            (assert)
+                                                                            (("1"
+                                                                              (replace
+                                                                               -6
+                                                                               1)
+                                                                              (("1"
+                                                                                (case
+                                                                                 "(LAMBDA (k:nat): entry(isometry_matrix(f))(k, i) * entry(isometry_matrix(f))(k, j)) = (LAMBDA (k:nat): access(f(e(n, i))
+)(k) *  
+  access(f(e(n, j)))(k))")
+                                                                                (("1"
+                                                                                  (replace
+                                                                                   -1
+                                                                                   1
+                                                                                   :hide?
+                                                                                   t)
+                                                                                  (("1"
+                                                                                    (lemma
+                                                                                     "matrices.dot_eq_sigma"
+                                                                                     ("v1"
+                                                                                      "f(e(n, i))"
+                                                                                      "v2"
+                                                                                      "f(e(n, j))"))
+                                                                                    (("1"
+                                                                                      (assert)
+                                                                                      (("1"
+                                                                                        (typepred
+                                                                                         "f(e(n, i))")
+                                                                                        (("1"
+                                                                                          (typepred
+                                                                                           "f(e(n, j))")
+                                                                                          (("1"
+                                                                                            (assert)
+                                                                                            (("1"
+                                                                                              (replace
+                                                                                               -2
+                                                                                               -7
+                                                                                               :hide?
+                                                                                               nil)
+                                                                                              (("1"
+                                                                                                (replace
+                                                                                                 -5
+                                                                                                 -7
+                                                                                                 :hide?
+                                                                                                 nil)
+                                                                                                (("1"
+                                                                                                  (replace
+                                                                                                   -7
+                                                                                                   1
+                                                                                                   :dir
+                                                                                                   rl
+                                                                                                   :hide?
+                                                                                                   t)
+                                                                                                  (("1"
+                                                                                                    (lemma
+                                                                                                     "isometry_preserves_dot_product"
+                                                                                                     ("f"
+                                                                                                      "f"))
+                                                                                                    (("1"
+                                                                                                      (inst
+                                                                                                       -18
+                                                                                                       "e(n, i)"
+                                                                                                       "e(n, j)")
+                                                                                                      (("1"
+                                                                                                        (expand
+                                                                                                         "*"
+                                                                                                         -1)
+                                                                                                        (("1"
+                                                                                                          (expand
+                                                                                                           "*"
+                                                                                                           -18)
+                                                                                                          (("1"
+                                                                                                            (replace
+                                                                                                             -18
+                                                                                                             1
+                                                                                                             :hide?
+                                                                                                             t)
+                                                                                                            (("1"
+                                                                                                              (lemma
+                                                                                                               "vector_arithmetic.dot_prod_e"
+                                                                                                               ("n"
+                                                                                                                "n"
+                                                                                                                "i"
+                                                                                                                "j"
+                                                                                                                "v"
+                                                                                                                "e(n, i)"))
+                                                                                                              (("1"
+                                                                                                                (expand
+                                                                                                                 "*"
+                                                                                                                 -1)
+                                                                                                                (("1"
+                                                                                                                  (replace
+                                                                                                                   -1
+                                                                                                                   1
+                                                                                                                   :hide?
+                                                                                                                   t)
+                                                                                                                  (("1"
+                                                                                                                    (lemma
+                                                                                                                     "vector_arithmetic.nth_e"
+                                                                                                                     ("m"
+                                                                                                                      "n"
+                                                                                                                      "i"
+                                                                                                                      "i"))
+                                                                                                                    (("1"
+                                                                                                                      (inst
+                                                                                                                       -1
+                                                                                                                       "j")
+                                                                                                                      (("1"
+                                                                                                                        (assert)
+                                                                                                                        (("1"
+                                                                                                                          (case
+                                                                                                                           "i = j")
+                                                                                                                          (("1"
+                                                                                                                            (assert)
+                                                                                                                            nil
+                                                                                                                            nil)
+                                                                                                                           ("2"
+                                                                                                                            (assert)
+                                                                                                                            nil
+                                                                                                                            nil))
+                                                                                                                          nil))
+                                                                                                                        nil))
+                                                                                                                      nil))
+                                                                                                                    nil))
+                                                                                                                  nil))
+                                                                                                                nil))
+                                                                                                              nil))
+                                                                                                            nil))
+                                                                                                          nil))
+                                                                                                        nil))
+                                                                                                      nil))
+                                                                                                    nil))
+                                                                                                  nil))
+                                                                                                nil))
+                                                                                              nil))
+                                                                                            nil))
+                                                                                          nil))
+                                                                                        nil))
+                                                                                      nil))
+                                                                                    nil))
+                                                                                  nil)
+                                                                                 ("2"
+                                                                                  (hide
+                                                                                   2)
+                                                                                  (("2"
+                                                                                    (apply-extensionality
+                                                                                     1
+                                                                                     :hide?
+                                                                                     t)
+                                                                                    (("2"
+                                                                                      (expand
+                                                                                       "isometry_matrix"
+                                                                                       1)
+                                                                                      (("2"
+                                                                                        (rewrite
+                                                                                         "matrices.entry_form_matrix"
+                                                                                         1)
+                                                                                        (("1"
+                                                                                          (rewrite
+                                                                                           "matrices.entry_form_matrix"
+                                                                                           1)
+                                                                                          (("1"
+                                                                                            (expand
+                                                                                             "access"
+                                                                                             1)
+                                                                                            (("1"
+                                                                                              (typepred
+                                                                                               "f(e(n, i))")
+                                                                                              (("1"
+                                                                                                (typepred
+                                                                                                 "f(e(n, j))")
+                                                                                                (("1"
+                                                                                                  (assert)
+                                                                                                  (("1"
+                                                                                                    (replace
+                                                                                                     -2
+                                                                                                     1
+                                                                                                     :hide?
+                                                                                                     nil)
+                                                                                                    (("1"
+                                                                                                      (replace
+                                                                                                       -5
+                                                                                                       1
+                                                                                                       :hide?
+                                                                                                       nil)
+                                                                                                      (("1"
+                                                                                                        (propax)
+                                                                                                        nil
+                                                                                                        nil))
+                                                                                                      nil))
+                                                                                                    nil))
+                                                                                                  nil))
+                                                                                                nil))
+                                                                                              nil))
+                                                                                            nil)
+                                                                                           ("2"
+                                                                                            (hide
+                                                                                             2)
+                                                                                            (("2"
+                                                                                              (skeep)
+                                                                                              (("2"
+                                                                                                (typepred
+                                                                                                 "f(e(n, j!1))")
+                                                                                                (("2"
+                                                                                                  (assert)
+                                                                                                  nil
+                                                                                                  nil))
+                                                                                                nil))
+                                                                                              nil))
+                                                                                            nil)
+                                                                                           ("3"
+                                                                                            (hide
+                                                                                             2)
+                                                                                            (("3"
+                                                                                              (skeep)
+                                                                                              (("3"
+                                                                                                (expand
+                                                                                                 "e"
+                                                                                                 1)
+                                                                                                (("3"
+                                                                                                  (assert)
+                                                                                                  (("3"
+                                                                                                    (lift-if
+                                                                                                     1)
+                                                                                                    (("3"
+                                                                                                      (assert)
+                                                                                                      nil
+                                                                                                      nil))
+                                                                                                    nil))
+                                                                                                  nil))
+                                                                                                nil))
+                                                                                              nil))
+                                                                                            nil))
+                                                                                          nil)
+                                                                                         ("2"
+                                                                                          (skeep)
+                                                                                          (("2"
+                                                                                            (typepred
+                                                                                             "f(e(n, j!1))")
+                                                                                            (("2"
+                                                                                              (assert)
+                                                                                              nil
+                                                                                              nil))
+                                                                                            nil))
+                                                                                          nil)
+                                                                                         ("3"
+                                                                                          (skeep)
+                                                                                          (("3"
+                                                                                            (expand
+                                                                                             "e"
+                                                                                             1)
+                                                                                            (("3"
+                                                                                              (lift-if
+                                                                                               1)
+                                                                                              (("3"
+                                                                                                (assert)
+                                                                                                nil
+                                                                                                nil))
+                                                                                              nil))
+                                                                                            nil))
+                                                                                          nil))
+                                                                                        nil))
+                                                                                      nil))
+                                                                                    nil))
+                                                                                  nil)
+                                                                                 ("3"
+                                                                                  (expand
+                                                                                   "e"
+                                                                                   1)
+                                                                                  (("3"
+                                                                                    (lift-if
+                                                                                     1)
+                                                                                    (("3"
+                                                                                      (assert)
+                                                                                      nil
+                                                                                      nil))
+                                                                                    nil))
+                                                                                  nil)
+                                                                                 ("4"
+                                                                                  (expand
+                                                                                   "e"
+                                                                                   1)
+                                                                                  (("4"
+                                                                                    (lift-if
+                                                                                     1)
+                                                                                    (("4"
+                                                                                      (assert)
+                                                                                      nil
+                                                                                      nil))
+                                                                                    nil))
+                                                                                  nil))
+                                                                                nil))
+                                                                              nil))
+                                                                            nil))
+                                                                          nil))
+                                                                        nil))
+                                                                      nil)
+                                                                     ("2"
+                                                                      (expand
+                                                                       "rows")
+                                                                      (("2"
+                                                                        (assert)
+                                                                        nil
+                                                                        nil))
+                                                                      nil))
+                                                                    nil))
+                                                                  nil))
+                                                                nil))
+                                                              nil))
+                                                            nil))
+                                                          nil))
+                                                        nil))
+                                                      nil))
+                                                    nil))
+                                                  nil))
+                                                nil))
+                                              nil))
+                                            nil)
+                                           ("2"
+                                            (typepred
+                                             "isometry_matrix(f)")
+                                            (("2"
+                                              (expand "Id" 2)
+                                              (("2"
+                                                (rewrite
+                                                 "matrices.entry_form_matrix"
+                                                 2)
+                                                (("2"
+                                                  (assert)
+                                                  nil
+                                                  nil))
+                                                nil))
+                                              nil))
+                                            nil))
+                                          nil))
+                                        nil))
+                                      nil))
+                                    nil))
+                                  nil))
+                                nil))
+                              nil))
+                            nil))
+                          nil))
+                        nil))
+                      nil))
+                    nil))
+                  nil))
+                nil))
+              nil)
+             ("2" (typepred "isometry_matrix(f)")
+              (("2" (rewrite "matrices.rows_transpose")
+                (("2" (rewrite "matrices.columns_transpose")
+                  (("2" (assert) nil nil)) nil))
+                nil))
+              nil))
+            nil))
+          nil))
+        nil))
+      nil))
+    nil)
+   ((Function_n type-eq-decl nil linear_isometries_def nil)
+    (ConsVecN type-eq-decl nil linear_isometries_def nil)
+    (cons? adt-recognizer-decl "[list -> boolean]" list_adt nil)
+    (VectorN type-eq-decl nil matrices matrices)
+    (n formal-const-decl "posnat" orthogonal_groups nil)
+    (posnat nonempty-type-eq-decl nil integers nil)
+    (> const-decl "bool" reals nil)
+    (nonneg_int nonempty-type-eq-decl nil integers nil)
+    (length def-decl "nat" list_props nil)
+    (nat nonempty-type-eq-decl nil naturalnumbers nil)
+    (>= const-decl "bool" reals nil)
+    (int nonempty-type-eq-decl nil integers nil)
+    (integer_pred const-decl "[rational -> boolean]" integers nil)
+    (rational nonempty-type-from-decl nil rationals nil)
+    (rational_pred const-decl "[real -> boolean]" rationals nil)
+    (= const-decl "[T, T -> boolean]" equalities nil)
+    (real nonempty-type-from-decl nil reals nil)
+    (real_pred const-decl "[number_field -> boolean]" reals nil)
+    (number_field nonempty-type-from-decl nil number_fields nil)
+    (number_field_pred const-decl "[number -> boolean]" number_fields
+     nil)
+    (AND const-decl "[bool, bool -> bool]" booleans nil)
+    (every adt-def-decl "boolean" list_adt nil)
+    (PRED type-eq-decl nil defined_types nil)
+    (bool nonempty-type-eq-decl nil booleans nil)
+    (boolean nonempty-type-decl nil booleans nil)
+    (list type-decl nil list_adt nil)
+    (number nonempty-type-decl nil numbers nil)
+    (isometry_preserves_dot_product formula-decl nil orthogonal_groups
+     nil)
+    (orthogonal_matrix? const-decl "bool" orthogonal_groups_def nil)
+    (mult_full application-judgement "FullMatrix" matrices matrices)
+    (Id const-decl "{M: SquareMatrix(pm) |
+   (FORALL (i, j):
+      entry(M)(i, j) = IF i < pm AND i = j THEN 1 ELSE 0 ENDIF)
+    AND
+    (FORALL (pn: posnat, N: MatrixMN(pm, pn)): M * N = N) AND
+     (FORALL (pn: posnat, N: MatrixMN(pn, pm)): N * M = N)}" matrices
+     matrices)
+    (IF const-decl "[boolean, T, T -> T]" if_def nil)
+    (* const-decl "{A: MatrixMN(rows(M), columns(N)) |
+   FORALL (i, j): entry(A)(i, j) = row(M)(i) * col(N)(j)}" matrices
+       matrices)
+    (col def-decl "VectorN(rows(M))" matrices matrices)
+    (row const-decl "Vector" matrices matrices)
+    (* const-decl "real" matrices matrices)
+    (Vector type-eq-decl nil matrices matrices)
+    (entry const-decl "real" matrices matrices)
+    (MatrixMN type-eq-decl nil matrices matrices)
+    (full_matrix_eq formula-decl nil matrices matrices)
+    (real_gt_is_strict_total_order name-judgement
+     "(strict_total_order?[real])" real_props nil)
+    (NOT const-decl "[bool -> bool]" booleans nil)
+    (listn_0 name-judgement "listn[real](0)" vector_arithmetic
+     matrices)
+    (real_lt_is_strict_total_order name-judgement
+     "(strict_total_order?[real])" real_props nil)
+    (IMPLIES const-decl "[bool, bool -> bool]" booleans nil)
+    (e def-decl "VectorN(m)" vector_arithmetic matrices)
+    (f skolem-const-decl "Function_n[n]" orthogonal_groups nil)
+    (columns_form_matrix formula-decl nil matrices matrices)
+    (rows_form_matrix formula-decl nil matrices matrices)
+    (form_matrix_square application-judgement "FullMatrix" matrices
+     matrices)
+    (entry_mult formula-decl nil matrices matrices)
+    (columns_transpose formula-decl nil matrices matrices)
+    (dot_eq_sigma formula-decl nil matrices matrices)
+    (real_le_is_total_order name-judgement "(total_order?[real])"
+     real_props nil)
+    (real_times_real_is_real application-judgement "real" reals nil)
+    (int_minus_int_is_int application-judgement "int" integers nil)
+    (int_min application-judgement "{k: int | k <= i AND k <= j}"
+     real_defs nil)
+    (entry_transpose formula-decl nil matrices matrices)
+    (access_row formula-decl nil matrices matrices)
+    (access_col formula-decl nil matrices matrices)
+    (length_col formula-decl nil matrices matrices)
+    (i skolem-const-decl
+       "below(rows(transpose(isometry_matrix(f)) * isometry_matrix(f)))"
+       orthogonal_groups nil)
+    (j skolem-const-decl
+     "below(columns(transpose(isometry_matrix(f)) * isometry_matrix(f)))"
+     orthogonal_groups nil)
+    (dot_prod_e formula-decl nil vector_arithmetic matrices)
+    (nth_e formula-decl nil vector_arithmetic matrices)
+    (access const-decl "real" matrices matrices)
+    (* const-decl "[numfield, numfield -> numfield]" number_fields nil)
+    (numfield nonempty-type-eq-decl nil number_fields nil)
+    (length_row formula-decl nil matrices matrices)
+    (entry_form_matrix formula-decl nil matrices matrices)
+    (dot def-decl "real" matrices matrices)
+    (array2list_it def-decl
+     "{l: listn(n - i) | FORALL (j: subrange(i, n - 1)): a(j) = nth(l, j - i)}"
+     array2list structures)
+    (array2list const-decl
+     "{l: listn(n) | FORALL (i: below(n)): a(i) = nth(l, i)}"
+     array2list structures)
+    (form_matrix const-decl "{M: MatrixMN(m, n) |
+   FORALL (i: below(m), j: below(n)): nth(row(M)(i), j) = F(i, j)}"
+     matrices matrices)
+    (mult const-decl "{A: MatrixMN(rows(M), columns(N)) |
+   FORALL (i, j): entry(A)(i, j) = row(M)(i) * col(N)(j)}" matrices
+     matrices)
+    (columns_mult formula-decl nil matrices matrices)
+    (rows_transpose formula-decl nil matrices matrices)
+    (rows_mult formula-decl nil matrices matrices)
+    (inverse_unique formula-decl nil matrix_inv matrices)
+    (Matrix type-eq-decl nil matrices matrices)
+    (OR const-decl "[bool, bool -> bool]" booleans nil)
+    (null? adt-recognizer-decl "[list -> boolean]" list_adt nil)
+    (< const-decl "bool" reals nil)
+    (below type-eq-decl nil naturalnumbers nil)
+    (below type-eq-decl nil nat_types nil)
+    (nth def-decl "T" list_props nil)
+    (FullMatrix type-eq-decl nil matrices matrices)
+    (rows const-decl "nat" matrices matrices)
+    (<= const-decl "bool" reals nil)
+    (columns def-decl "{c: nat |
+   (FORALL (i: below(length(M))): length(nth(M, i)) <= c) AND
+    (null?(M) AND c = 0 OR
+      EXISTS (i: below(length(M))): length(nth(M, i)) = c)}" matrices
+     matrices)
+    (PosFullMatrix type-eq-decl nil matrices matrices)
+    (Square type-eq-decl nil matrices matrices)
+    (transpose const-decl "PosFullMatrix" matrices matrices)
+    (SquareMatrix type-eq-decl nil matrices matrices)
+    (isometry_matrix const-decl "SquareMatrix(n)" orthogonal_groups
+     nil))
+   shostak))
  (so_closure_TCC1 0
   (so_closure_TCC1-1 nil 3988435624
    ("" (skeep)
@@ -1215,36 +2165,11 @@
    ((mult_full application-judgement "FullMatrix" matrices matrices)
     (special_orthogonal_matrix? const-decl "bool" orthogonal_groups_def
      nil)
-    (number nonempty-type-decl nil numbers nil)
     (list type-decl nil list_adt nil)
-    (boolean nonempty-type-decl nil booleans nil)
-    (bool nonempty-type-eq-decl nil booleans nil)
-    (PRED type-eq-decl nil defined_types nil)
-    (AND const-decl "[bool, bool -> bool]" booleans nil)
-    (number_field_pred const-decl "[number -> boolean]" number_fields
-     nil)
-    (number_field nonempty-type-from-decl nil number_fields nil)
-    (real_pred const-decl "[number_field -> boolean]" reals nil)
     (Matrix type-eq-decl nil matrices matrices)
-    (OR const-decl "[bool, bool -> bool]" booleans nil)
-    (real nonempty-type-from-decl nil reals nil)
     (null? adt-recognizer-decl "[list -> boolean]" list_adt nil)
-    (rational_pred const-decl "[real -> boolean]" rationals nil)
-    (rational nonempty-type-from-decl nil rationals nil)
-    (integer_pred const-decl "[rational -> boolean]" integers nil)
-    (int nonempty-type-eq-decl nil integers nil)
-    (>= const-decl "bool" reals nil)
-    (nat nonempty-type-eq-decl nil naturalnumbers nil)
-    (< const-decl "bool" reals nil)
-    (length def-decl "nat" list_props nil)
-    (below type-eq-decl nil naturalnumbers nil)
-    (= const-decl "[T, T -> boolean]" equalities nil)
-    (below type-eq-decl nil nat_types nil)
-    (nth def-decl "T" list_props nil)
     (FullMatrix type-eq-decl nil matrices matrices)
-    (> const-decl "bool" reals nil)
     (rows const-decl "nat" matrices matrices)
-    (<= const-decl "bool" reals nil)
     (columns def-decl "{c: nat |
    (FORALL (i: below(length(M))): length(nth(M, i)) <= c) AND
     (null?(M) AND c = 0 OR
@@ -1252,11 +2177,7 @@
      matrices)
     (PosFullMatrix type-eq-decl nil matrices matrices)
     (Square type-eq-decl nil matrices matrices)
-    (nonneg_int nonempty-type-eq-decl nil integers nil)
-    (posnat nonempty-type-eq-decl nil integers nil)
-    (n formal-const-decl "posnat" orthogonal_groups nil)
     (SquareMatrix type-eq-decl nil matrices matrices)
-    (ortho_closure formula-decl nil orthogonal_groups nil)
     (det_mult formula-decl nil matrix_diag matrices))
    shostak))
  (so_identity 0
@@ -1267,25 +2188,7 @@
        ("2" (lemma "det_Id") (("2" (inst -1 "n") nil nil)) nil))
       nil))
     nil)
-   ((ortho_identity formula-decl nil orthogonal_groups nil)
-    (number nonempty-type-decl nil numbers nil)
-    (boolean nonempty-type-decl nil booleans nil)
-    (number_field_pred const-decl "[number -> boolean]" number_fields
-     nil)
-    (number_field nonempty-type-from-decl nil number_fields nil)
-    (real_pred const-decl "[number_field -> boolean]" reals nil)
-    (real nonempty-type-from-decl nil reals nil)
-    (rational_pred const-decl "[real -> boolean]" rationals nil)
-    (rational nonempty-type-from-decl nil rationals nil)
-    (integer_pred const-decl "[rational -> boolean]" integers nil)
-    (int nonempty-type-eq-decl nil integers nil)
-    (bool nonempty-type-eq-decl nil booleans nil)
-    (>= const-decl "bool" reals nil)
-    (nonneg_int nonempty-type-eq-decl nil integers nil)
-    (> const-decl "bool" reals nil)
-    (posnat nonempty-type-eq-decl nil integers nil)
-    (n formal-const-decl "posnat" orthogonal_groups nil)
-    (det_Id formula-decl nil matrix_props matrices)
+   ((det_Id formula-decl nil matrix_props matrices)
     (special_orthogonal_matrix? const-decl "bool" orthogonal_groups_def
      nil))
    shostak))
@@ -1457,18 +2360,11 @@
    ((special_orthogonal_matrix? const-decl "bool" orthogonal_groups_def
      nil)
     (det_inverse formula-decl nil matrix_inv matrices)
-    (real_gt_is_strict_total_order name-judgement
-     "(strict_total_order?[real])" real_props nil)
-    (NOT const-decl "[bool -> bool]" booleans nil)
-    (ortho_inverse formula-decl nil orthogonal_groups nil)
     (SpecialOrthogonalMatrix type-eq-decl nil orthogonal_groups_def
      nil)
     (OrthogonalMatrix type-eq-decl nil orthogonal_groups_def nil)
     (orthogonal_matrix? const-decl "bool" orthogonal_groups_def nil)
     (SquareMatrix type-eq-decl nil matrices matrices)
-    (n formal-const-decl "posnat" orthogonal_groups nil)
-    (posnat nonempty-type-eq-decl nil integers nil)
-    (nonneg_int nonempty-type-eq-decl nil integers nil)
     (Square type-eq-decl nil matrices matrices)
     (PosFullMatrix type-eq-decl nil matrices matrices)
     (columns def-decl "{c: nat |
@@ -1476,211 +2372,10 @@
     (null?(M) AND c = 0 OR
       EXISTS (i: below(length(M))): length(nth(M, i)) = c)}" matrices
      matrices)
-    (<= const-decl "bool" reals nil)
     (rows const-decl "nat" matrices matrices)
-    (> const-decl "bool" reals nil)
     (FullMatrix type-eq-decl nil matrices matrices)
-    (nth def-decl "T" list_props nil)
-    (below type-eq-decl nil nat_types nil)
-    (= const-decl "[T, T -> boolean]" equalities nil)
-    (below type-eq-decl nil naturalnumbers nil)
-    (length def-decl "nat" list_props nil)
-    (< const-decl "bool" reals nil)
-    (nat nonempty-type-eq-decl nil naturalnumbers nil)
-    (>= const-decl "bool" reals nil)
-    (int nonempty-type-eq-decl nil integers nil)
-    (integer_pred const-decl "[rational -> boolean]" integers nil)
-    (rational nonempty-type-from-decl nil rationals nil)
-    (rational_pred const-decl "[real -> boolean]" rationals nil)
     (null? adt-recognizer-decl "[list -> boolean]" list_adt nil)
-    (real nonempty-type-from-decl nil reals nil)
-    (OR const-decl "[bool, bool -> bool]" booleans nil)
     (Matrix type-eq-decl nil matrices matrices)
-    (real_pred const-decl "[number_field -> boolean]" reals nil)
-    (number_field nonempty-type-from-decl nil number_fields nil)
-    (number_field_pred const-decl "[number -> boolean]" number_fields
-     nil)
-    (AND const-decl "[bool, bool -> bool]" booleans nil)
-    (PRED type-eq-decl nil defined_types nil)
-    (bool nonempty-type-eq-decl nil booleans nil)
-    (boolean nonempty-type-decl nil booleans nil)
-    (list type-decl nil list_adt nil)
-    (number nonempty-type-decl nil numbers nil))
-   shostak))
- (ortho_det_homomorphism 0
-  (ortho_det_homomorphism-1 nil 3989042585
-   ("" (skeep) (("" (postpone) nil nil)) nil) nil shostak))
- (so_normal_TCC1 0
-  (so_normal_TCC1-1 nil 3988435624
-   ("" (skeep)
-    (("" (typepred "A" "C")
-      (("" (lemma "rows_mult")
-        (("" (inst -1 "A*C" "inverse(A)")
-          (("1" (lemma "rows_mult")
-            (("1" (inst -1 "A" "C")
-              (("1" (lemma "columns_mult")
-                (("1" (inst -1 "A*C" "inverse(A)")
-                  (("1" (expand "orthogonal_matrix?")
-                    (("1" (case "NOT null?(A)")
-                      (("1" (assert)
-                        (("1" (hide -4 -11)
-                          (("1" (prop)
-                            (("1" (expand "invertible?" -10)
-                              (("1" (assert) nil nil)) nil)
-                             ("2" (expand "rows")
-                              (("2" (assert) nil nil)) nil)
-                             ("3" (assert) nil nil)
-                             ("4" (replace -11 -2)
-                              (("4"
-                                (rewrite "columns_transpose")
-                                (("4" (assert) nil nil))
-                                nil))
-                              nil)
-                             ("5" (expand "rows")
-                              (("5"
-                                (assert)
-                                (("5"
-                                  (typepred "n")
-                                  (("5"
-                                    (lemma "columns_mult")
-                                    (("5"
-                                      (inst -1 "A * C" "inverse(A)")
-                                      (("5"
-                                        (assert)
-                                        (("5"
-                                          (lemma "columns_mult")
-                                          (("5"
-                                            (inst -1 "A" "C")
-                                            (("5"
-                                              (assert)
-                                              (("5"
-                                                (lemma "columns_mult")
-                                                (("5"
-                                                  (inst
-                                                   -1
-                                                   "A * C"
-                                                   "inverse(A)")
-                                                  (("5"
-                                                    (lemma
-                                                     "columns_transpose")
-                                                    (("5"
-                                                      (inst -1 "A")
-                                                      (("5"
-                                                        (replace
-                                                         -16
-                                                         -2)
-                                                        (("5"
-                                                          (lemma
-                                                           "rows_mult")
-                                                          (("5"
-                                                            (inst
-                                                             -1
-                                                             "A"
-                                                             "C")
-                                                            (("5"
-                                                              (assert)
-                                                              (("5"
-                                                                (lemma
-                                                                 "columns_mult")
-                                                                (("5"
-                                                                  (inst
-                                                                   -1
-                                                                   "A * C"
-                                                                   "inverse(A)")
-                                                                  (("5"
-                                                                    (lemma
-                                                                     "columns_transpose")
-                                                                    (("5"
-                                                                      (postpone)
-                                                                      nil
-                                                                      nil))
-                                                                    nil))
-                                                                  nil))
-                                                                nil))
-                                                              nil))
-                                                            nil))
-                                                          nil))
-                                                        nil))
-                                                      nil))
-                                                    nil))
-                                                  nil))
-                                                nil))
-                                              nil))
-                                            nil))
-                                          nil))
-                                        nil))
-                                      nil))
-                                    nil))
-                                  nil))
-                                nil))
-                              nil)
-                             ("6" (postpone) nil nil)
-                             ("7" (postpone) nil nil)
-                             ("8" (postpone) nil nil))
-                            nil))
-                          nil))
-                        nil)
-                       ("2" (postpone) nil nil))
-                      nil))
-                    nil))
-                  nil))
-                nil))
-              nil))
-            nil)
-           ("2" (postpone) nil nil))
-          nil))
-        nil))
-      nil))
-    nil)
-   nil nil
-   (so_normal subtype
-    "matrices.*(matrices.*(orthogonal_groups.A, orthogonal_groups.C), matrix_inv.inverse(orthogonal_groups.A))"
-    "matrices.SquareMatrix(orthogonal_groups.n)")))
- (so_normal 0
-  (so_normal-1 nil 3989040320
-   ("" (skeep)
-    (("" (typepred "A")
-      (("" (typepred "C")
-        (("" (expand "special_orthogonal_matrix?")
-          (("" (expand "orthogonal_matrix?" -)
-            (("" (lemma "invertible_det")
-              (("" (inst -1 "A")
-                (("" (flatten)
-                  (("" (split)
-                    (("1" (lemma "ortho_closure")
-                      (("1" (inst -1 "A * C" "inverse(A)")
-                        (("1" (lemma "ortho_closure")
-                          (("1" (inst -1 "A" "C")
-                            (("1" (lemma "ortho_inverse")
-                              (("1"
-                                (inst -1 "A")
-                                (("1"
-                                  (assert)
-                                  (("1" (postpone) nil nil))
-                                  nil))
-                                nil))
-                              nil))
-                            nil))
-                          nil)
-                         ("2" (postpone) nil nil)
-                         ("3" (postpone) nil nil))
-                        nil))
-                      nil)
-                     ("2" (postpone) nil nil))
-                    nil))
-                  nil))
-                nil))
-              nil))
-            nil))
-          nil))
-        nil))
-      nil))
-    nil)
-   nil shostak))
- (ortho_det_sign_homomorphism_TCC1 0
-  (ortho_det_sign_homomorphism_TCC1-1 nil 3990478183
-   ("" (subtype-tcc) nil nil) nil nil
-   (ortho_det_sign_homomorphism subtype
-    "matrices.*(orthogonal_groups.A, orthogonal_groups.B)"
-    "OrthogonalMatrix[n]"))))
+    (list type-decl nil list_adt nil))
+   shostak)))
 
