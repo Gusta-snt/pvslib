@@ -89,13 +89,13 @@ BEGIN
 
   % Step 1: Auxiliary equality: 2P.Q = norm(P)^2 + norm(Q)^2 - norm(P - Q)^2
   % In terms of dot product: 2(P*Q) = P*P + Q*Q - (P - Q)*(P - Q)
-  % @QED dot_product_norm_eq proved by gusta on Fri, 07 Aug 2026 10:05:11 GMT
+  % @QED dot_product_norm_eq proved by gusta on Fri, 06 Aug 2026 10:05:11 GMT
   dot_product_norm_eq: LEMMA
     FORALL (P, Q: ConsVecN):
     2 * (P * Q) = (P * P) + (Q * Q) - ((P - Q) * (P - Q))
 
   % Step 2: f(x) preserves the dot product
-  % @QED isometry_preserves_dot_product proved by gusta on Fri, 07 Aug 2026 10:13:22 GMT
+  % @QED isometry_preserves_dot_product proved by gusta on Fri, 06 Aug 2026 10:13:22 GMT
   isometry_preserves_dot_product: LEMMA
     linear_isometry?(f)(norm_2(n)) IMPLIES
     FORALL (x, y: ConsVecN): f(x) * f(y) = x * y
@@ -106,25 +106,25 @@ BEGIN
       IF i < n AND j < n THEN nth(f(e(n, j)), i) ELSE 0 ENDIF, n, n)
 
   % Step 3: Matrix A belongs to O(n) (its columns are orthonormal, A*A^T = Id)
-  % @QED isometry_matrix_is_orthogonal proved by gusta on Fri, 07 Aug 2026 12:03:20 GMT
+  % @QED isometry_matrix_is_orthogonal proved by gusta on Fri, 06 Aug 2026 12:03:20 GMT
   isometry_matrix_is_orthogonal: LEMMA
     linear_isometry?(f)(norm_2(n)) IMPLIES
     orthogonal_matrix?(isometry_matrix(f))
 
   % Step 3.5: Auxiliary lemma to avoid linear combinations 
   % A^T * f(x) = x
-  % @QED isometry_transpose_mult proved by gusta on Fri, 14 Aug 2026 10:50:18 GMT
+  % @QED isometry_transpose_mult proved by gusta on Fri, 07 Aug 2026 10:50:18 GMT
   isometry_transpose_mult: LEMMA
     linear_isometry?(f)(norm_2(n)) IMPLIES
     FORALL (x: ConsVecN): transpose(isometry_matrix(f)) * f(x) = x
 
   % Step 4: f(x) is defined by A * x
-  % @QED linear_isometry_is_matrix_mult proved by gusta on Fri, 14 Aug 2026 11:44:30 GMT
+  % @QED linear_isometry_is_matrix_mult proved by gusta on Fri, 07 Aug 2026 11:44:30 GMT
   linear_isometry_is_matrix_mult: LEMMA
     linear_isometry?(f)(norm_2(n)) IMPLIES
     FORALL (x: ConsVecN): f(x) = isometry_matrix(f) * x
 
-  % @QED theorem_1_8 proved by gusta on Fri, 14 Aug 2026 11:48:48 GMT
+  % @QED theorem_1_8 proved by gusta on Fri, 07 Aug 2026 11:48:48 GMT
   theorem_1_8: THEOREM
     linear_isometry?(f)(norm_2(n)) IMPLIES
     EXISTS (A: OrthogonalMatrix):
