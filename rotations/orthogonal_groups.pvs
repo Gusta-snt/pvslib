@@ -111,11 +111,20 @@ BEGIN
     linear_isometry?(f)(norm_2(n)) IMPLIES
     orthogonal_matrix?(isometry_matrix(f))
 
+  % Step 3.5: Auxiliary lemma to avoid linear combinations 
+  % A^T * f(x) = x
+  % @QED isometry_transpose_mult proved by gusta on Fri, 14 Aug 2026 10:50:18 GMT
+  isometry_transpose_mult: LEMMA
+    linear_isometry?(f)(norm_2(n)) IMPLIES
+    FORALL (x: ConsVecN): transpose(isometry_matrix(f)) * f(x) = x
+
   % Step 4: f(x) is defined by A * x
+  % @QED linear_isometry_is_matrix_mult proved by gusta on Fri, 14 Aug 2026 11:44:30 GMT
   linear_isometry_is_matrix_mult: LEMMA
     linear_isometry?(f)(norm_2(n)) IMPLIES
     FORALL (x: ConsVecN): f(x) = isometry_matrix(f) * x
 
+  % @QED theorem_1_8 proved by gusta on Fri, 14 Aug 2026 11:48:48 GMT
   theorem_1_8: THEOREM
     linear_isometry?(f)(norm_2(n)) IMPLIES
     EXISTS (A: OrthogonalMatrix):
