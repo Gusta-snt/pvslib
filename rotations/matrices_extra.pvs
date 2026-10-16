@@ -29,4 +29,8 @@ BEGIN
     FORALL(m, n: posnat, A: MatrixMN(m,n)):
       A * zero_vec(n) = zero_vec(m)
 
+  mult_Id_vec_alt: LEMMA
+    FORALL(n: posnat, v: VectorN(n)):
+      Id(n) * v = v
+
 END matrices_extra
